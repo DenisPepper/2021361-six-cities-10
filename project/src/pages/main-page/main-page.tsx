@@ -3,8 +3,8 @@
 };*/
 
 const SpanStyles = {
-  80: { width: '80%' },
-  100: { width: '100%' },
+  '80%': { width: '80%' },
+  '100%': { width: '100%' },
 } as const;
 
 export default function MainPage(): JSX.Element {
@@ -130,7 +130,7 @@ export default function MainPage(): JSX.Element {
                         src='img/apartment-01.jpg'
                         width='260'
                         height='200'
-                        alt='Place image'
+                        alt='Place'
                       />
                     </a>
                   </div>
@@ -158,7 +158,7 @@ export default function MainPage(): JSX.Element {
                     </div>
                     <div className='place-card__rating rating'>
                       <div className='place-card__stars rating__stars'>
-                        <span style={SpanStyles[80]}></span>
+                        <span style={SpanStyles['80%']}></span>
                         <span className='visually-hidden'>Rating</span>
                       </div>
                     </div>
@@ -179,7 +179,7 @@ export default function MainPage(): JSX.Element {
                         src='img/room.jpg'
                         width='260'
                         height='200'
-                        alt='Place image'
+                        alt='Place'
                       />
                     </a>
                   </div>
@@ -207,7 +207,7 @@ export default function MainPage(): JSX.Element {
                     </div>
                     <div className='place-card__rating rating'>
                       <div className='place-card__stars rating__stars'>
-                        <span style={SpanStyles[80]}></span>
+                        <span style={SpanStyles['80%']}></span>
                         <span className='visually-hidden'>Rating</span>
                       </div>
                     </div>
@@ -226,7 +226,7 @@ export default function MainPage(): JSX.Element {
                         src='img/apartment-02.jpg'
                         width='260'
                         height='200'
-                        alt='Place image'
+                        alt='Place'
                       />
                     </a>
                   </div>
@@ -254,7 +254,7 @@ export default function MainPage(): JSX.Element {
                     </div>
                     <div className='place-card__rating rating'>
                       <div className='place-card__stars rating__stars'>
-                        <span style={SpanStyles[80]}></span>
+                        <span style={SpanStyles['80%']}></span>
                         <span className='visually-hidden'>Rating</span>
                       </div>
                     </div>
@@ -276,7 +276,7 @@ export default function MainPage(): JSX.Element {
                         src='img/apartment-03.jpg'
                         width='260'
                         height='200'
-                        alt='Place image'
+                        alt='Place'
                       />
                     </a>
                   </div>
@@ -304,7 +304,7 @@ export default function MainPage(): JSX.Element {
                     </div>
                     <div className='place-card__rating rating'>
                       <div className='place-card__stars rating__stars'>
-                        <span style={SpanStyles[100]}></span>
+                        <span style={SpanStyles['100%']}></span>
                         <span className='visually-hidden'>Rating</span>
                       </div>
                     </div>
@@ -323,7 +323,7 @@ export default function MainPage(): JSX.Element {
                         src='img/room.jpg'
                         width='260'
                         height='200'
-                        alt='Place image'
+                        alt='Place'
                       />
                     </a>
                   </div>
@@ -351,7 +351,7 @@ export default function MainPage(): JSX.Element {
                     </div>
                     <div className='place-card__rating rating'>
                       <div className='place-card__stars rating__stars'>
-                        <span style={SpanStyles[80]}></span>
+                        <span style={SpanStyles['80%']}></span>
                         <span className='visually-hidden'>Rating</span>
                       </div>
                     </div>
