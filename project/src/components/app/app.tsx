@@ -1,5 +1,10 @@
-function App(): JSX.Element {
-  return <p>Hello, world!</p>;
+import MainPage from '../../pages/main-page/main-page';
+
+type AppProps = {
+  placesCount: number;
 }
 
-export default App;
+export default function App(props: AppProps): JSX.Element {
+  const {placesCount} = props;
+  return <MainPage placesCount = {placesCount} />;
+}
