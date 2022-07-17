@@ -8,22 +8,23 @@ import RoomPage from '../../pages/room-page/room-page';
 
 type AppProps = {
   placesCount: number;
+  rooms: number[];
 };
 
 export default function App(props: AppProps): JSX.Element {
-  const { placesCount } = props;
+  const { placesCount, rooms } = props;
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path = '/'>
-          <Route index element = {<MainPage placesCount = {placesCount}></MainPage>}></Route>
-          <Route path = 'login' element = {<LoginPage></LoginPage>}></Route>
-          <Route path = 'favorites' element = {<FavoritesPage></FavoritesPage>}></Route>
-          <Route path = 'offer/'>
-            <Route path = ':id' element = {<RoomPage></RoomPage>}></Route>
+        <Route path='/'>
+          <Route index element={<MainPage roomsCount={placesCount}></MainPage>} />
+          <Route path='login' element={<LoginPage></LoginPage>}/>
+          <Route path='favorites' element={<FavoritesPage></FavoritesPage>} />
+          <Route path='offer/'>
+            <Route path=':id' element={<RoomPage rooms={rooms}></RoomPage>} />
           </Route>
-          <Route path = '*' element = {<Page404></Page404>}></Route>
+          <Route path='*' element={<Page404></Page404>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

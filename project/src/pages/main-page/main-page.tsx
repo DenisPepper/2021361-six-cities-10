@@ -1,18 +1,21 @@
 import PlaceCard from '../../components/place-card/place-card';
 
 type MainPageProps = {
-  placesCount: number;
-}
+  roomsCount: number;
+};
 
 export default function MainPage(props: MainPageProps): JSX.Element {
-  const {placesCount} = props;
+  const { roomsCount } = props;
   return (
     <div className='page page--gray page--main'>
       <header className='header'>
         <div className='container'>
           <div className='header__wrapper'>
             <div className='header__left'>
-              <a className='header__logo-link header__logo-link--active' href='#ref'>
+              <a
+                className='header__logo-link header__logo-link--active'
+                href='#ref'
+              >
                 <img
                   className='header__logo'
                   src='img/logo.svg'
@@ -68,7 +71,10 @@ export default function MainPage(props: MainPageProps): JSX.Element {
                 </a>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item tabs__item--active' href='#ref'>
+                <a
+                  className='locations__item-link tabs__item tabs__item--active'
+                  href='#ref'
+                >
                   <span>Amsterdam</span>
                 </a>
               </li>
@@ -89,7 +95,9 @@ export default function MainPage(props: MainPageProps): JSX.Element {
           <div className='cities__places-container container'>
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
-              <b className='places__found'>{placesCount} places to stay in Amsterdam</b>
+              <b className='places__found'>
+                {roomsCount} places to stay in Amsterdam
+              </b>
               <form className='places__sorting' action='#' method='get'>
                 <span className='places__sorting-caption'>Sort by</span>
                 <span className='places__sorting-type' tabIndex={0}>
@@ -117,7 +125,9 @@ export default function MainPage(props: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                {Array.from({length: 5}, () => <PlaceCard/>)}
+                {Array.from({ length: 5 }, () => (
+                  <PlaceCard />
+                ))}
               </div>
             </section>
             <div className='cities__right-section'>

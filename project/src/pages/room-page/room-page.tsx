@@ -1,5 +1,18 @@
-export default function RoomPage(): JSX.Element {
-  return (
+import { useParams } from 'react-router-dom';
+
+import Page404 from '../404-page/404-page';
+
+const DECIMAL = 10;
+
+type RoomPageProps = {
+  rooms: number[];
+}
+
+export default function RoomPage(props: RoomPageProps): JSX.Element {
+  const { id } = useParams();
+  const {rooms} = props;
+  const isValid = rooms.find((room) => room === parseInt(String(id), DECIMAL));
+  return isValid ? (
     <div className='page'>
       <header className='header'>
         <div className='container'>
@@ -481,6 +494,5 @@ export default function RoomPage(): JSX.Element {
           </section>
         </div>
       </main>
-    </div>
-  );
+    </div>) : <Page404 />;
 }
