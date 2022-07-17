@@ -9,4 +9,8 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-root.render(<App placesCount={ROOMS_COUNT} rooms={ROOMS} />);
+root.render(
+  <React.StrictMode>
+    <App placesCount={ROOMS_COUNT} rooms={ROOMS} />
+  </React.StrictMode>
+);
