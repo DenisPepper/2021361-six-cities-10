@@ -1,39 +1,6 @@
-type offer = {
-  bedrooms: number;
-  city: {
-    location: {
-      latitude: number;
-      longitude: number;
-      zoom: number;
-    };
-    name: string;
-  };
-  description: string;
-  goods: string[];
-  host: {
-    avatarUrl: string;
-    id: number;
-    isPro: boolean;
-    name: string;
-  };
-  id: number;
-  images: string[];
-  isFavorite: boolean;
-  isPremium: boolean;
-  location: {
-    latitude: number;
-    longitude: number;
-    zoom: number;
-  };
-  maxAdults: number;
-  previewImage: string;
-  price: number;
-  rating: number;
-  title: string;
-  type: string;
-};
+import { Offer } from '../types/offer';
 
-const offerOne: offer = {
+const offerOne: Offer = {
   city: {
     name: 'Dusseldorf',
     location: {
@@ -89,7 +56,7 @@ const offerOne: offer = {
   id: 1,
 };
 
-const offerTwo: offer = {
+const offerTwo: Offer = {
   city: {
     name: 'Paris',
     location: {
@@ -140,7 +107,7 @@ const offerTwo: offer = {
   id: 2,
 };
 
-const offerThree: offer = {
+const offerThree: Offer = {
   city: {
     name: 'Hamburg',
     location: {
@@ -200,7 +167,7 @@ const offerThree: offer = {
   id: 3,
 };
 
-const offerFour: offer = {
+const offerFour: Offer = {
   city: {
     name: 'Cologne',
     location: {
@@ -261,4 +228,4 @@ const offerFour: offer = {
   id: 4,
 };
 
-export const offers: offer[] = [offerOne, offerTwo, offerThree, offerFour];
+export const offers: Offer[] = [offerOne, offerTwo, offerThree, offerFour];
