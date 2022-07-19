@@ -6,10 +6,11 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import RoomPage from '../../pages/room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
+import {Offer} from '../../types/offer';
 
 type AppProps = {
   placesCount: number;
-  rooms: number[];
+  rooms: Offer[];
 };
 
 export default function App(props: AppProps): JSX.Element {
