@@ -1,17 +1,17 @@
 import { useParams } from 'react-router-dom';
-
+import { OfferType } from '../../types/offer-type';
 import Page404 from '../404-page/404-page';
 
 const DECIMAL = 10;
 
 type RoomPageProps = {
-  rooms: number[];
+  rooms: OfferType[];
 }
 
 export default function RoomPage(props: RoomPageProps): JSX.Element {
   const { id } = useParams();
   const {rooms} = props;
-  const isValid = rooms.find((room) => room === parseInt(String(id), DECIMAL));
+  const isValid = rooms.find((room) => room.id === parseInt(String(id), DECIMAL));
   return isValid ? (
     <div className='page'>
       <header className='header'>

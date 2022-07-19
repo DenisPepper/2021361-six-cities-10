@@ -1,6 +1,6 @@
-import { Offer } from '../types/offer';
+import { OfferType } from '../types/offer-type';
 
-const offerOne: Offer = {
+const offerOne: OfferType = {
   city: {
     name: 'Dusseldorf',
     location: {
@@ -56,7 +56,7 @@ const offerOne: Offer = {
   id: 1,
 };
 
-const offerTwo: Offer = {
+const offerTwo: OfferType = {
   city: {
     name: 'Paris',
     location: {
@@ -107,7 +107,7 @@ const offerTwo: Offer = {
   id: 2,
 };
 
-const offerThree: Offer = {
+const offerThree: OfferType = {
   city: {
     name: 'Hamburg',
     location: {
@@ -167,7 +167,7 @@ const offerThree: Offer = {
   id: 3,
 };
 
-const offerFour: Offer = {
+const offerFour: OfferType = {
   city: {
     name: 'Cologne',
     location: {
@@ -228,4 +228,4 @@ const offerFour: Offer = {
   id: 4,
 };
 
-export const offers: Offer[] = [offerOne, offerTwo, offerThree, offerFour];
+export const offers: OfferType[] = [offerOne, offerTwo, offerThree, offerFour];

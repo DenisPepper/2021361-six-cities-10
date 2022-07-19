@@ -6,11 +6,11 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import RoomPage from '../../pages/room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
-import {Offer} from '../../types/offer';
+import { OfferType } from '../../types/offer-type';
 
 type AppProps = {
   placesCount: number;
-  rooms: Offer[];
+  rooms: OfferType[];
 };
 
 export default function App(props: AppProps): JSX.Element {
@@ -19,10 +19,20 @@ export default function App(props: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path = {AppPath.MainPage}>
-          <Route index element={<MainPage roomsCount={placesCount}></MainPage>} />
-          <Route path={AppPath.LoginPage} element={<LoginPage></LoginPage>}/>
-          <Route path={AppPath.FavoritesPage} element={<PrivateRoute authorizationStatus = {AuthorizationStatus.No}><FavoritesPage/></PrivateRoute>} />
+        <Route path={AppPath.MainPage}>
+          <Route
+            index
+            element={<MainPage roomsCount={placesCount}></MainPage>}
+          />
+          <Route path={AppPath.LoginPage} element={<LoginPage></LoginPage>} />
+          <Route
+            path={AppPath.FavoritesPage}
+            element={
+              <PrivateRoute authorizationStatus={AuthorizationStatus.No}>
+                <FavoritesPage />
+              </PrivateRoute>
+            }
+          />
           <Route path={AppPath.Offer}>
             <Route path=':id' element={<RoomPage rooms={rooms}></RoomPage>} />
           </Route>
