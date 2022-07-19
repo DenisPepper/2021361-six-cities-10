@@ -195,7 +195,7 @@ const offerFour: OfferType = {
   ],
   title: 'Loft Studio in the Central Area',
   isFavorite: false,
-  isPremium: false,
+  isPremium: true,
   rating: 3.7,
   type: 'house',
   bedrooms: 3,
