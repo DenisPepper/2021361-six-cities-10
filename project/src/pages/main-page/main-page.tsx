@@ -1,4 +1,4 @@
-import PlaceCard from '../../components/place-card/place-card';
+import PlaceCardList from '../../components/place-card-list/place-card-list';
 import {OfferType} from '../../types/offer-type';
 
 type MainPageProps = {
@@ -127,7 +127,7 @@ export default function MainPage(props: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                {rooms.map((room, index) => (<PlaceCard key = {++index} room={room}></PlaceCard>))}
+                <PlaceCardList rooms = {rooms}></PlaceCardList>
               </div>
             </section>
             <div className='cities__right-section'>

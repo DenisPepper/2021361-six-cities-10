@@ -1,15 +1,24 @@
-import {OfferType} from '../../types/offer-type';
-import {converToPercent} from '../../util';
+import { OfferType } from '../../types/offer-type';
+import { converToPercent } from '../../util';
 
 type PlaceCardProps = {
-  room: OfferType;
+  room: OfferType,
+  callback: any,
 };
 
 export default function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const {room} = props;
+  const { room, callback } = props;
+  const onMouseOverHandler = () => callback(room.id);
   return (
-    <article className='cities__card place-card'>
-      {room.isPremium ? (<div className='place-card__mark'><span>Premium</span></div>) : null}
+    <article
+      className='cities__card place-card'
+      onMouseOver={onMouseOverHandler}
+    >
+      {room.isPremium ? (
+        <div className='place-card__mark'>
+          <span>Premium</span>
+        </div>
+      ) : null}
       <div className='cities__image-wrapper place-card__image-wrapper'>
         <a href='#ref'>
           <img
