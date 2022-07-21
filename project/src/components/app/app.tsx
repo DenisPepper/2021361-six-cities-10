@@ -9,12 +9,11 @@ import PrivateRoute from '../private-route/private-route';
 import { OfferType } from '../../types/offer-type';
 
 type AppProps = {
-  placesCount: number;
   rooms: OfferType[];
 };
 
 export default function App(props: AppProps): JSX.Element {
-  const { placesCount, rooms } = props;
+  const { rooms } = props;
 
   return (
     <BrowserRouter>
@@ -22,7 +21,7 @@ export default function App(props: AppProps): JSX.Element {
         <Route path={AppPath.MainPage}>
           <Route
             index
-            element={<MainPage roomsCount={placesCount}></MainPage>}
+            element={<MainPage rooms={rooms}></MainPage>}
           />
           <Route path={AppPath.LoginPage} element={<LoginPage></LoginPage>} />
           <Route
