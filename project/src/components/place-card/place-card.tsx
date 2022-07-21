@@ -3,7 +3,7 @@ import { converToPercent } from '../../util';
 
 type PlaceCardProps = {
   room: OfferType,
-  callback: any,
+  callback: (id: number) => void,
 };
 
 export default function PlaceCard(props: PlaceCardProps): JSX.Element {

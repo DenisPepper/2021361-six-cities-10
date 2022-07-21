@@ -1,4 +1,12 @@
-export default function FavoritesPage(): JSX.Element {
+import {OfferType} from '../../types/offer-type';
+
+type FavoritesPageProps = {
+  rooms: OfferType[],
+};
+
+export default function FavoritesPage(props: FavoritesPageProps): JSX.Element {
+  const {rooms} = props;
+
   return (
     <div className='page'>
       <header className='header'>
@@ -39,12 +47,16 @@ export default function FavoritesPage(): JSX.Element {
           </div>
         </div>
       </header>
+
       <main className='page__main page__main--favorites'>
         <div className='page__favorites-container container'>
           <section className='favorites'>
             <h1 className='favorites__title'>Saved listing</h1>
+
             <ul className='favorites__list'>
+
               <li className='favorites__locations-items'>
+
                 <div className='favorites__locations locations locations--current'>
                   <div className='locations__item'>
                     <a className='locations__item-link' href='#ref'>
@@ -52,7 +64,9 @@ export default function FavoritesPage(): JSX.Element {
                     </a>
                   </div>
                 </div>
+
                 <div className='favorites__places'>
+
                   <article className='favorites__card place-card'>
                     <div className='place-card__mark'>
                       <span>Premium</span>
@@ -102,6 +116,7 @@ export default function FavoritesPage(): JSX.Element {
                       <p className='place-card__type'>Apartment</p>
                     </div>
                   </article>
+
                   <article className='favorites__card place-card'>
                     <div className='favorites__image-wrapper place-card__image-wrapper'>
                       <a href='#ref'>
@@ -148,8 +163,11 @@ export default function FavoritesPage(): JSX.Element {
                       <p className='place-card__type'>Private room</p>
                     </div>
                   </article>
+
                 </div>
+
               </li>
+
               <li className='favorites__locations-items'>
                 <div className='favorites__locations locations locations--current'>
                   <div className='locations__item'>
@@ -207,7 +225,9 @@ export default function FavoritesPage(): JSX.Element {
                   </article>
                 </div>
               </li>
+
             </ul>
+
           </section>
         </div>
       </main>
