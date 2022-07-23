@@ -27,7 +27,7 @@ export default function App(props: AppProps): JSX.Element {
           <Route
             path={AppPath.FavoritesPage}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Yes}>
+              <PrivateRoute authorizationStatus={AuthorizationStatus.No}>
                 <FavoritesPage rooms={rooms.filter((room) => room.isFavorite)}/>
               </PrivateRoute>
             }
