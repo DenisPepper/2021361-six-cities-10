@@ -1,19 +1,21 @@
 import { useParams } from 'react-router-dom';
 import { OfferType } from '../../types/offer-type';
+import { CommentType } from '../../types/comment-type';
 import Page404 from '../404-page/404-page';
 import RoomImage from '../../components/room-image/room-image';
 import { converToPercent } from '../../util';
-import CommentForm from '../../components/comment-form/comment-form';
+import CommentSection from '../../components/comments-section/comments-section';
 
 const DECIMAL = 10;
 
 type RoomPageProps = {
   rooms: OfferType[];
+  comments: CommentType[];
 };
 
 export default function RoomPage(props: RoomPageProps): JSX.Element {
   const { id } = useParams();
-  const { rooms } = props;
+  const { rooms, comments } = props;
   const room = rooms.find(
     (element) => element.id === parseInt(String(id), DECIMAL)
   );
@@ -155,7 +157,9 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
                   <p className='property__text'>{room.description}</p>
                 </div>
               </div>
-              <CommentForm />
+              <CommentSection
+                comments={comments.filter((comment) => comment.id === room.id)}
+              />
             </div>
           </div>
           <section className='property__map map' />

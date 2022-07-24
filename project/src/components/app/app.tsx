@@ -7,13 +7,15 @@ import LoginPage from '../../pages/login-page/login-page';
 import RoomPage from '../../pages/room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
 import { OfferType } from '../../types/offer-type';
+import {CommentType} from '../../types/comment-type';
 
 type AppProps = {
-  rooms: OfferType[];
+  rooms: OfferType[],
+  comments: CommentType[],
 };
 
 export default function App(props: AppProps): JSX.Element {
-  const { rooms } = props;
+  const { rooms, comments } = props;
 
   return (
     <BrowserRouter>
@@ -33,7 +35,7 @@ export default function App(props: AppProps): JSX.Element {
             }
           />
           <Route path={AppPath.Offer}>
-            <Route path=':id' element={<RoomPage rooms={rooms}></RoomPage>} />
+            <Route path=':id' element={<RoomPage rooms={rooms} comments={comments}></RoomPage>} />
           </Route>
           <Route path={AppPath.Page404} element={<Page404></Page404>}></Route>
         </Route>

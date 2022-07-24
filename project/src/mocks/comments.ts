@@ -1,6 +1,6 @@
 import { CommentType } from '../types/comment-type';
 
-const commentOne = {
+const comment = {
   id: 1,
   user: {
     id: 12,
@@ -14,17 +14,4 @@ const commentOne = {
   date: '2022-06-13T12:25:36.938Z',
 };
 
-const commentTwo = {
-  id: 1,
-  user: {
-    id: 18,
-    isPro: true,
-    name: 'Sophie',
-    avatarUrl: 'https://10.react.pages.academy/static/avatar/9.jpg',
-  },
-  rating: 5,
-  comment: 'I stayed here for one night and it was an unpleasant experience.',
-  date: '2022-05-25T12:25:36.939Z',
-};
-
-export const comments: CommentType[] = [commentOne, commentTwo];
+export const comments: CommentType[] = [comment];
