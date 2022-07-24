@@ -159,6 +159,7 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
               </div>
               <CommentSection
                 comments={comments.filter((comment) => comment.id === room.id)}
+                id={room.id}
               />
             </div>
           </div>

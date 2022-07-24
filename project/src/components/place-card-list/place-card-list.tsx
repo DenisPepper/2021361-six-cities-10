@@ -8,7 +8,7 @@ type PlaceCardListProps = {
 
 export default function PlaceCardList(props: PlaceCardListProps): JSX.Element {
   const { rooms } = props;
-  const [currentID, setCurrentID] = useState(NaN);
+  const [, setCurrentID] = useState(NaN);
 
   const callback = (id: number) => setCurrentID(id);
 

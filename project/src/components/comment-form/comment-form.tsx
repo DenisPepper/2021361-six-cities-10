@@ -1,9 +1,46 @@
-export default function CommentForm(): JSX.Element {
+import React, { useState } from 'react';
+import { CommentType } from '../../types/comment-type';
+
+/* FIXME: user.id user.isPro, user.name, user.avatarUrl,  */
+const getDefaultState = (id: number):CommentType =>
+  ({
+    id,
+    user: {
+      id: 12,
+      isPro: false,
+      name: 'UserName',
+      avatarUrl: 'https://10.react.pages.academy/static/avatar/1.jpg',
+    },
+    rating: 0,
+    comment:'text content',
+    date: new Date().toISOString(),
+  });
+
+type CommentFormProps = {
+  id: number;
+};
+
+export default function CommentForm(props: CommentFormProps): JSX.Element {
+  const { id } = props;
+
+  const [state, setState] = useState(getDefaultState(id));
+
+  const onInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target;
+    setState({ ...state, [name]: value });
+  };
+
+  const onChangeHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = evt.target;
+    setState({ ...state, [name]: value });
+  };
+
   return (
     <form className='reviews__form form' action='#' method='post'>
       <label className='reviews__label form__label' htmlFor='review'>
         Your review
       </label>
+
       <div className='reviews__rating-form form__rating'>
         <input
           className='form__rating-input visually-hidden'
@@ -11,6 +48,7 @@ export default function CommentForm(): JSX.Element {
           defaultValue={5}
           id='5-stars'
           type='radio'
+          onInput={onInputHandler}
         />
         <label
           htmlFor='5-stars'
@@ -21,12 +59,14 @@ export default function CommentForm(): JSX.Element {
             <use xlinkHref='#icon-star' />
           </svg>
         </label>
+
         <input
           className='form__rating-input visually-hidden'
           name='rating'
           defaultValue={4}
           id='4-stars'
           type='radio'
+          onInput={onInputHandler}
         />
         <label
           htmlFor='4-stars'
@@ -37,12 +77,14 @@ export default function CommentForm(): JSX.Element {
             <use xlinkHref='#icon-star' />
           </svg>
         </label>
+
         <input
           className='form__rating-input visually-hidden'
           name='rating'
           defaultValue={3}
           id='3-stars'
           type='radio'
+          onInput={onInputHandler}
         />
         <label
           htmlFor='3-stars'
@@ -53,12 +95,14 @@ export default function CommentForm(): JSX.Element {
             <use xlinkHref='#icon-star' />
           </svg>
         </label>
+
         <input
           className='form__rating-input visually-hidden'
           name='rating'
           defaultValue={2}
           id='2-stars'
           type='radio'
+          onInput={onInputHandler}
         />
         <label
           htmlFor='2-stars'
@@ -69,12 +113,14 @@ export default function CommentForm(): JSX.Element {
             <use xlinkHref='#icon-star' />
           </svg>
         </label>
+
         <input
           className='form__rating-input visually-hidden'
           name='rating'
           defaultValue={1}
           id='1-star'
           type='radio'
+          onInput={onInputHandler}
         />
         <label
           htmlFor='1-star'
@@ -86,13 +132,16 @@ export default function CommentForm(): JSX.Element {
           </svg>
         </label>
       </div>
+
       <textarea
         className='reviews__textarea form__textarea'
         id='review'
-        name='review'
+        name='comment'
         placeholder='Tell how was your stay, what you like and what can be improved'
         defaultValue={''}
+        onInput={onChangeHandler}
       />
+
       <div className='reviews__button-wrapper'>
         <p className='reviews__help'>
           To submit review please make sure to set{' '}

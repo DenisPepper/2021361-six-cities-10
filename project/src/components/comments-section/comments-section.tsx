@@ -4,10 +4,11 @@ import CommentItem from '../comment-item/comment-item';
 
 type CommentFormProps = {
   comments: CommentType[];
+  id: number
 };
 
 export default function CommentSection(props: CommentFormProps): JSX.Element {
-  const { comments } = props;
+  const { comments, id } = props;
 
   return (
     <section className='property__reviews reviews'>
@@ -21,7 +22,7 @@ export default function CommentSection(props: CommentFormProps): JSX.Element {
         ))}
       </ul>
 
-      <CommentForm />
+      <CommentForm id={id}/>
     </section>
   );
 }
