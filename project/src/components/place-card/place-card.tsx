@@ -1,14 +1,18 @@
 import { OfferType } from '../../types/offer-type';
 import { converToPercent } from '../../util';
+import { AppPath } from '../../const';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 type PlaceCardProps = {
-  room: OfferType,
-  callback: (id: number) => void,
+  room: OfferType;
+  callback: (id: number) => void;
 };
 
 export default function PlaceCard(props: PlaceCardProps): JSX.Element {
   const { room, callback } = props;
   const onMouseOverHandler = () => callback(room.id);
+  const[id] = useState(room.id);
   return (
     <article
       className='cities__card place-card'
@@ -20,7 +24,7 @@ export default function PlaceCard(props: PlaceCardProps): JSX.Element {
         </div>
       ) : null}
       <div className='cities__image-wrapper place-card__image-wrapper'>
-        <a href='#ref'>
+        <Link to={`${AppPath.Offer}${id}`}>
           <img
             className='place-card__image'
             src={room.previewImage}
@@ -28,7 +32,7 @@ export default function PlaceCard(props: PlaceCardProps): JSX.Element {
             height='200'
             alt='preview'
           />
-        </a>
+        </Link>
       </div>
       <div className='place-card__info'>
         <div className='place-card__price-wrapper'>
@@ -50,7 +54,7 @@ export default function PlaceCard(props: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className='place-card__name'>
-          <a href='#ref'>{room.title}</a>
+          <Link to={`${AppPath.Offer}${id}`}>{room.title}</Link>
         </h2>
         <p className='place-card__type'>{room.type}</p>
       </div>

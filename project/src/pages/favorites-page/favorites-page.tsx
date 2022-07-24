@@ -1,6 +1,8 @@
 import { OfferType } from '../../types/offer-type';
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
+import {Link} from 'react-router-dom';
+import { AppPath } from '../../const';
 
 type FavoritesPageProps = {
   rooms: OfferType[];
@@ -15,7 +17,7 @@ export default function FavoritesPage(props: FavoritesPageProps): JSX.Element {
         <div className='container'>
           <div className='header__wrapper'>
             <div className='header__left'>
-              <a className='header__logo-link' href='main.html'>
+              <Link className='header__logo-link' to={AppPath.MainPage}>
                 <img
                   className='header__logo'
                   src='img/logo.svg'
@@ -23,7 +25,7 @@ export default function FavoritesPage(props: FavoritesPageProps): JSX.Element {
                   width={81}
                   height={41}
                 />
-              </a>
+              </Link>
             </div>
             <nav className='header__nav'>
               <ul className='header__nav-list'>

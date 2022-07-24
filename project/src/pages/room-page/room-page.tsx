@@ -290,6 +290,7 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
           </div>
           <section className='property__map map' />
         </section>
+
         <div className='container'>
           <section className='near-places places'>
             <h2 className='near-places__title'>
@@ -440,6 +441,7 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
             </div>
           </section>
         </div>
+
       </main>
     </div>
   ) : (

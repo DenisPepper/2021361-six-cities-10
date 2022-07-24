@@ -1,19 +1,26 @@
+import { Link } from 'react-router-dom';
 import { OfferType } from '../../types/offer-type';
-import {converToPercent} from '../../util';
-
+import { converToPercent } from '../../util';
+import { AppPath } from '../../const';
+import { useState } from 'react';
 type FavoriteCardProps = {
   room: OfferType;
 };
 
 export default function FavoriteCard(props: FavoriteCardProps): JSX.Element {
   const { room } = props;
+  const [id] = useState(room.id);
+
   return (
     <article className='favorites__card place-card'>
-
-      {room.isPremium ? (<div className='place-card__mark'><span>Premium</span></div>) : null}
+      {room.isPremium ? (
+        <div className='place-card__mark'>
+          <span>Premium</span>
+        </div>
+      ) : null}
 
       <div className='favorites__image-wrapper place-card__image-wrapper'>
-        <a href='#ref'>
+        <Link to={`${AppPath.Offer}${id}`}>
           <img
             className='place-card__image'
             src={room.previewImage}
@@ -21,11 +28,10 @@ export default function FavoriteCard(props: FavoriteCardProps): JSX.Element {
             height={110}
             alt='view'
           />
-        </a>
+        </Link>
       </div>
 
       <div className='favorites__card-info place-card__info'>
-
         <div className='place-card__price-wrapper'>
           <div className='place-card__price'>
             <b className='place-card__price-value'>€{room.price}</b>
@@ -49,11 +55,10 @@ export default function FavoriteCard(props: FavoriteCardProps): JSX.Element {
           </div>
         </div>
         <h2 className='place-card__name'>
-          <a href='#ref'>{room.title}</a>
+          <Link to={`${AppPath.Offer}${id}`}>{room.title}</Link>
         </h2>
         <p className='place-card__type'>{room.type}</p>
       </div>
-
     </article>
   );
 }

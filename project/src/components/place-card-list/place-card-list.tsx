@@ -1,6 +1,6 @@
 import PlaceCard from '../place-card/place-card';
 import { OfferType } from '../../types/offer-type';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 type PlaceCardListProps = {
   rooms: OfferType[];
