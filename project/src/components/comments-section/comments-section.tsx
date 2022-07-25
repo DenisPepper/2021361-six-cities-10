@@ -7,6 +7,8 @@ type CommentFormProps = {
   id: number
 };
 
+const generateKey = (comment: CommentType): string => `${comment.id}${comment.user.id}${comment.date}`;
+
 export default function CommentSection(props: CommentFormProps): JSX.Element {
   const { comments, id } = props;
 
@@ -17,8 +19,8 @@ export default function CommentSection(props: CommentFormProps): JSX.Element {
       </h2>
 
       <ul className='reviews__list'>
-        {comments.map((comment, index) => (
-          <CommentItem key={++index} comment={comment} />
+        {comments.map((comment) => (
+          <CommentItem key={generateKey(comment)} comment={comment} />
         ))}
       </ul>
 
