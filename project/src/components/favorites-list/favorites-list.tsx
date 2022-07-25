@@ -8,7 +8,7 @@ type FavoritesListProps = {
 
 export default function FavoritesList(props: FavoritesListProps): JSX.Element {
   const { rooms } = props;
-  const group = groupByCity(rooms);
+  const grouping = groupByCity(rooms);
   return (
     <React.Fragment>
       <main className='page__main page__main--favorites'>
@@ -16,7 +16,13 @@ export default function FavoritesList(props: FavoritesListProps): JSX.Element {
           <section className='favorites'>
             <h1 className='favorites__title'>Saved listing</h1>
             <ul className='favorites__list'>
-              {group.cityNames.map((cityName, index) => (<FavoritesLocation key={++index} cityName={cityName} rooms={group.cityData.get(cityName)}/>))}
+              {grouping.locations.map((location) => (
+                <FavoritesLocation
+                  key={location}
+                  cityName={String(grouping.cityNames.get(location))}
+                  rooms={grouping.cityRooms.get(location)}
+                />
+              ))}
             </ul>
           </section>
         </div>
@@ -37,21 +43,24 @@ export default function FavoritesList(props: FavoritesListProps): JSX.Element {
 }
 
 type GroupType = {
-  cityNames: string[];
-  cityData: Map<string, OfferType[]>;
+  locations: string[];
+  cityNames: Map<string, string>;
+  cityRooms: Map<string, OfferType[]>;
 };
 
 const groupByCity = (rooms: OfferType[]): GroupType => {
-  const cityData = new Map<string, OfferType[]>();
-  const cityNames: string[] = [];
+  const cityRooms = new Map<string, OfferType[]>();
+  const cityNames = new Map<string, string>();
+  const locations: string[] = [];
   rooms.forEach((room) => {
-    const cityName = room.city.name;
-    if (cityData.has(cityName)) {
-      cityData.get(cityName)?.push(room);
+    const location = `${room.city.location.latitude}${room.city.location.longitude}`;
+    if (cityRooms.has(location)) {
+      cityRooms.get(location)?.push(room);
     } else {
-      cityData.set(cityName, [room]);
-      cityNames.push(cityName);
+      locations.push(location);
+      cityRooms.set(location, [room]);
+      cityNames.set(location, room.city.name);
     }
   });
-  return { cityNames, cityData };
+  return { locations, cityNames, cityRooms };
 };
