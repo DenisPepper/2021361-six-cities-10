@@ -18,7 +18,7 @@ export default function FavoritesLocation(props: FavoritesLocationProps): JSX.El
         </div>
       </div>
       <div className='favorites__places'>
-        {rooms?.map((room, index)=>(<FavoriteCard key={++index} room={room}/>))}
+        {rooms?.map((room, index)=>(<FavoriteCard key={room.id} room={room}/>))}
       </div>
     </li>
   );
