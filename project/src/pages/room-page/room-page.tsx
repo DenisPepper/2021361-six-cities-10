@@ -63,8 +63,8 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
         <section className='property'>
           <div className='property__gallery-container container'>
             <div className='property__gallery'>
-              {room.images.map((element, index) => (
-                <RoomImage key={++index} src={element}></RoomImage>
+              {room.images.map((element) => (
+                <RoomImage key={element} src={element}></RoomImage>
               ))}
             </div>
           </div>
@@ -124,8 +124,8 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
               <div className='property__inside'>
                 <h2 className='property__inside-title'>What is inside</h2>
                 <ul className='property__inside-list'>
-                  {room.goods.map((element, index) => (
-                    <li key={++index} className='property__inside-item'>
+                  {room.goods.map((element) => (
+                    <li key={element} className='property__inside-item'>
                       {element}
                     </li>
                   ))}

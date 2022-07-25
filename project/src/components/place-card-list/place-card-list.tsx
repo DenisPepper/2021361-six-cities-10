@@ -14,8 +14,8 @@ export default function PlaceCardList(props: PlaceCardListProps): JSX.Element {
 
   return (
     <div className='cities__places-list places__list tabs__content'>
-      {rooms.map((room, index) => (
-        <PlaceCard key={++index} room={room} callback={callback}></PlaceCard>
+      {rooms.map((room) => (
+        <PlaceCard key={room.id} room={room} callback={callback}></PlaceCard>
       ))}
     </div>
   );
