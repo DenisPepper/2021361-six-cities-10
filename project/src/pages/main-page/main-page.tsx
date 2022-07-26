@@ -1,11 +1,12 @@
-import PlaceCard from '../../components/place-card/place-card';
+import PlaceCardList from '../../components/place-card-list/place-card-list';
+import {OfferType} from '../../types/offer-type';
 
 type MainPageProps = {
-  roomsCount: number;
+  rooms: OfferType[];
 };
 
 export default function MainPage(props: MainPageProps): JSX.Element {
-  const { roomsCount } = props;
+  const { rooms } = props;
   return (
     <div className='page page--gray page--main'>
       <header className='header'>
@@ -95,8 +96,9 @@ export default function MainPage(props: MainPageProps): JSX.Element {
           <div className='cities__places-container container'>
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
+              {/* FIXME: fix places count & city*/}
               <b className='places__found'>
-                {roomsCount} places to stay in Amsterdam
+                100500 places to stay in City
               </b>
               <form className='places__sorting' action='#' method='get'>
                 <span className='places__sorting-caption'>Sort by</span>
@@ -125,9 +127,7 @@ export default function MainPage(props: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                {Array.from({ length: 5 }, () => (
-                  <PlaceCard />
-                ))}
+                <PlaceCardList rooms = {rooms}></PlaceCardList>
               </div>
             </section>
             <div className='cities__right-section'>
