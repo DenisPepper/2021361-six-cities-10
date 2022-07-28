@@ -1,12 +1,15 @@
+import Map from '../../components/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import {OfferType} from '../../types/offer-type';
+import { MapSettings } from '../../types/map-types';
 
 type MainPageProps = {
   rooms: OfferType[];
+  mapSettings: MapSettings,
 };
 
 export default function MainPage(props: MainPageProps): JSX.Element {
-  const { rooms } = props;
+  const { rooms, mapSettings } = props;
   return (
     <div className='page page--gray page--main'>
       <header className='header'>
@@ -131,7 +134,7 @@ export default function MainPage(props: MainPageProps): JSX.Element {
               </div>
             </section>
             <div className='cities__right-section'>
-              <section className='cities__map map'></section>
+              <Map mapSettings={mapSettings} rooms={rooms}/>
             </div>
           </div>
         </div>

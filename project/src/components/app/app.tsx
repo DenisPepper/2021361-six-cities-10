@@ -8,14 +8,16 @@ import RoomPage from '../../pages/room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
 import { OfferType } from '../../types/offer-type';
 import {CommentType} from '../../types/comment-type';
+import {MapSettings} from '../../types/map-types';
 
 type AppProps = {
   rooms: OfferType[],
   comments: CommentType[],
+  mapSettings: MapSettings,
 };
 
 export default function App(props: AppProps): JSX.Element {
-  const { rooms, comments } = props;
+  const { rooms, comments, mapSettings } = props;
 
   return (
     <BrowserRouter>
@@ -23,7 +25,7 @@ export default function App(props: AppProps): JSX.Element {
         <Route path={AppPath.MainPage}>
           <Route
             index
-            element={<MainPage rooms={rooms}></MainPage>}
+            element={<MainPage mapSettings={mapSettings} rooms={rooms}></MainPage>}
           />
           <Route path={AppPath.LoginPage} element={<LoginPage></LoginPage>} />
           <Route
