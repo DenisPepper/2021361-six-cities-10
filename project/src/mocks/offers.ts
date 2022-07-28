@@ -2,10 +2,10 @@ import { OfferType } from '../types/offer-type';
 
 const offerOne: OfferType = {
   city: {
-    name: 'Dusseldorf',
+    name: 'Amsterdam',
     location: {
-      latitude: 51.225402,
-      longitude: 6.776314,
+      latitude: 52.37454,
+      longitude: 4.897976,
       zoom: 13,
     },
   },
@@ -49,8 +49,8 @@ const offerOne: OfferType = {
   description:
     'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
   location: {
-    latitude: 51.210402,
-    longitude: 6.798314,
+    latitude: 52.3909553943508,
+    longitude: 4.85309666406198,
     zoom: 16,
   },
   id: 1,
@@ -58,10 +58,10 @@ const offerOne: OfferType = {
 
 const offerTwo: OfferType = {
   city: {
-    name: 'Paris',
+    name: 'Amsterdam',
     location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
+      latitude: 52.37454,
+      longitude: 4.897976,
       zoom: 13,
     },
   },
@@ -100,8 +100,8 @@ const offerTwo: OfferType = {
   description:
     'Relax, rejuvenate and unplug in this ultimate rustic getaway experience in the country. In our beautiful screened Pondhouse, you can gaze at the stars and listen to the sounds of nature from your cozy warm bed.',
   location: {
-    latitude: 48.843610000000005,
-    longitude: 2.338499,
+    latitude: 52.369553943508,
+    longitude: 4.85309666406198,
     zoom: 16,
   },
   id: 2,
@@ -109,10 +109,10 @@ const offerTwo: OfferType = {
 
 const offerThree: OfferType = {
   city: {
-    name: 'Hamburg',
+    name: 'Amsterdam',
     location: {
-      latitude: 53.550341,
-      longitude: 10.000654,
+      latitude: 52.37454,
+      longitude: 4.897976,
       zoom: 13,
     },
   },
@@ -160,8 +160,8 @@ const offerThree: OfferType = {
   description:
     'Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.',
   location: {
-    latitude: 53.534341000000005,
-    longitude: 9.998654,
+    latitude: 52.3909553943508,
+    longitude: 4.929309666406198,
     zoom: 16,
   },
   id: 3,
@@ -169,10 +169,10 @@ const offerThree: OfferType = {
 
 const offerFour: OfferType = {
   city: {
-    name: 'Cologne',
+    name: 'Amsterdam',
     location: {
-      latitude: 50.938361,
-      longitude: 6.959974,
+      latitude: 52.37454,
+      longitude: 4.897976,
       zoom: 13,
     },
   },
@@ -221,8 +221,8 @@ const offerFour: OfferType = {
   description:
     'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
   location: {
-    latitude: 50.934361,
-    longitude: 6.943974,
+    latitude: 52.3809553943508,
+    longitude: 4.939309666406198,
     zoom: 16,
   },
   id: 4,
