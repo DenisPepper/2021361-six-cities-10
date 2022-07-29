@@ -1,4 +1,4 @@
-import Map from '../../components/map';
+import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import {OfferType} from '../../types/offer-type';
 import { MapSettings } from '../../types/map-types';
