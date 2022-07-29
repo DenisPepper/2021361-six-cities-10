@@ -6,16 +6,18 @@ import { OfferType } from '../types/offer-type';
 import { URL_MARKER_DEFAULT } from '../const';
 import 'leaflet/dist/leaflet.css';
 
+const ICON_SIZE = 40;
+
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [ICON_SIZE, ICON_SIZE],
+  iconAnchor: [ICON_SIZE / 2, ICON_SIZE],
 });
 
 /*const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [ICON_SIZE, ICON_SIZE],
+  iconAnchor: [ICON_SIZE / 2, ICON_SIZE],
 });*/
 
 type MapProps = {
