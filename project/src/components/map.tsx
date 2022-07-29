@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
 import useMap from '../hooks/use-map';
-import { MapSettings } from '../types/map-types';
+import { MapSettings, Location } from '../types/map-types';
 import { OfferType } from '../types/offer-type';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, ICON_SIZE } from '../const';
 import 'leaflet/dist/leaflet.css';
@@ -28,20 +28,19 @@ export default function Map(props: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({ mapRef, mapSettings });
   useEffect(() => {
-    if (map) {
-      rooms.forEach((room) => {
-        const marker = new Marker({
-          lat: room.location.latitude,
-          lng: room.location.longitude,
-        });
-
-        marker
-          .setIcon(
-            defaultCustomIcon
-          )
-          .addTo(map);
-      });
+    if (map === null) {
+      return;
     }
+    rooms.forEach((room) => {
+      createMarker(room.location).addTo(map);
+    });
   }, [map, rooms]);
   return <section style={{height: '500px'}} ref={mapRef} className='cities__map map'></section>;
 }
+
+
+const createMarker = (location: Location) => {
+  const marker = new Marker({ lat: location.latitude, lng: location.longitude });
+  marker.setIcon(defaultCustomIcon);
+  return marker;
+};
