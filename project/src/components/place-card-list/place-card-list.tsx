@@ -16,7 +16,7 @@ export default function PlaceCardList(props: PlaceCardListProps): JSX.Element {
   return (
     <div className={`${isNearList ? 'cities__places-list tabs__content' : 'near-places__list'} 'places__list'`}>
       {rooms.map((room) => (
-        <PlaceCard key={room.id} room={room} callback={callback} isNearList></PlaceCard>
+        <PlaceCard key={room.id} room={room} callback={callback} isNearList={isNearList}></PlaceCard>
       ))}
     </div>
   );
