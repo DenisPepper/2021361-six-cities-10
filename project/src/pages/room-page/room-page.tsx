@@ -5,17 +5,20 @@ import Page404 from '../404-page/404-page';
 import RoomImage from '../../components/room-image/room-image';
 import { converToPercent } from '../../util';
 import CommentSection from '../../components/comments-section/comments-section';
+import Map from '../../components/map/map';
+import { MapSettings } from '../../types/map-types';
 
 const DECIMAL = 10;
 
 type RoomPageProps = {
   rooms: OfferType[];
   comments: CommentType[];
+  mapSettings: MapSettings,
 };
 
 export default function RoomPage(props: RoomPageProps): JSX.Element {
   const { id } = useParams();
-  const { rooms, comments } = props;
+  const { rooms, comments, mapSettings } = props;
   const room = rooms.find(
     (element) => element.id === parseInt(String(id), DECIMAL)
   );
@@ -163,7 +166,9 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
               />
             </div>
           </div>
-          <section className='property__map map' />
+          <section className='property__map map'>
+            <Map mapSettings={mapSettings} rooms={rooms} />
+          </section>
         </section>
 
         <div className='container'>
