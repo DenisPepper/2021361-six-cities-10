@@ -27,6 +27,10 @@ export default function useMap(params: UseMapParams): Map | null {
       instance.addLayer(layer);
 
       setMap(instance);
+
+      return () => {
+        mapRef.current = null;
+      };
     }
   }, [mapRef, map, mapSettings]);
 

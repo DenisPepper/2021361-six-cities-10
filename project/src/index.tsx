@@ -17,5 +17,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <App mapSettings={MAP_SETTINGS} rooms={ROOMS} comments={COMMENTS} />
+  <React.StrictMode>
+    <App mapSettings={MAP_SETTINGS} rooms={ROOMS} comments={COMMENTS} />
+  </React.StrictMode>
 );
