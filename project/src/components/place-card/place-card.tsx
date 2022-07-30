@@ -16,7 +16,7 @@ export default function PlaceCard(props: PlaceCardProps): JSX.Element {
   const[id] = useState(room.id);
   return (
     <article
-      className={`${isNearList ? 'near-places__card' : 'cities__card'} 'place-card'`}
+      className={`${isNearList ? 'near-places__card' : 'cities__card'} place-card`}
       onMouseOver={onMouseOverHandler}
     >
       {room.isPremium ? (
