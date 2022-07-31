@@ -1,4 +1,4 @@
-import Map from '../../components/map';
+import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import {OfferType} from '../../types/offer-type';
 import { MapSettings } from '../../types/map-types';
@@ -130,7 +130,7 @@ export default function MainPage(props: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                <PlaceCardList rooms = {rooms}></PlaceCardList>
+                <PlaceCardList rooms = {rooms} isNearList={false}></PlaceCardList>
               </div>
             </section>
             <div className='cities__right-section'>

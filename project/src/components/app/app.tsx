@@ -37,7 +37,7 @@ export default function App(props: AppProps): JSX.Element {
             }
           />
           <Route path={AppPath.Offer}>
-            <Route path=':id' element={<RoomPage rooms={rooms} comments={comments}></RoomPage>} />
+            <Route path=':id' element={<RoomPage rooms={rooms} comments={comments} mapSettings={mapSettings}></RoomPage>} />
           </Route>
           <Route path={AppPath.Page404} element={<Page404></Page404>}></Route>
         </Route>

@@ -9,7 +9,7 @@ const COMMENTS = comments;
 const MAP_SETTINGS = {
   latitude: 52.37454,
   longitude: 4.897976,
-  zoom: 13,
+  zoom: 10,
 };
 
 const root = ReactDOM.createRoot(
@@ -18,6 +18,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App mapSettings={MAP_SETTINGS} rooms={ROOMS} comments={COMMENTS}/>
+    <App mapSettings={MAP_SETTINGS} rooms={ROOMS} comments={COMMENTS} />
   </React.StrictMode>
 );

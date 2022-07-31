@@ -10,3 +10,6 @@ export type UseMapParams = {
   mapRef: MutableRefObject<HTMLElement | null>;
   mapSettings: MapSettings;
 };
+
+export type Location = MapSettings;
+

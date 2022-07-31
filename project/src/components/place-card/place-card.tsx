@@ -7,15 +7,16 @@ import { Link } from 'react-router-dom';
 type PlaceCardProps = {
   room: OfferType;
   callback: (id: number) => void;
+  isNearList: boolean;
 };
 
 export default function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const { room, callback } = props;
+  const { room, callback, isNearList } = props;
   const onMouseOverHandler = () => callback(room.id);
   const[id] = useState(room.id);
   return (
     <article
-      className='cities__card place-card'
+      className={`${isNearList ? 'near-places__card' : 'cities__card'} place-card`}
       onMouseOver={onMouseOverHandler}
     >
       {room.isPremium ? (
@@ -23,7 +24,7 @@ export default function PlaceCard(props: PlaceCardProps): JSX.Element {
           <span>Premium</span>
         </div>
       ) : null}
-      <div className='cities__image-wrapper place-card__image-wrapper'>
+      <div className={`${isNearList ? 'near-places__image-wrapper' : 'cities__image-wrapper'} 'place-card__image-wrapper'`}>
         <Link to={`${AppPath.Offer}${id}`}>
           <img
             className='place-card__image'
