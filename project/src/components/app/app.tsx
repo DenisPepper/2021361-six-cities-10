@@ -6,18 +6,17 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import RoomPage from '../../pages/room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
-import { OfferType } from '../../types/offer-type';
 import {CommentType} from '../../types/comment-type';
-import {MapSettings} from '../../types/map-types';
+import {useAppSelector } from '../../hooks';
 
 type AppProps = {
-  rooms: OfferType[],
   comments: CommentType[],
-  mapSettings: MapSettings,
+  cities: string[]
 };
 
 export default function App(props: AppProps): JSX.Element {
-  const { rooms, comments, mapSettings } = props;
+  const { comments, cities } = props;
+  const {city, mapSettings, offers} = useAppSelector((state) => state.reducer);
 
   return (
     <BrowserRouter>
@@ -25,19 +24,19 @@ export default function App(props: AppProps): JSX.Element {
         <Route path={AppPath.MainPage}>
           <Route
             index
-            element={<MainPage mapSettings={mapSettings} rooms={rooms}></MainPage>}
+            element={<MainPage rooms={offers.filter((offer) => offer.city.name === city)} cities={cities} mapSettings={mapSettings}></MainPage>}
           />
           <Route path={AppPath.LoginPage} element={<LoginPage></LoginPage>} />
           <Route
             path={AppPath.FavoritesPage}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.Yes}>
-                <FavoritesPage rooms={rooms.filter((room) => room.isFavorite)}/>
+                <FavoritesPage rooms={offers.filter((room) => room.isFavorite)}/>
               </PrivateRoute>
             }
           />
           <Route path={AppPath.Offer}>
-            <Route path=':id' element={<RoomPage rooms={rooms} comments={comments} mapSettings={mapSettings}></RoomPage>} />
+            <Route path=':id' element={<RoomPage rooms={offers} comments={comments} mapSettings={mapSettings}></RoomPage>} />
           </Route>
           <Route path={AppPath.Page404} element={<Page404></Page404>}></Route>
         </Route>
@@ -45,3 +44,4 @@ export default function App(props: AppProps): JSX.Element {
     </BrowserRouter>
   );
 }
+
