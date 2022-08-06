@@ -6,38 +6,32 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import RoomPage from '../../pages/room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
-import { OfferType } from '../../types/offer-type';
-import {CommentType} from '../../types/comment-type';
-import {MapSettings} from '../../types/map-types';
+import { CommentType } from '../../types/comment-type';
 
 type AppProps = {
-  rooms: OfferType[],
-  comments: CommentType[],
-  mapSettings: MapSettings,
+  comments: CommentType[];
+  cities: string[];
 };
 
 export default function App(props: AppProps): JSX.Element {
-  const { rooms, comments, mapSettings } = props;
+  const { comments, cities } = props;
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppPath.MainPage}>
-          <Route
-            index
-            element={<MainPage mapSettings={mapSettings} rooms={rooms}></MainPage>}
-          />
+          <Route index element={<MainPage cities={cities} />} />
           <Route path={AppPath.LoginPage} element={<LoginPage></LoginPage>} />
           <Route
             path={AppPath.FavoritesPage}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.Yes}>
-                <FavoritesPage rooms={rooms.filter((room) => room.isFavorite)}/>
+                <FavoritesPage />
               </PrivateRoute>
             }
           />
           <Route path={AppPath.Offer}>
-            <Route path=':id' element={<RoomPage rooms={rooms} comments={comments} mapSettings={mapSettings}></RoomPage>} />
+            <Route path=':id' element={<RoomPage comments={comments} />} />
           </Route>
           <Route path={AppPath.Page404} element={<Page404></Page404>}></Route>
         </Route>

@@ -1,16 +1,14 @@
-import { OfferType } from '../../types/offer-type';
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppPath } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { OfferType } from '../../types/offer-type';
 
-type FavoritesPageProps = {
-  rooms: OfferType[];
-};
+export default function FavoritesPage(): JSX.Element {
+  const offers = getFavorites(useAppSelector((state) => state.reducer.offers));
 
-export default function FavoritesPage(props: FavoritesPageProps): JSX.Element {
-  const { rooms } = props;
-  const isEmpty = rooms.length === 0;
+  const isEmpty = offers.length === 0;
   return (
     <div className={`'page'${isEmpty ? ' page--favorites-empty' : ''}`}>
       <header className='header'>
@@ -52,8 +50,10 @@ export default function FavoritesPage(props: FavoritesPageProps): JSX.Element {
         </div>
       </header>
 
-      {isEmpty ? <FavoritesEmpty/> : <FavoritesList rooms={rooms}/>}
-
+      {isEmpty ? <FavoritesEmpty /> : <FavoritesList offers={offers} />}
     </div>
   );
 }
+
+const getFavorites = (rooms: OfferType[]): OfferType[] =>
+  rooms.filter((room) => room.isFavorite);

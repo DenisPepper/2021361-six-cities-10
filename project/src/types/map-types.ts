@@ -1,6 +1,6 @@
 import { MutableRefObject } from 'react';
 
-export type MapSettings = {
+export type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
@@ -8,8 +8,5 @@ export type MapSettings = {
 
 export type UseMapParams = {
   mapRef: MutableRefObject<HTMLElement | null>;
-  mapSettings: MapSettings;
+  location: Location;
 };
-
-export type Location = MapSettings;
-

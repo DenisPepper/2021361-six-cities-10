@@ -1,16 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { comments } from './mocks/comments';
-import { offers } from './mocks/offers';
-
-const ROOMS = offers;
-const COMMENTS = comments;
-const MAP_SETTINGS = {
-  latitude: 52.37454,
-  longitude: 4.897976,
-  zoom: 10,
-};
+import { store } from './store';
+import { CITIES } from './const';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,6 +12,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App mapSettings={MAP_SETTINGS} rooms={ROOMS} comments={COMMENTS} />
+    <Provider store={store}>
+      <App cities={CITIES} comments={comments} />
+    </Provider>
   </React.StrictMode>
 );

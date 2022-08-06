@@ -3,17 +3,16 @@ import { Map, TileLayer } from 'leaflet';
 import { UseMapParams } from '../types/map-types';
 
 export default function useMap(params: UseMapParams): Map | null {
-  const { mapRef, mapSettings } = params;
+  const { mapRef, location } = params;
   const [map, setMap] = useState<Map | null>(null);
-
   useEffect(() => {
     if (mapRef.current !== null && map === null) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: mapSettings.latitude,
-          lng: mapSettings.longitude,
+          lat: location.latitude,
+          lng: location.longitude,
         },
-        zoom: mapSettings.zoom,
+        zoom: location.zoom,
       });
 
       const layer = new TileLayer(
@@ -32,7 +31,7 @@ export default function useMap(params: UseMapParams): Map | null {
         mapRef.current = null;
       };
     }
-  }, [mapRef, map, mapSettings]);
+  }, [mapRef, map, location]);
 
   return map;
 }

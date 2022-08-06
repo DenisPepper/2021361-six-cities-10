@@ -3,12 +3,12 @@ import { OfferType } from '../../types/offer-type';
 import FavoritesLocation from '../favorites-location/favorites-location';
 
 type FavoritesListProps = {
-  rooms: OfferType[];
+  offers: OfferType[];
 };
 
 export default function FavoritesList(props: FavoritesListProps): JSX.Element {
-  const { rooms } = props;
-  const grouping = groupByCity(rooms);
+  const { offers } = props;
+  const grouping = groupByCity(offers);
   return (
     <React.Fragment>
       <main className='page__main page__main--favorites'>

@@ -1,10 +1,12 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/use-map';
-import { MapSettings, Location } from '../../types/map-types';
-import { OfferType } from '../../types/offer-type';
-import { URL_MARKER_DEFAULT, ICON_SIZE } from '../../const';
+import { Location } from '../../types/map-types';
+import { URL_MARKER_DEFAULT, ICON_SIZE, DEFAULT_MAP_SETTINGS } from '../../const';
 import 'leaflet/dist/leaflet.css';
+import { useAppSelector } from '../../hooks';
+import { OfferType } from '../../types/offer-type';
+import { filterOffersByCity } from '../../util';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -12,23 +14,22 @@ const defaultCustomIcon = new Icon({
   iconAnchor: [ICON_SIZE / 2, ICON_SIZE],
 });
 
-type MapProps = {
-  mapSettings: MapSettings;
-  rooms: OfferType[];
-};
+export default function Map(): JSX.Element {
+  const offers = useAppSelector((state) => state.reducer.offers);
+  const city = useAppSelector((state) => state.reducer.city);
+  const cityOffers = filterOffersByCity(city, offers);
+  const location = pullOutMapSettings(city, offers);
 
-export default function Map(props: MapProps): JSX.Element {
-  const { mapSettings, rooms } = props;
   const mapRef = useRef(null);
-  const map = useMap({ mapRef, mapSettings });
+  const map = useMap({ mapRef, location });
   useEffect(() => {
     if (map === null) {
       return;
     }
-    rooms.forEach((room) => {
+    cityOffers.forEach((room) => {
       createMarker(room.location).addTo(map);
     });
-  }, [map, rooms]);
+  }, [map, cityOffers]);
   return <section style={{height: '500px'}} ref={mapRef} className='cities__map map'></section>;
 }
 
@@ -37,4 +38,9 @@ const createMarker = (location: Location) => {
   const marker = new Marker({ lat: location.latitude, lng: location.longitude });
   marker.setIcon(defaultCustomIcon);
   return marker;
+};
+
+const pullOutMapSettings = (city: string, offers: OfferType[]): Location => {
+  const room = offers.find((offer) => offer.city.name === city);
+  return room?.city.location || DEFAULT_MAP_SETTINGS;
 };
