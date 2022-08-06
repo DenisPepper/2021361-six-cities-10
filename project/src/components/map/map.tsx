@@ -26,10 +26,11 @@ export default function Map(): JSX.Element {
     if (map === null) {
       return;
     }
+    map.panTo({lat: location.latitude, lng: location.longitude});
     cityOffers.forEach((room) => {
       createMarker(room.location).addTo(map);
     });
-  }, [map, cityOffers]);
+  }, [map, cityOffers, location.latitude, location.longitude]);
   return <section style={{height: '500px'}} ref={mapRef} className='cities__map map'></section>;
 }
 
