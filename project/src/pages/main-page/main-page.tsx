@@ -1,17 +1,20 @@
 import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
-import { OfferType } from '../../types/offer-type';
-import { MapSettings } from '../../types/map-types';
 import CitiesList from '../../components/cities-list/cities-list';
+import { useAppSelector } from '../../hooks';
+import { filterOffersByCity } from '../../util';
 
 type MainPageProps = {
-  rooms: OfferType[];
-  mapSettings: MapSettings;
   cities: string[];
 };
 
 export default function MainPage(props: MainPageProps): JSX.Element {
-  const { rooms, mapSettings, cities } = props;
+  const { cities } = props;
+  const cityOffers = filterOffersByCity(
+    useAppSelector((state) => state.reducer.city),
+    useAppSelector((state) => state.reducer.offers)
+  );
+
   return (
     <div className='page page--gray page--main'>
       <header className='header'>
@@ -64,7 +67,7 @@ export default function MainPage(props: MainPageProps): JSX.Element {
           <div className='cities__places-container container'>
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
-              <b className='places__found'>{`${rooms.length} places to stay in City`}</b>
+              <b className='places__found'>{`${cityOffers.length} places to stay in City`}</b>
               <form className='places__sorting' action='#' method='get'>
                 <span className='places__sorting-caption'>Sort by</span>
                 <span className='places__sorting-type' tabIndex={0}>
@@ -92,11 +95,11 @@ export default function MainPage(props: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                <PlaceCardList rooms={rooms} isNearList={false}></PlaceCardList>
+                <PlaceCardList cityOffers={cityOffers} isNearList={false} />
               </div>
             </section>
             <div className='cities__right-section'>
-              <Map mapSettings={mapSettings} rooms={rooms} />
+              <Map />
             </div>
           </div>
         </div>

@@ -1,28 +1,25 @@
 import { useParams } from 'react-router-dom';
-import { OfferType } from '../../types/offer-type';
 import { CommentType } from '../../types/comment-type';
 import Page404 from '../404-page/404-page';
 import RoomImage from '../../components/room-image/room-image';
 import { converToPercent } from '../../util';
 import CommentSection from '../../components/comments-section/comments-section';
 import Map from '../../components/map/map';
-import { MapSettings } from '../../types/map-types';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
+import { useAppSelector } from '../../hooks';
 
 const DECIMAL = 10;
 
 type RoomPageProps = {
-  rooms: OfferType[];
   comments: CommentType[];
-  mapSettings: MapSettings,
 };
 
 export default function RoomPage(props: RoomPageProps): JSX.Element {
   const { id } = useParams();
-  const { rooms, comments, mapSettings } = props;
-  const room = rooms.find(
-    (element) => element.id === parseInt(String(id), DECIMAL)
-  );
+  const { comments } = props;
+  const offers = useAppSelector((state) => state.reducer.offers);
+  const room = offers.find((element) => element.id === parseInt(String(id), DECIMAL));
+
   return room ? (
     <div className='page'>
       <header className='header'>
@@ -168,7 +165,7 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
             </div>
           </div>
           <section className='property__map map'>
-            <Map mapSettings={mapSettings} rooms={rooms} />
+            <Map/>
           </section>
         </section>
 
@@ -177,7 +174,7 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
             <h2 className='near-places__title'>
               Other places in the neighbourhood
             </h2>
-            <PlaceCardList rooms={rooms} isNearList/>
+            <PlaceCardList cityOffers={offers} isNearList />
           </section>
         </div>
       </main>
