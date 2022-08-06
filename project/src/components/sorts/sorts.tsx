@@ -1,29 +1,83 @@
+import { useState } from 'react';
+
+const SORTS = {
+  POPULAR: 'Popular',
+  PRICE_LOW_TO_HIGH: 'Price: low to high',
+  PRICE_HIGH_TO_LOW: 'Price: high to low',
+  TOP_RATED_FIRST: 'Top rated first',
+};
+
 export default function Sorts(): JSX.Element {
+  const [isOpened, setOpened] = useState(false);
+  const [currentSort, setCurrentSort] = useState(SORTS.POPULAR);
+
+  const onClickHandler = () => setOpened(!isOpened);
+
+  const onSelectHandler = (evt: React.MouseEvent<HTMLElement>) => {
+    const listItem = evt.target as HTMLElement;
+    const select = String(listItem.textContent);
+    if (select !== currentSort) {
+      setCurrentSort(String(listItem.textContent));
+    }
+    setOpened(!isOpened);
+  };
+
   return (
     <form className='places__sorting' action='#' method='get'>
       <span className='places__sorting-caption'>Sort by</span>
-      <span className='places__sorting-type' tabIndex={0}>
-        Popular
+      <span
+        onClick={onClickHandler}
+        className='places__sorting-type'
+        tabIndex={0}
+      >
+        {currentSort}
         <svg className='places__sorting-arrow' width={7} height={4}>
           <use xlinkHref='#icon-arrow-select' />
         </svg>
       </span>
-      <ul className='places__options places__options--custom places__options'>
-        <li className='places__option places__option--active' tabIndex={0}>
-          Popular
+      <ul
+        onClick={onSelectHandler}
+        className={`places__options places__options--custom ${
+          isOpened ? 'places__options--opened' : ''
+        }`}
+      >
+        <li
+          className={`places__option ${isActive(SORTS.POPULAR, currentSort)}`}
+          tabIndex={0}
+        >
+          {SORTS.POPULAR}
         </li>
-        <li className='places__option' tabIndex={0}>
-          Price: low to high
+        <li
+          className={`places__option ${isActive(
+            SORTS.PRICE_LOW_TO_HIGH,
+            currentSort
+          )}`}
+          tabIndex={0}
+        >
+          {SORTS.PRICE_LOW_TO_HIGH}
         </li>
-        <li className='places__option' tabIndex={0}>
-          Price: high to low
+        <li
+          className={`places__option ${isActive(
+            SORTS.PRICE_HIGH_TO_LOW,
+            currentSort
+          )}`}
+          tabIndex={0}
+        >
+          {SORTS.PRICE_HIGH_TO_LOW}
         </li>
-        <li className='places__option' tabIndex={0}>
-          Top rated first
+        <li
+          className={`places__option ${isActive(
+            SORTS.TOP_RATED_FIRST,
+            currentSort
+          )}`}
+          tabIndex={0}
+        >
+          {SORTS.TOP_RATED_FIRST}
         </li>
       </ul>
     </form>
   );
 }
 
-//places__options--opened
+const isActive = (value: string, currentSort: string) =>
+  value === currentSort ? 'places__option--active' : '';
