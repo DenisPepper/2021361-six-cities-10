@@ -1,3 +1,5 @@
+
+
 export enum AuthorizationStatus {
   Yes = 'YES',
   No = 'NO',
@@ -36,3 +38,5 @@ export const DEFAULT_MAP_SETTINGS = {
   longitude: 2.351499,
   zoom: 13,
 };
+
+

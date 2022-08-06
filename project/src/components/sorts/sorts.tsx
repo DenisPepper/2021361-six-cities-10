@@ -1,15 +1,31 @@
 import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setOffers } from '../../store/action-creaters';
+import { OfferType } from '../../types/offer-type';
+//import { SortsName, SortsRules } from '../../const';
 
-const SORTS = {
+const SortsName = {
   POPULAR: 'Popular',
   PRICE_LOW_TO_HIGH: 'Price: low to high',
   PRICE_HIGH_TO_LOW: 'Price: high to low',
   TOP_RATED_FIRST: 'Top rated first',
 };
 
+const SortsRules = {
+  [SortsName.POPULAR]: (a: OfferType, b: OfferType) => a.id - b.id,
+  [SortsName.PRICE_LOW_TO_HIGH]: (a: OfferType, b: OfferType) =>
+    a.price - b.price,
+  [SortsName.PRICE_HIGH_TO_LOW]: (a: OfferType, b: OfferType) =>
+    b.price - a.price,
+  [SortsName.TOP_RATED_FIRST]: (a: OfferType, b: OfferType) =>
+    b.rating - a.rating,
+};
+
 export default function Sorts(): JSX.Element {
   const [isOpened, setOpened] = useState(false);
-  const [currentSort, setCurrentSort] = useState(SORTS.POPULAR);
+  const [currentSort, setCurrentSort] = useState(SortsName.POPULAR);
+  const dispath = useAppDispatch();
+  const offers = useAppSelector((store) => store.reducer.offers);
 
   const onClickHandler = () => setOpened(!isOpened);
 
@@ -18,6 +34,7 @@ export default function Sorts(): JSX.Element {
     const select = String(listItem.textContent);
     if (select !== currentSort) {
       setCurrentSort(String(listItem.textContent));
+      dispath(setOffers([...offers].sort(SortsRules[select])));
     }
     setOpened(!isOpened);
   };
@@ -42,37 +59,40 @@ export default function Sorts(): JSX.Element {
         }`}
       >
         <li
-          className={`places__option ${isActive(SORTS.POPULAR, currentSort)}`}
-          tabIndex={0}
-        >
-          {SORTS.POPULAR}
-        </li>
-        <li
           className={`places__option ${isActive(
-            SORTS.PRICE_LOW_TO_HIGH,
+            SortsName.POPULAR,
             currentSort
           )}`}
           tabIndex={0}
         >
-          {SORTS.PRICE_LOW_TO_HIGH}
+          {SortsName.POPULAR}
         </li>
         <li
           className={`places__option ${isActive(
-            SORTS.PRICE_HIGH_TO_LOW,
+            SortsName.PRICE_LOW_TO_HIGH,
             currentSort
           )}`}
           tabIndex={0}
         >
-          {SORTS.PRICE_HIGH_TO_LOW}
+          {SortsName.PRICE_LOW_TO_HIGH}
         </li>
         <li
           className={`places__option ${isActive(
-            SORTS.TOP_RATED_FIRST,
+            SortsName.PRICE_HIGH_TO_LOW,
             currentSort
           )}`}
           tabIndex={0}
         >
-          {SORTS.TOP_RATED_FIRST}
+          {SortsName.PRICE_HIGH_TO_LOW}
+        </li>
+        <li
+          className={`places__option ${isActive(
+            SortsName.TOP_RATED_FIRST,
+            currentSort
+          )}`}
+          tabIndex={0}
+        >
+          {SortsName.TOP_RATED_FIRST}
         </li>
       </ul>
     </form>
