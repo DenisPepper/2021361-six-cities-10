@@ -1,7 +1,7 @@
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import { Link } from 'react-router-dom';
-import { AppPath } from '../../const';
+import { AppPath } from '../../settings';
 import { useAppSelector } from '../../hooks';
 import { OfferType } from '../../types/offer-type';
 

@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/use-map';
 import { Location } from '../../types/map-types';
-import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, ICON_SIZE, DEFAULT_MAP_SETTINGS } from '../../const';
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, ICON_SIZE, DEFAULT_MAP_SETTINGS } from '../../settings';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks';
 import { OfferType } from '../../types/offer-type';
@@ -37,7 +37,6 @@ export default function Map(): JSX.Element {
     cityOffers.forEach((room) => {
       createMarker(room.location, room.id, currentID).addTo(map);
     });
-    console.log(currentID);
   }, [map, cityOffers, location.latitude, location.longitude, currentID]);
   return <section style={{height: '600px'}} ref={mapRef} className='cities__map map'></section>;
 }

@@ -1,25 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setOffers } from '../../store/action-creaters';
-import { OfferType } from '../../types/offer-type';
-//import { SortsName, SortsRules } from '../../const';
-
-const SortsName = {
-  POPULAR: 'Popular',
-  PRICE_LOW_TO_HIGH: 'Price: low to high',
-  PRICE_HIGH_TO_LOW: 'Price: high to low',
-  TOP_RATED_FIRST: 'Top rated first',
-};
-
-const SortsRules = {
-  [SortsName.POPULAR]: (a: OfferType, b: OfferType) => a.id - b.id,
-  [SortsName.PRICE_LOW_TO_HIGH]: (a: OfferType, b: OfferType) =>
-    a.price - b.price,
-  [SortsName.PRICE_HIGH_TO_LOW]: (a: OfferType, b: OfferType) =>
-    b.price - a.price,
-  [SortsName.TOP_RATED_FIRST]: (a: OfferType, b: OfferType) =>
-    b.rating - a.rating,
-};
+import { SortsName, SortsRules } from '../../settings';
 
 export default function Sorts(): JSX.Element {
   const [isOpened, setOpened] = useState(false);

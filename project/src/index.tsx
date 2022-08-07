@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { comments } from './mocks/comments';
 import { store } from './store';
-import { CITIES } from './const';
+import { CITIES } from './settings';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

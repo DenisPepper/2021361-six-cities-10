@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { OfferType } from '../../types/offer-type';
 import { converToPercent } from '../../util';
-import { AppPath } from '../../const';
+import { AppPath } from '../../settings';
 import { useState } from 'react';
 type FavoriteCardProps = {
   room: OfferType;

@@ -1,6 +1,6 @@
 import { OfferType } from '../../types/offer-type';
 import { converToPercent } from '../../util';
-import { AppPath } from '../../const';
+import { AppPath } from '../../settings';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

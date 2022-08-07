@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { OfferType } from '../types/offer-type';
 import { offers } from '../mocks/offers';
 import { changeCity, setOffers, setCurrentID } from './action-creaters';
-import { DEFAULT_CITY } from '../const';
+import { DEFAULT_CITY } from '../settings';
 
 type StateType = {
   city: string;
