@@ -8,13 +8,13 @@ type CitiesListProps = {
 
 export default function CitiesList(props: CitiesListProps): JSX.Element {
   const { cities } = props;
-  const dispath = useAppDispatch();
+  const dispatch = useAppDispatch();
   const { city: currentCity } = useAppSelector(
     (state) => state.reducer
   );
 
   const callback = (value: string) => {
-    dispath(changeCity(value));
+    dispatch(changeCity(value));
   };
 
   return (
