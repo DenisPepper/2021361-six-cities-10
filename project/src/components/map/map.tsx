@@ -31,7 +31,7 @@ export default function Map(): JSX.Element {
       createMarker(room.location).addTo(map);
     });
   }, [map, cityOffers, location.latitude, location.longitude]);
-  return <section style={{height: '500px'}} ref={mapRef} className='cities__map map'></section>;
+  return <section style={{height: '600px'}} ref={mapRef} className='cities__map map'></section>;
 }
 
 
