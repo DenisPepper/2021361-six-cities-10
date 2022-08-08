@@ -20,3 +20,7 @@ export const setAuthorizationStatus = createAction('SET_AUTH_STATUS', (payload: 
 export const setError = createAction('SET_ERROR', (payload: string | null) => ({
   payload,
 }));
+
+export const setLoadingStatus = createAction('SET_LOADING_STATUS', (payload: boolean) => ({
+  payload,
+}));

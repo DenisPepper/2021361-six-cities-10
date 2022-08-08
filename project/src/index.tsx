@@ -8,9 +8,8 @@ import { CITIES } from './settings';
 import ErrorMessage from './components/error/error';
 import { getOffers, checkAuthorizationStatus } from './store/action-creaters-middleware';
 
-
-store.dispatch(checkAuthorizationStatus());
 store.dispatch(getOffers());
+store.dispatch(checkAuthorizationStatus());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

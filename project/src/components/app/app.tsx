@@ -7,6 +7,8 @@ import LoginPage from '../../pages/login-page/login-page';
 import RoomPage from '../../pages/room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
 import { CommentType } from '../../types/comment-type';
+import Spinner from '../spinner/spinner';
+import { useAppSelector } from '../../hooks';
 
 type AppProps = {
   comments: CommentType[];
@@ -15,8 +17,11 @@ type AppProps = {
 
 export default function App(props: AppProps): JSX.Element {
   const { comments, cities } = props;
+  const isLoading = useAppSelector((store) => store.reducer.isLoading);
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <BrowserRouter>
       <Routes>
         <Route path={AppPath.MainPage}>

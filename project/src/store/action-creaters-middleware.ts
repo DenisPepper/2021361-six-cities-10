@@ -7,7 +7,7 @@ import {
 } from '../settings';
 import { OfferType } from '../types/offer-type';
 import { AppDispatchType, StateType } from '../types/state-type';
-import { setOffers, setAuthorizationStatus, setError } from './action-creaters';
+import { setOffers, setAuthorizationStatus, setError, setLoadingStatus } from './action-creaters';
 import { AuthData, UserData } from '../types/user-auth-types';
 import { dropToken, saveToken } from '../services/token';
 
@@ -21,7 +21,9 @@ export const getOffers = createAsyncThunk<void, undefined, AsyncThunkType>(
   'GET_OFFERS',
   async (_args, { dispatch, extra: HTTPClient }) => {
     const { data } = await HTTPClient.get<OfferType[]>(ServerRoutes.hotels);
+    dispatch(setLoadingStatus(true));
     dispatch(setOffers(data));
+    dispatch(setLoadingStatus(false));
   }
 );
 
