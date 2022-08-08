@@ -1,19 +1,23 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferType } from '../types/offer-type';
-import { offers } from '../mocks/offers';
-import { changeCity, setOffers, setCurrentID } from './action-creaters';
-import { DEFAULT_CITY } from '../settings';
+//import { offers } from '../mocks/offers';
+import { changeCity, setOffers, setCurrentID, setError } from './action-creaters';
+import { DEFAULT_CITY, AuthorizationStatus } from '../settings';
 
 type StateType = {
   city: string;
   offers: OfferType[];
   currentID: number;
+  AuthorizationStatus: string;
+  error: string | null;
 };
 
 const initialState: StateType = {
   city: DEFAULT_CITY,
-  offers: offers,
+  offers: [],
   currentID: NaN,
+  AuthorizationStatus: AuthorizationStatus.Unknown,
+  error: null,
 };
 
 export default createReducer(initialState, (builder) => {
@@ -28,4 +32,9 @@ export default createReducer(initialState, (builder) => {
   builder.addCase(setCurrentID, (state, action) => {
     state.currentID = action.payload;
   });
+
+  builder.addCase(setError, (state, action) => {
+    state.error = action.payload;
+  });
+
 });
