@@ -1,6 +1,7 @@
 import PlaceCard from '../place-card/place-card';
 import { OfferType } from '../../types/offer-type';
-import { useState } from 'react';
+import { useAppDispatch } from '../../hooks/index';
+import { setCurrentID } from '../../store/action-creaters';
 
 type PlaceCardListProps = {
   cityOffers: OfferType[];
@@ -9,9 +10,9 @@ type PlaceCardListProps = {
 
 export default function PlaceCardList(props: PlaceCardListProps): JSX.Element {
   const { cityOffers, isNearList } = props;
-  const [, setCurrentID] = useState(NaN);
+  const dispatch = useAppDispatch();
 
-  const callback = (id: number) => setCurrentID(id);
+  const callback = (id: number) => dispatch(setCurrentID(id));
 
   return (
     <div className={`${isNearList ? 'cities__places-list tabs__content' : 'near-places__list'} places__list`}>
