@@ -1,5 +1,7 @@
 import { OfferType } from './types/offer-type';
 
+export const TIME_OUT_SHOW_ERROR = 5000;
+
 export enum AuthorizationStatus {
   Yes = 'YES',
   No = 'NO',
@@ -13,6 +15,16 @@ export enum AppPath {
   Page404 = '*',
   Offer = '/offer/',
 }
+
+export const BASE_URL = 'https://10.react.pages.academy/six-cities';
+
+export const REQUEST_TIMEOUT = 5000;
+
+export const ServerRoutes = {
+  hotels: '/hotels',
+  login: '/login',
+  logout: '/logout'
+};
 
 export const URL_MARKER_DEFAULT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
@@ -56,3 +68,4 @@ export const SortsRules = {
   [SortsName.TOP_RATED_FIRST]: (a: OfferType, b: OfferType) =>
     b.rating - a.rating,
 };
+
