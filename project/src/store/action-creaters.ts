@@ -12,3 +12,11 @@ export const setOffers = createAction('SET_OFFERS', (payload: OfferType[]) => ({
 export const setCurrentID = createAction('SET_CURRENT_ID', (payload: number) => ({
   payload,
 }));
+
+export const setAuthorizationStatus = createAction('SET_AUTH_STATUS', (payload: string) => ({
+  payload,
+}));
+
+export const setError = createAction('SET_ERROR', (payload: string | null) => ({
+  payload,
+}));
