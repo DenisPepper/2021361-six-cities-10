@@ -1,21 +1,20 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setOffers } from '../../store/action-creaters';
-import { SortsName, SortsRules } from '../../settings';
+import { SORTS, SortsRules, DEFAULT_SORT } from '../../settings';
+import SortItem from '../sort-item/sort-item';
 
 export default function Sorts(): JSX.Element {
   const [isOpened, setOpened] = useState(false);
-  const [currentSort, setCurrentSort] = useState(SortsName.POPULAR);
+  const [currentSort, setCurrentSort] = useState(DEFAULT_SORT);
   const dispath = useAppDispatch();
   const offers = useAppSelector((store) => store.reducer.offers);
 
   const onClickHandler = () => setOpened(!isOpened);
 
-  const onSelectHandler = (evt: React.MouseEvent<HTMLElement>) => {
-    const listItem = evt.target as HTMLElement;
-    const select = String(listItem.textContent);
+  const onSelectHandler = (select: string) => {
     if (select !== currentSort) {
-      setCurrentSort(String(listItem.textContent));
+      setCurrentSort(String(select));
       dispath(setOffers([...offers].sort(SortsRules[select])));
     }
     setOpened(!isOpened);
@@ -34,52 +33,16 @@ export default function Sorts(): JSX.Element {
           <use xlinkHref='#icon-arrow-select' />
         </svg>
       </span>
-      <ul
-        onClick={onSelectHandler}
-        className={`places__options places__options--custom ${
-          isOpened ? 'places__options--opened' : ''
-        }`}
-      >
-        <li
-          className={`places__option ${isActive(
-            SortsName.POPULAR,
-            currentSort
-          )}`}
-          tabIndex={0}
-        >
-          {SortsName.POPULAR}
-        </li>
-        <li
-          className={`places__option ${isActive(
-            SortsName.PRICE_LOW_TO_HIGH,
-            currentSort
-          )}`}
-          tabIndex={0}
-        >
-          {SortsName.PRICE_LOW_TO_HIGH}
-        </li>
-        <li
-          className={`places__option ${isActive(
-            SortsName.PRICE_HIGH_TO_LOW,
-            currentSort
-          )}`}
-          tabIndex={0}
-        >
-          {SortsName.PRICE_HIGH_TO_LOW}
-        </li>
-        <li
-          className={`places__option ${isActive(
-            SortsName.TOP_RATED_FIRST,
-            currentSort
-          )}`}
-          tabIndex={0}
-        >
-          {SortsName.TOP_RATED_FIRST}
-        </li>
+      <ul className={getUlClassName(isOpened)}>
+        {SORTS.map((sort) => (
+          <SortItem key={sort} sort={sort} currentSort={currentSort} callback={onSelectHandler}/>
+        ))}
       </ul>
     </form>
   );
 }
 
-const isActive = (value: string, currentSort: string) =>
-  value === currentSort ? 'places__option--active' : '';
+const getUlClassName = (isOpened: boolean) =>
+  `places__options places__options--custom ${
+    isOpened ? 'places__options--opened' : ''
+  }`;
