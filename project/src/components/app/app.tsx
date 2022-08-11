@@ -17,11 +17,9 @@ type AppProps = {
 
 export default function App(props: AppProps): JSX.Element {
   const { comments, cities } = props;
-  const isLoading = useAppSelector((store) => store.reducer.isLoading);
+  const offersLoaded = useAppSelector((store) => store.reducer.offersLoaded);
 
-  return isLoading ? (
-    <Spinner />
-  ) : (
+  return offersLoaded ? (
     <BrowserRouter>
       <Routes>
         <Route path={AppPath.MainPage}>
@@ -42,5 +40,7 @@ export default function App(props: AppProps): JSX.Element {
         </Route>
       </Routes>
     </BrowserRouter>
+  ) : (
+    <Spinner />
   );
 }

@@ -9,6 +9,10 @@ export const setOffers = createAction('SET_OFFERS', (payload: OfferType[]) => ({
   payload,
 }));
 
+export const sortOffers = createAction('SORT_OFFERS', (payload: OfferType[]) => ({
+  payload,
+}));
+
 export const setCurrentID = createAction('SET_CURRENT_ID', (payload: number) => ({
   payload,
 }));

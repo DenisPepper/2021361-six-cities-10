@@ -21,9 +21,11 @@ export const getOffers = createAsyncThunk<void, undefined, AsyncThunkType>(
   'GET_OFFERS',
   async (_args, { dispatch, extra: HTTPClient }) => {
     const { data } = await HTTPClient.get<OfferType[]>(ServerRoutes.hotels);
-    dispatch(setLoadingStatus(true));
-    dispatch(setOffers(data));
-    dispatch(setLoadingStatus(false));
+    try {
+      dispatch(setOffers(data));
+    } catch (error) {
+      dispatch(setLoadingStatus(false));
+    }
   }
 );
 

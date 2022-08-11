@@ -1,6 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferType } from '../types/offer-type';
-import { changeCity, setOffers, setCurrentID, setError, setLoadingStatus } from './action-creaters';
+import {
+  changeCity,
+  setOffers,
+  sortOffers,
+  setCurrentID,
+  setError,
+  setLoadingStatus,
+} from './action-creaters';
 import { DEFAULT_CITY, AuthorizationStatus } from '../settings';
 
 type StateType = {
@@ -9,7 +16,7 @@ type StateType = {
   currentID: number;
   AuthorizationStatus: string;
   error: string | null;
-  isLoading: boolean,
+  offersLoaded: boolean;
 };
 
 const initialState: StateType = {
@@ -18,7 +25,7 @@ const initialState: StateType = {
   currentID: NaN,
   AuthorizationStatus: AuthorizationStatus.Unknown,
   error: null,
-  isLoading: false,
+  offersLoaded: false,
 };
 
 export default createReducer(initialState, (builder) => {
@@ -27,6 +34,11 @@ export default createReducer(initialState, (builder) => {
   });
 
   builder.addCase(setOffers, (state, action) => {
+    state.offers = action.payload;
+    state.offersLoaded = true;
+  });
+
+  builder.addCase(sortOffers, (state, action) => {
     state.offers = action.payload;
   });
 
@@ -39,7 +51,6 @@ export default createReducer(initialState, (builder) => {
   });
 
   builder.addCase(setLoadingStatus, (state, action) => {
-    state.isLoading = action.payload;
+    state.offersLoaded = action.payload;
   });
-
 });

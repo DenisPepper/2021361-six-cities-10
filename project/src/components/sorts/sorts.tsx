@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setOffers } from '../../store/action-creaters';
+import { sortOffers } from '../../store/action-creaters';
 import { SORTS, SortsRules, DEFAULT_SORT } from '../../settings';
 import SortItem from '../sort-item/sort-item';
 
@@ -15,7 +15,7 @@ export default function Sorts(): JSX.Element {
   const onSelectHandler = (select: string) => {
     if (select !== currentSort) {
       setCurrentSort(String(select));
-      dispath(setOffers([...offers].sort(SortsRules[select])));
+      dispath(sortOffers([...offers].sort(SortsRules[select])));
     }
     setOpened(!isOpened);
   };
