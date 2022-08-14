@@ -7,7 +7,13 @@ import {
 } from '../settings';
 import { OfferType } from '../types/offer-type';
 import { AppDispatchType, StateType } from '../types/state-type';
-import { setOffers, setAuthorizationStatus, setError, setLoadingStatus } from './action-creaters';
+import {
+  setOffers,
+  setAuthorizationStatus,
+  setError,
+  setLoadingStatus,
+  loggedIn,
+} from './action-creaters';
 import { AuthData, UserData } from '../types/user-auth-types';
 import { dropToken, saveToken } from '../services/token';
 
@@ -46,13 +52,13 @@ export const login = createAsyncThunk<void, AuthData, AsyncThunkType>(
   'LOGIN',
   async ({ login: email, password }, { dispatch, extra: HTTPClient }) => {
     const {
-      data: { token },
+      data: { token, email: userEmail },
     } = await HTTPClient.post<UserData>(ServerRoutes.login, {
       email,
       password,
     });
     saveToken(token);
-    dispatch(setAuthorizationStatus(AuthorizationStatus.Yes));
+    dispatch(loggedIn(userEmail));
   }
 );
 

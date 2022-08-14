@@ -6,6 +6,7 @@ export default function HeaderNav(): JSX.Element {
   const isAuthorized =
     useAppSelector((store) => store.reducer.authorizationStatus) ===
     AuthorizationStatus.Yes;
+  const userName = useAppSelector((store) => store.reducer.userName);
 
   return isAuthorized ? (
     <nav className='header__nav'>
@@ -14,7 +15,7 @@ export default function HeaderNav(): JSX.Element {
           <a className='header__nav-link header__nav-link--profile' href='#ref'>
             <div className='header__avatar-wrapper user__avatar-wrapper'></div>
             <span className='header__user-name user__name'>
-              Oliver.conner@gmail.com
+              {userName}
             </span>
             {/*FIXME: вычислить количество избранных */}
             <span className='header__favorite-count'>3</span>
