@@ -9,7 +9,7 @@ export default function FavoritesPage(): JSX.Element {
   const isEmpty = offers.length === 0;
   return (
     <div className={`'page'${isEmpty ? ' page--favorites-empty' : ''}`}>
-      <Header/>
+      <Header isLoginPage={false}/>
       {isEmpty ? <FavoritesEmpty /> : <FavoritesList offers={offers} />}
     </div>
   );

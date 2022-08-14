@@ -23,7 +23,7 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
 
   return room ? (
     <div className='page'>
-      <Header/>
+      <Header isLoginPage={false}/>
       <main className='page__main page__main--property'>
         <section className='property'>
           <div className='property__gallery-container container'>

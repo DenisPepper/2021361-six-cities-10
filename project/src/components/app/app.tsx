@@ -24,7 +24,7 @@ export default function App(props: AppProps): JSX.Element {
       <Routes>
         <Route path={AppPath.MainPage}>
           <Route index element={<MainPage cities={cities} />} />
-          <Route path={AppPath.LoginPage} element={<LoginPage></LoginPage>} />
+          <Route path={AppPath.LoginPage} element={<LoginPage/>} />
           <Route
             path={AppPath.FavoritesPage}
             element={

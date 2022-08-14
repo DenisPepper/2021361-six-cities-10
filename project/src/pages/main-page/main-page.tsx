@@ -19,7 +19,7 @@ export default function MainPage(props: MainPageProps): JSX.Element {
 
   return (
     <div className='page page--gray page--main'>
-      <Header/>
+      <Header isLoginPage={false}/>
       <main className={`page__main page__main--index ${isEmpty ? 'page__main--index-empty' : ''}`}>
         <h1 className='visually-hidden'>Cities</h1>
         <CitiesList cities={cities} />
