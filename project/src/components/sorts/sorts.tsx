@@ -1,21 +1,23 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { sortOffers } from '../../store/action-creaters';
-import { SORTS, SortsRules, DEFAULT_SORT } from '../../settings';
+import { setCurrentSort } from '../../store/action-creaters';
+import { SORTS } from '../../settings';
 import SortItem from '../sort-item/sort-item';
 
-export default function Sorts(): JSX.Element {
+type SortsProps = {
+  currentSort: string;
+};
+
+export default function Sorts(props: SortsProps): JSX.Element {
+  const {currentSort} = props;
   const [isOpened, setOpened] = useState(false);
-  const [currentSort, setCurrentSort] = useState(DEFAULT_SORT);
   const dispath = useAppDispatch();
-  const offers = useAppSelector((store) => store.reducer.offers);
 
   const onClickHandler = () => setOpened(!isOpened);
 
   const onSelectHandler = (select: string) => {
     if (select !== currentSort) {
-      setCurrentSort(String(select));
-      dispath(sortOffers([...offers].sort(SortsRules[select])));
+      dispath(setCurrentSort(select));
     }
     setOpened(!isOpened);
   };
@@ -35,7 +37,12 @@ export default function Sorts(): JSX.Element {
       </span>
       <ul className={getUlClassName(isOpened)}>
         {SORTS.map((sort) => (
-          <SortItem key={sort} sort={sort} currentSort={currentSort} callback={onSelectHandler}/>
+          <SortItem
+            key={sort}
+            sort={sort}
+            currentSort={currentSort}
+            callback={onSelectHandler}
+          />
         ))}
       </ul>
     </form>

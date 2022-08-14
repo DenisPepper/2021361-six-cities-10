@@ -3,17 +3,18 @@ import { OfferType } from '../types/offer-type';
 import {
   changeCity,
   setOffers,
-  sortOffers,
+  setCurrentSort,
   setCurrentID,
   setError,
   setLoadingStatus,
 } from './action-creaters';
-import { DEFAULT_CITY, AuthorizationStatus } from '../settings';
+import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../settings';
 
 type StateType = {
   city: string;
   offers: OfferType[];
   currentID: number;
+  currentSort: string;
   AuthorizationStatus: string;
   error: string | null;
   offersLoaded: boolean;
@@ -23,6 +24,7 @@ const initialState: StateType = {
   city: DEFAULT_CITY,
   offers: [],
   currentID: NaN,
+  currentSort: DEFAULT_SORT,
   AuthorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   offersLoaded: false,
@@ -38,8 +40,8 @@ export default createReducer(initialState, (builder) => {
     state.offersLoaded = true;
   });
 
-  builder.addCase(sortOffers, (state, action) => {
-    state.offers = action.payload;
+  builder.addCase(setCurrentSort, (state, action) => {
+    state.currentSort = action.payload;
   });
 
   builder.addCase(setCurrentID, (state, action) => {
