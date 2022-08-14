@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppPath, AuthorizationStatus } from '../../settings';
+import { AppPath } from '../../settings';
 import MainPage from '../../pages/main-page/main-page';
 import Page404 from '../../pages/404-page/404-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -28,7 +28,7 @@ export default function App(props: AppProps): JSX.Element {
           <Route
             path={AppPath.FavoritesPage}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Yes}>
+              <PrivateRoute>
                 <FavoritesPage />
               </PrivateRoute>
             }
