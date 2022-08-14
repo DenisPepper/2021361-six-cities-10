@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { setCurrentSort } from '../../store/action-creaters';
 import { SORTS } from '../../settings';
 import SortItem from '../sort-item/sort-item';
