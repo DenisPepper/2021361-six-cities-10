@@ -5,8 +5,7 @@ import { Location } from '../../types/map-types';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, ICON_SIZE, DEFAULT_MAP_SETTINGS } from '../../settings';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks';
-import { OfferType } from '../../types/offer-type';
-import { filterOffersByCity } from '../../util';
+import { StateType } from '../../types/state-type';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -20,12 +19,16 @@ const currentCustomIcon = new Icon({
   iconAnchor: [ICON_SIZE / 2, ICON_SIZE],
 });
 
+const selectLocations = (store: StateType) => {
+  const city = store.reducer.city;
+  const offers = store.reducer.offers.filter((offer) => offer.city.name === city);
+  return offers.map((offer) => ({location: offer.location, id: offer.id, cityLocation: offer.city.location}));
+};
+
 export default function Map(): JSX.Element {
-  const offers = useAppSelector((state) => state.reducer.offers);
-  const city = useAppSelector((state) => state.reducer.city);
+  const offersLocations = useAppSelector(selectLocations);
   const currentID = useAppSelector((state) => state.reducer.currentID);
-  const cityOffers = filterOffersByCity(city, offers);
-  const location = pullOutMapSettings(city, offers);
+  const location = offersLocations[0].cityLocation || DEFAULT_MAP_SETTINGS;
 
   const mapRef = useRef(null);
   const map = useMap({ mapRef, location });
@@ -34,10 +37,10 @@ export default function Map(): JSX.Element {
       return;
     }
     map.panTo({lat: location.latitude, lng: location.longitude});
-    cityOffers.forEach((room) => {
-      createMarker(room.location, room.id, currentID).addTo(map);
+    offersLocations.forEach((element) => {
+      createMarker(element.location, element.id, currentID).addTo(map);
     });
-  }, [map, cityOffers, location.latitude, location.longitude, currentID]);
+  }, [map, offersLocations, location.latitude, location.longitude, currentID]);
   return <section style={{height: '600px'}} ref={mapRef} className='cities__map map'></section>;
 }
 
@@ -45,9 +48,4 @@ const createMarker = (location: Location, id: number, currentID: number) => {
   const marker = new Marker({ lat: location.latitude, lng: location.longitude });
   marker.setIcon(id === currentID ? currentCustomIcon : defaultCustomIcon);
   return marker;
-};
-
-const pullOutMapSettings = (city: string, offers: OfferType[]): Location => {
-  const room = offers.find((offer) => offer.city.name === city);
-  return room?.city.location || DEFAULT_MAP_SETTINGS;
 };
