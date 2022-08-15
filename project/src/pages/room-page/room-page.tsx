@@ -18,8 +18,7 @@ type RoomPageProps = {
 export default function RoomPage(props: RoomPageProps): JSX.Element {
   const { id } = useParams();
   const { comments } = props;
-  const offers = useAppSelector((state) => state.reducer.offers);
-  const room = offers.find((element) => element.id === parseInt(String(id), DECIMAL));
+  const room = useAppSelector((state) => state.reducer.offers.find((e) => e.id === parseInt(String(id), DECIMAL)));
 
   return room ? (
     <div className='page'>
@@ -138,7 +137,7 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
             <h2 className='near-places__title'>
               Other places in the neighbourhood
             </h2>
-            <PlaceCardList cityOffers={offers} isNearList />
+            <PlaceCardList offers={[]} isNearList currentSort='' />
           </section>
         </div>
       </main>
