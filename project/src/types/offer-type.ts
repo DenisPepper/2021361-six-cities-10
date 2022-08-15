@@ -32,3 +32,9 @@ export type OfferType = {
   title: string;
   type: string;
 };
+
+export type OfferTypeToSort = {
+  id: number;
+  price: number;
+  rating: number;
+};
