@@ -1,7 +1,6 @@
-import Map from '../../components/map/map';
-import PlaceCardList from '../../components/place-card-list/place-card-list';
 import CitiesList from '../../components/cities-list/cities-list';
-import Sorts from '../../components/sorts/sorts';
+import MainPageEmptySection from '../main-page-empty-section.ts/main-page-empty-section';
+import MainPageFilledSection from '../main-page-filled-section/main-page-filled-section';
 import { useAppSelector } from '../../hooks';
 import { filterOffersByCity } from '../../util';
 
@@ -15,6 +14,7 @@ export default function MainPage(props: MainPageProps): JSX.Element {
     useAppSelector((state) => state.reducer.city),
     useAppSelector((state) => state.reducer.offers)
   );
+  const isEmpty = cityOffers.length === 0;
 
   return (
     <div className='page page--gray page--main'>
@@ -60,25 +60,11 @@ export default function MainPage(props: MainPageProps): JSX.Element {
         </div>
       </header>
 
-      <main className='page__main page__main--index'>
+      <main className={`page__main page__main--index ${isEmpty ? 'page__main--index-empty' : ''}`}>
         <h1 className='visually-hidden'>Cities</h1>
         <CitiesList cities={cities} />
-
         <div className='cities'>
-          <div className='cities__places-container container'>
-            <section className='cities__places places'>
-              <h2 className='visually-hidden'>Places</h2>
-              <b className='places__found'>{`${cityOffers.length} places to stay in City`}</b>
-              <Sorts />
-
-              <div className='cities__places-list places__list tabs__content'>
-                <PlaceCardList cityOffers={cityOffers} isNearList={false} />
-              </div>
-            </section>
-            <div className='cities__right-section'>
-              <Map />
-            </div>
-          </div>
+          {isEmpty ? (<MainPageEmptySection />) : (<MainPageFilledSection cityOffers={cityOffers}/>)}
         </div>
       </main>
     </div>

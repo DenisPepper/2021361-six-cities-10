@@ -1,5 +1,7 @@
 import { OfferType } from './types/offer-type';
 
+export const TIME_OUT_SHOW_ERROR = 5000;
+
 export enum AuthorizationStatus {
   Yes = 'YES',
   No = 'NO',
@@ -13,6 +15,16 @@ export enum AppPath {
   Page404 = '*',
   Offer = '/offer/',
 }
+
+export const BASE_URL = 'https://10.react.pages.academy/six-cities';
+
+export const REQUEST_TIMEOUT = 5000;
+
+export const ServerRoutes = {
+  hotels: '/hotels',
+  login: '/login',
+  logout: '/logout',
+};
 
 export const URL_MARKER_DEFAULT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
@@ -39,20 +51,20 @@ export const DEFAULT_MAP_SETTINGS = {
   zoom: 13,
 };
 
+export const SORTS:string[] = [
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first',
+];
 
-export const SortsName = {
-  POPULAR: 'Popular',
-  PRICE_LOW_TO_HIGH: 'Price: low to high',
-  PRICE_HIGH_TO_LOW: 'Price: high to low',
-  TOP_RATED_FIRST: 'Top rated first',
+type Compare = (a: OfferType, b: OfferType) => number;
+
+export const SortsRules: Record<string, Compare> = {
+  'Popular': (a: OfferType, b: OfferType) => a.id - b.id,
+  'Price: low to high': (a: OfferType, b: OfferType) => a.price - b.price,
+  'Price: high to low': (a: OfferType, b: OfferType) => b.price - a.price,
+  'Top rated first': (a: OfferType, b: OfferType) => b.rating - a.rating,
 };
 
-export const SortsRules = {
-  [SortsName.POPULAR]: (a: OfferType, b: OfferType) => a.id - b.id,
-  [SortsName.PRICE_LOW_TO_HIGH]: (a: OfferType, b: OfferType) =>
-    a.price - b.price,
-  [SortsName.PRICE_HIGH_TO_LOW]: (a: OfferType, b: OfferType) =>
-    b.price - a.price,
-  [SortsName.TOP_RATED_FIRST]: (a: OfferType, b: OfferType) =>
-    b.rating - a.rating,
-};
+export const DEFAULT_SORT = SORTS[0];
