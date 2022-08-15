@@ -3,19 +3,22 @@ import MainPageEmptySection from '../main-page-empty-section.ts/main-page-empty-
 import MainPageFilledSection from '../main-page-filled-section/main-page-filled-section';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
-import { filterOffersByCity } from '../../util';
+import { StateType } from '../../types/state-type';
 
 type MainPageProps = {
   cities: string[];
 };
 
+const selectSomeOffersData = (store: StateType) => {
+  const city = store.reducer.city;
+  const offers = store.reducer.offers.filter((offer) => offer.city.name === city);
+  return offers.map((offer) => ({id: offer.id, price: offer.price, rating: offer.rating}));
+};
+
 export default function MainPage(props: MainPageProps): JSX.Element {
   const { cities } = props;
-  const cityOffers = filterOffersByCity(
-    useAppSelector((state) => state.reducer.city),
-    useAppSelector((state) => state.reducer.offers)
-  );
-  const isEmpty = cityOffers.length === 0;
+  const offers = useAppSelector(selectSomeOffersData);
+  const isEmpty = offers.length === 0;
 
   return (
     <div className='page page--gray page--main'>
@@ -24,7 +27,7 @@ export default function MainPage(props: MainPageProps): JSX.Element {
         <h1 className='visually-hidden'>Cities</h1>
         <CitiesList cities={cities} />
         <div className='cities'>
-          {isEmpty ? (<MainPageEmptySection />) : (<MainPageFilledSection cityOffers={cityOffers}/>)}
+          {isEmpty ? (<MainPageEmptySection />) : (<MainPageFilledSection offers={offers}/>)}
         </div>
       </main>
     </div>

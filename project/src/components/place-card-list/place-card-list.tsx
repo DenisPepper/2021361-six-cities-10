@@ -1,23 +1,34 @@
 import PlaceCard from '../place-card/place-card';
-import { OfferType } from '../../types/offer-type';
 import { useAppDispatch } from '../../hooks/index';
 import { setCurrentID } from '../../store/action-creaters';
+import { SortsRules } from '../../settings';
+import { OfferTypeToSort } from '../../types/offer-type';
 
 type PlaceCardListProps = {
-  cityOffers: OfferType[];
+  offers: OfferTypeToSort[];
   isNearList: boolean;
+  currentSort: string;
 };
 
 export default function PlaceCardList(props: PlaceCardListProps): JSX.Element {
-  const { cityOffers, isNearList } = props;
+  const { offers, isNearList, currentSort } = props;
   const dispatch = useAppDispatch();
 
   const callback = (id: number) => dispatch(setCurrentID(id));
 
   return (
-    <div className={`${isNearList ? 'cities__places-list tabs__content' : 'near-places__list'} places__list`}>
-      {cityOffers.map((offer) => (
-        <PlaceCard key={offer.id} room={offer} callback={callback} isNearList={isNearList}></PlaceCard>
+    <div
+      className={`${
+        isNearList ? 'cities__places-list tabs__content' : 'near-places__list'
+      } places__list`}
+    >
+      {offers.sort(SortsRules[currentSort]).map((offer) => (
+        <PlaceCard
+          key={offer.id}
+          id={offer.id}
+          callback={callback}
+          isNearList={isNearList}
+        />
       ))}
     </div>
   );
