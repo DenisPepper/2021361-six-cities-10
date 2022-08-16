@@ -4,6 +4,17 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus, AppPath } from '../../settings';
 import { login } from '../../store/action-creaters-middleware';
 
+const throwError = (msg: string) => {throw new Error(msg);};
+
+type FormDataType = string | null | File;
+
+const assertString = (value: FormDataType, fieldName: string) => typeof value === 'string' ? value : throwError(`${fieldName} not valid`);
+
+const validate = (form: FormData) => ({
+  login: assertString(form.get('email'), 'email'),
+  password: assertString(form.get('password'), 'password'),
+});
+
 export default function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const isAuthorized =
@@ -11,19 +22,25 @@ export default function LoginPage(): JSX.Element {
     AuthorizationStatus.Yes;
   const onSubmitHandler = (evt: React.SyntheticEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const formData = new FormData(evt.currentTarget);
-    const authData = {login: String(formData.get('email')), password: String(formData.get('password'))};
+    const authData = validate(new FormData(evt.currentTarget));
     dispatch(login(authData));
   };
 
-  return isAuthorized ? <Navigate to={AppPath.MainPage}/> : (
+  return isAuthorized ? (
+    <Navigate to={AppPath.MainPage} />
+  ) : (
     <div className='page page--gray page--login'>
-      <Header isLoginPage/>
+      <Header isLoginPage />
       <main className='page__main page__main--login'>
         <div className='page__login-container container'>
           <section className='login'>
             <h1 className='login__title'>Sign in</h1>
-            <form onSubmit={onSubmitHandler} className='login__form form' action='#' method='post'>
+            <form
+              onSubmit={onSubmitHandler}
+              className='login__form form'
+              action='#'
+              method='post'
+            >
               <div className='login__input-wrapper form__input-wrapper'>
                 <label className='visually-hidden'>E-mail</label>
                 <input

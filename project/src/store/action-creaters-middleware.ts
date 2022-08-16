@@ -6,6 +6,7 @@ import {
   TIME_OUT_SHOW_ERROR,
 } from '../settings';
 import { OfferType } from '../types/offer-type';
+import { CommentType } from '../types/comment-type';
 import { AppDispatchType, StateType } from '../types/state-type';
 import {
   setOffers,
@@ -13,6 +14,7 @@ import {
   setError,
   setLoadingStatus,
   loggedIn,
+  offerLoaded,
 } from './action-creaters';
 import { AuthData, UserData } from '../types/user-auth-types';
 import { dropToken, saveToken } from '../services/token';
@@ -32,6 +34,16 @@ export const getOffers = createAsyncThunk<void, undefined, AsyncThunkType>(
     } catch (error) {
       dispatch(setLoadingStatus(false));
     }
+  }
+);
+
+export const getOffer = createAsyncThunk<void, number, AsyncThunkType>(
+  'GET_OFFER',
+  async (id, { dispatch, extra: HTTPClient }) => {
+    const { data: offer } = await HTTPClient.get<OfferType>(`${ServerRoutes.hotels}/${id}`);
+    const {data: nearOffers} = await HTTPClient.get<OfferType[]>(`${ServerRoutes.hotels}/${id}/nearby`);
+    const {data: comments} = await HTTPClient.get<CommentType[]>(`${ServerRoutes.comments}/${id}`);
+    dispatch(offerLoaded({offer, nearOffers, comments}));
   }
 );
 

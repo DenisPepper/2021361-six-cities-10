@@ -24,6 +24,7 @@ export const ServerRoutes = {
   hotels: '/hotels',
   login: '/login',
   logout: '/logout',
+  comments: '/comments',
 };
 
 export const URL_MARKER_DEFAULT =

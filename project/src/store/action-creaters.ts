@@ -1,11 +1,15 @@
 import { createAction } from '@reduxjs/toolkit';
-import { OfferType } from '../types/offer-type';
+import { OfferType, OfferTypeFullData } from '../types/offer-type';
 
 export const changeCity = createAction('CHANGE_CITY', (payload: string) => ({
   payload,
 }));
 
 export const setOffers = createAction('SET_OFFERS', (payload: OfferType[]) => ({
+  payload,
+}));
+
+export const offerLoaded = createAction('OFFER_LOADED', (payload: OfferTypeFullData) => ({
   payload,
 }));
 
