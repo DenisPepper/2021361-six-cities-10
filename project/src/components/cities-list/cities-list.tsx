@@ -9,9 +9,7 @@ type CitiesListProps = {
 export default function CitiesList(props: CitiesListProps): JSX.Element {
   const { cities } = props;
   const dispatch = useAppDispatch();
-  const { city: currentCity } = useAppSelector(
-    (state) => state.reducer
-  );
+  const currentCity = useAppSelector((state) => state.reducer.city);
 
   const callback = (value: string) => {
     dispatch(changeCity(value));

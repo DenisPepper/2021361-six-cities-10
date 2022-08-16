@@ -7,6 +7,8 @@ import {
   setCurrentID,
   setError,
   setLoadingStatus,
+  setAuthorizationStatus,
+  loggedIn
 } from './action-creaters';
 import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../settings';
 
@@ -15,9 +17,10 @@ type StateType = {
   offers: OfferType[];
   currentID: number;
   currentSort: string;
-  AuthorizationStatus: string;
+  authorizationStatus: string;
   error: string | null;
   offersLoaded: boolean;
+  userName: string;
 };
 
 const initialState: StateType = {
@@ -25,9 +28,10 @@ const initialState: StateType = {
   offers: [],
   currentID: NaN,
   currentSort: DEFAULT_SORT,
-  AuthorizationStatus: AuthorizationStatus.Unknown,
+  authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   offersLoaded: false,
+  userName: '',
 };
 
 export default createReducer(initialState, (builder) => {
@@ -54,5 +58,14 @@ export default createReducer(initialState, (builder) => {
 
   builder.addCase(setLoadingStatus, (state, action) => {
     state.offersLoaded = action.payload;
+  });
+
+  builder.addCase(setAuthorizationStatus, (state, action) => {
+    state.authorizationStatus = action.payload;
+  });
+
+  builder.addCase(loggedIn, (state, action) => {
+    state.authorizationStatus = AuthorizationStatus.Yes;
+    state.userName = action.payload;
   });
 });

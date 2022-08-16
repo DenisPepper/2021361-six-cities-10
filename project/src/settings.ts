@@ -1,4 +1,4 @@
-import { OfferType } from './types/offer-type';
+import { OfferTypeToSort } from './types/offer-type';
 
 export const TIME_OUT_SHOW_ERROR = 5000;
 
@@ -58,13 +58,13 @@ export const SORTS:string[] = [
   'Top rated first',
 ];
 
-type Compare = (a: OfferType, b: OfferType) => number;
+type Compare = (a: OfferTypeToSort, b: OfferTypeToSort) => number;
 
 export const SortsRules: Record<string, Compare> = {
-  'Popular': (a: OfferType, b: OfferType) => a.id - b.id,
-  'Price: low to high': (a: OfferType, b: OfferType) => a.price - b.price,
-  'Price: high to low': (a: OfferType, b: OfferType) => b.price - a.price,
-  'Top rated first': (a: OfferType, b: OfferType) => b.rating - a.rating,
+  'Popular': (a: OfferTypeToSort, b: OfferTypeToSort) => a.id - b.id,
+  'Price: low to high': (a: OfferTypeToSort, b: OfferTypeToSort) => a.price - b.price,
+  'Price: high to low': (a: OfferTypeToSort, b: OfferTypeToSort) => b.price - a.price,
+  'Top rated first': (a: OfferTypeToSort, b: OfferTypeToSort) => b.rating - a.rating,
 };
 
 export const DEFAULT_SORT = SORTS[0];

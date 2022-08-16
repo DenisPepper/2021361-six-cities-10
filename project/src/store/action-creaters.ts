@@ -40,3 +40,10 @@ export const setLoadingStatus = createAction(
     payload,
   })
 );
+
+export const loggedIn = createAction(
+  'LOGGED_IN',
+  (payload: string) => ({
+    payload,
+  })
+);

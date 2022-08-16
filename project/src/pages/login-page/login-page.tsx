@@ -1,28 +1,29 @@
+import { Navigate } from 'react-router-dom';
+import Header from '../../components/header/header';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AuthorizationStatus, AppPath } from '../../settings';
+import { login } from '../../store/action-creaters-middleware';
+
 export default function LoginPage(): JSX.Element {
-  return (
+  const dispatch = useAppDispatch();
+  const isAuthorized =
+    useAppSelector((store) => store.reducer.authorizationStatus) ===
+    AuthorizationStatus.Yes;
+  const onSubmitHandler = (evt: React.SyntheticEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const formData = new FormData(evt.currentTarget);
+    const authData = {login: String(formData.get('email')), password: String(formData.get('password'))};
+    dispatch(login(authData));
+  };
+
+  return isAuthorized ? <Navigate to={AppPath.MainPage}/> : (
     <div className='page page--gray page--login'>
-      <header className='header'>
-        <div className='container'>
-          <div className='header__wrapper'>
-            <div className='header__left'>
-              <a className='header__logo-link' href='main.html'>
-                <img
-                  className='header__logo'
-                  src='img/logo.svg'
-                  alt='6 cities logo'
-                  width={81}
-                  height={41}
-                />
-              </a>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header isLoginPage/>
       <main className='page__main page__main--login'>
         <div className='page__login-container container'>
           <section className='login'>
             <h1 className='login__title'>Sign in</h1>
-            <form className='login__form form' action='#' method='post'>
+            <form onSubmit={onSubmitHandler} className='login__form form' action='#' method='post'>
               <div className='login__input-wrapper form__input-wrapper'>
                 <label className='visually-hidden'>E-mail</label>
                 <input
@@ -53,6 +54,7 @@ export default function LoginPage(): JSX.Element {
           </section>
           <section className='locations locations--login locations--current'>
             <div className='locations__item'>
+              {/*FIXME: почему Амстердам?*/}
               <a className='locations__item-link' href='#ref'>
                 <span>Amsterdam</span>
               </a>
