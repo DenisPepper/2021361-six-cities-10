@@ -1,24 +1,23 @@
 import { useParams } from 'react-router-dom';
-import { CommentType } from '../../types/comment-type';
 import Page404 from '../404-page/404-page';
 import RoomImage from '../../components/room-image/room-image';
 import { converToPercent } from '../../util';
 import CommentSection from '../../components/comments-section/comments-section';
 import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import Header from '../../components/header/header';
+import { getOffer } from '../../store/action-creaters-middleware';
 
 const DECIMAL = 10;
 
-type RoomPageProps = {
-  comments: CommentType[];
-};
-
-export default function RoomPage(props: RoomPageProps): JSX.Element {
+export default function RoomPage(): JSX.Element {
   const { id } = useParams();
-  const { comments } = props;
-  const room = useAppSelector((state) => state.reducer.offers.find((e) => e.id === parseInt(String(id), DECIMAL)));
+  const dispatch = useAppDispatch();
+  dispatch(getOffer(parseInt(String(id), DECIMAL)));
+  const room = useAppSelector((state) => state.reducer.room);
+  const comments = useAppSelector((state) => state.reducer.comments);
+  const nearOffers = useAppSelector((state) => state.reducer.nearOffers);
 
   return room ? (
     <div className='page'>
@@ -137,7 +136,7 @@ export default function RoomPage(props: RoomPageProps): JSX.Element {
             <h2 className='near-places__title'>
               Other places in the neighbourhood
             </h2>
-            <PlaceCardList offers={[]} isNearList currentSort='' />
+            <PlaceCardList offers={nearOffers} isNearList currentSort='' />
           </section>
         </div>
       </main>

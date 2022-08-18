@@ -42,7 +42,7 @@ export type OfferTypeToSort = {
 };
 
 export type OfferTypeFullData = {
-  offer: OfferType;
+  room: OfferType;
   nearOffers: OfferType[];
   comments: CommentType[];
 };

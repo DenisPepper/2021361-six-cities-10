@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { OfferType, OfferTypeFullData } from '../types/offer-type';
+import { OfferType } from '../types/offer-type';
 import {
   changeCity,
   setOffers,
@@ -12,11 +12,14 @@ import {
   offerLoaded
 } from './action-creaters';
 import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../settings';
+import { CommentType } from '../types/comment-type';
 
 type StateType = {
   city: string;
-  offer: OfferTypeFullData | null;
+  room: OfferType | null;
   offers: OfferType[];
+  nearOffers: OfferType[];
+  comments: CommentType[];
   currentID: number;
   currentSort: string;
   authorizationStatus: string;
@@ -27,8 +30,10 @@ type StateType = {
 
 const initialState: StateType = {
   city: DEFAULT_CITY,
-  offer: null,
+  room: null,
   offers: [],
+  nearOffers: [],
+  comments: [],
   currentID: NaN,
   currentSort: DEFAULT_SORT,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -73,7 +78,9 @@ export default createReducer(initialState, (builder) => {
   });
 
   builder.addCase(offerLoaded, (state, action) => {
-    state.offer = action.payload;
+    state.room = action.payload.room;
+    state.nearOffers = action.payload.nearOffers;
+    state.comments = action.payload.comments;
   });
 
 });

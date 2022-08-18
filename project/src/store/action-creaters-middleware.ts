@@ -40,10 +40,16 @@ export const getOffers = createAsyncThunk<void, undefined, AsyncThunkType>(
 export const getOffer = createAsyncThunk<void, number, AsyncThunkType>(
   'GET_OFFER',
   async (id, { dispatch, extra: HTTPClient }) => {
-    const { data: offer } = await HTTPClient.get<OfferType>(`${ServerRoutes.hotels}/${id}`);
-    const {data: nearOffers} = await HTTPClient.get<OfferType[]>(`${ServerRoutes.hotels}/${id}/nearby`);
-    const {data: comments} = await HTTPClient.get<CommentType[]>(`${ServerRoutes.comments}/${id}`);
-    dispatch(offerLoaded({offer, nearOffers, comments}));
+    const { data: room } = await HTTPClient.get<OfferType>(
+      `${ServerRoutes.hotels}/${id}`
+    );
+    const { data: nearOffers } = await HTTPClient.get<OfferType[]>(
+      `${ServerRoutes.hotels}/${id}/nearby`
+    );
+    const { data: comments } = await HTTPClient.get<CommentType[]>(
+      `${ServerRoutes.comments}/${id}`
+    );
+    dispatch(offerLoaded({ room, nearOffers, comments }));
   }
 );
 
