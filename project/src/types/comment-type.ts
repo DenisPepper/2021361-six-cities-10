@@ -10,3 +10,8 @@ export type CommentType = {
     name: string;
   };
 };
+
+export type NewCommentType = {
+  id: number;
+  comment: { comment: string; rating: number };
+};
