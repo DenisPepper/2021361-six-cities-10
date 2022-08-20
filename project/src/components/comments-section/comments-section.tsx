@@ -1,16 +1,17 @@
+import { useAppSelector } from '../../hooks';
 import { CommentType } from '../../types/comment-type';
 import CommentForm from '../comment-form/comment-form';
 import CommentItem from '../comment-item/comment-item';
 
 type CommentFormProps = {
-  comments: CommentType[];
   id: number
 };
 
 const generateKey = (comment: CommentType): string => `${comment.id}${comment.user.id}${comment.date}`;
 
 export default function CommentSection(props: CommentFormProps): JSX.Element {
-  const { comments, id } = props;
+  const { id } = props;
+  const comments = useAppSelector((state) => state.reducer.comments);
 
   return (
     <section className='property__reviews reviews'>
