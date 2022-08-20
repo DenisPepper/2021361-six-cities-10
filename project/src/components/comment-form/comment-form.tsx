@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { getInteger } from '../../util';
+import React, { useEffect, useState } from 'react';
+import { getInteger, debounce } from '../../util';
 
 type CommentFormProps = {
   id: number;
@@ -7,25 +7,38 @@ type CommentFormProps = {
 
 export default function CommentForm(props: CommentFormProps): JSX.Element {
   const { id } = props;
+  const [state, setState] = useState({ rating: 0, comment: '' , isValid: false});
 
-  const [state, setState] = useState({id, rating: 0, comment: '',});
+  useEffect(() => {
+    const isValid = state.comment.length >= 50 && state.rating !== 0;
+    if (isValid !== state.isValid) {
+      setState({ ...state, isValid});
+    }
+  }, [state]);
 
-  const onInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
-    setState({ ...state, [name]: getInteger(value) });
+    setState(() => ({ ...state, [name]: getInteger(value) }));
   };
 
-  const onChangeHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = evt.target;
-    setState({ ...state, [name]: getInteger(value) });
-  };
+  const onChangeTextHandler = debounce(
+    (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+      const { name, value } = evt.target;
+      setState(() => ({ ...state, [name]: value }));
+    }
+  );
 
   const onSubmitHandler = (evt: React.SyntheticEvent<HTMLFormElement>) => {
     evt.preventDefault();
   };
 
   return (
-    <form onSubmit={onSubmitHandler} className='reviews__form form' action='#' method='post'>
+    <form
+      onSubmit={onSubmitHandler}
+      className='reviews__form form'
+      action='#'
+      method='post'
+    >
       <label className='reviews__label form__label' htmlFor='review'>
         Your review
       </label>
@@ -37,7 +50,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
           defaultValue={5}
           id='5-stars'
           type='radio'
-          onInput={onInputHandler}
+          onInput={onChangeInputHandler}
         />
         <label
           htmlFor='5-stars'
@@ -55,7 +68,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
           defaultValue={4}
           id='4-stars'
           type='radio'
-          onInput={onInputHandler}
+          onInput={onChangeInputHandler}
         />
         <label
           htmlFor='4-stars'
@@ -73,7 +86,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
           defaultValue={3}
           id='3-stars'
           type='radio'
-          onInput={onInputHandler}
+          onInput={onChangeInputHandler}
         />
         <label
           htmlFor='3-stars'
@@ -91,7 +104,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
           defaultValue={2}
           id='2-stars'
           type='radio'
-          onInput={onInputHandler}
+          onInput={onChangeInputHandler}
         />
         <label
           htmlFor='2-stars'
@@ -109,7 +122,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
           defaultValue={1}
           id='1-star'
           type='radio'
-          onInput={onInputHandler}
+          onInput={onChangeInputHandler}
         />
         <label
           htmlFor='1-star'
@@ -128,7 +141,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
         name='comment'
         placeholder='Tell how was your stay, what you like and what can be improved'
         defaultValue={''}
-        onInput={onChangeHandler}
+        onInput={onChangeTextHandler}
       />
 
       <div className='reviews__button-wrapper'>
@@ -140,7 +153,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
         <button
           className='reviews__submit form__submit button'
           type='submit'
-          disabled
+          disabled = {!state.isValid}
         >
           Submit
         </button>

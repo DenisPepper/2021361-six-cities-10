@@ -8,6 +8,8 @@ export const RATING_COEF = FULL_PERCENT / FULL_STARS;
 
 export const TIME_OUT_SHOW_ERROR = 5000;
 
+export const DEFAULT_DELAY = 1000;
+
 export enum AuthorizationStatus {
   Yes = 'YES',
   No = 'NO',
