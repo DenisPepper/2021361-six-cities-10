@@ -12,6 +12,7 @@ import {
   offerLoaded,
   offerNotLoaded,
   spinnerEnabled,
+  commentsLoaded
 } from './action-creaters';
 import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../settings';
 import { CommentType } from '../types/comment-type';
@@ -97,5 +98,9 @@ export default createReducer(initialState, (builder) => {
 
   builder.addCase(spinnerEnabled, (state) => {
     state.spinnerDisabled = false;
+  });
+
+  builder.addCase(commentsLoaded, (state, action) => {
+    state.comments = action.payload;
   });
 });

@@ -1,5 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
 import { OfferType, OfferTypeFullData } from '../types/offer-type';
+import { CommentType } from '../types/comment-type';
+
+export const commentsLoaded = createAction<CommentType[]>('COMMENTS_LOADED');
 
 export const changeCity = createAction('CHANGE_CITY', (payload: string) => ({
   payload,
