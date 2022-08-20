@@ -22,7 +22,7 @@ export default function PlaceCardList(props: PlaceCardListProps): JSX.Element {
         isNearList ? 'cities__places-list tabs__content' : 'near-places__list'
       } places__list`}
     >
-      {offers.sort(SortsRules[currentSort]).map((offer) => (
+      {[...offers].sort(SortsRules[currentSort]).map((offer) => (
         <PlaceCard
           key={offer.id}
           id={offer.id}
