@@ -1,5 +1,11 @@
 import { OfferTypeToSort } from './types/offer-type';
 
+export const DECIMAL = 10;
+
+const FULL_PERCENT = 100;
+const FULL_STARS = 5;
+export const RATING_COEF = FULL_PERCENT / FULL_STARS;
+
 export const TIME_OUT_SHOW_ERROR = 5000;
 
 export enum AuthorizationStatus {
