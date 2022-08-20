@@ -9,7 +9,9 @@ import {
   setLoadingStatus,
   setAuthorizationStatus,
   loggedIn,
-  offerLoaded
+  offerLoaded,
+  offerNotLoaded,
+  spinnerEnabled,
 } from './action-creaters';
 import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../settings';
 import { CommentType } from '../types/comment-type';
@@ -25,6 +27,7 @@ type StateType = {
   authorizationStatus: string;
   error: string | null;
   offersLoaded: boolean;
+  spinnerDisabled: boolean;
   userName: string;
 };
 
@@ -39,6 +42,7 @@ const initialState: StateType = {
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   offersLoaded: false,
+  spinnerDisabled: false,
   userName: '',
 };
 
@@ -81,6 +85,17 @@ export default createReducer(initialState, (builder) => {
     state.room = action.payload.room;
     state.nearOffers = action.payload.nearOffers;
     state.comments = action.payload.comments;
+    state.spinnerDisabled = true;
   });
 
+  builder.addCase(offerNotLoaded, (state) => {
+    state.room = null;
+    state.nearOffers = [];
+    state.comments = [];
+    state.spinnerDisabled = true;
+  });
+
+  builder.addCase(spinnerEnabled, (state) => {
+    state.spinnerDisabled = false;
+  });
 });

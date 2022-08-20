@@ -15,6 +15,7 @@ import {
   setLoadingStatus,
   loggedIn,
   offerLoaded,
+  offerNotLoaded,
 } from './action-creaters';
 import { AuthData, UserData } from '../types/user-auth-types';
 import { dropToken, saveToken } from '../services/token';
@@ -28,8 +29,8 @@ type AsyncThunkType = {
 export const getOffers = createAsyncThunk<void, undefined, AsyncThunkType>(
   'GET_OFFERS',
   async (_args, { dispatch, extra: HTTPClient }) => {
-    const { data } = await HTTPClient.get<OfferType[]>(ServerRoutes.hotels);
     try {
+      const { data } = await HTTPClient.get<OfferType[]>(ServerRoutes.hotels);
       dispatch(setOffers(data));
     } catch (error) {
       dispatch(setLoadingStatus(false));
@@ -40,16 +41,20 @@ export const getOffers = createAsyncThunk<void, undefined, AsyncThunkType>(
 export const getOffer = createAsyncThunk<void, number, AsyncThunkType>(
   'GET_OFFER',
   async (id, { dispatch, extra: HTTPClient }) => {
-    const { data: room } = await HTTPClient.get<OfferType>(
-      `${ServerRoutes.hotels}/${id}`
-    );
-    const { data: nearOffers } = await HTTPClient.get<OfferType[]>(
-      `${ServerRoutes.hotels}/${id}/nearby`
-    );
-    const { data: comments } = await HTTPClient.get<CommentType[]>(
-      `${ServerRoutes.comments}/${id}`
-    );
-    dispatch(offerLoaded({ room, nearOffers, comments }));
+    try {
+      const { data: room } = await HTTPClient.get<OfferType>(
+        `${ServerRoutes.hotels}/${id}`
+      );
+      const { data: nearOffers } = await HTTPClient.get<OfferType[]>(
+        `${ServerRoutes.hotels}/${id}/nearby`
+      );
+      const { data: comments } = await HTTPClient.get<CommentType[]>(
+        `${ServerRoutes.comments}/${id}`
+      );
+      dispatch(offerLoaded({ room, nearOffers, comments }));
+    } catch (error) {
+      dispatch(offerNotLoaded());
+    }
   }
 );
 

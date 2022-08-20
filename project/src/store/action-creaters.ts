@@ -9,9 +9,16 @@ export const setOffers = createAction('SET_OFFERS', (payload: OfferType[]) => ({
   payload,
 }));
 
-export const offerLoaded = createAction('OFFER_LOADED', (payload: OfferTypeFullData) => ({
-  payload,
-}));
+export const offerLoaded = createAction(
+  'OFFER_LOADED',
+  (payload: OfferTypeFullData) => ({
+    payload,
+  })
+);
+
+export const offerNotLoaded = createAction('OFFER_NOT_LOADED');
+
+export const spinnerEnabled = createAction('SPINNER_ENABLED');
 
 export const setCurrentSort = createAction(
   'SET_CURRENT_SORT',
@@ -45,9 +52,6 @@ export const setLoadingStatus = createAction(
   })
 );
 
-export const loggedIn = createAction(
-  'LOGGED_IN',
-  (payload: string) => ({
-    payload,
-  })
-);
+export const loggedIn = createAction('LOGGED_IN', (payload: string) => ({
+  payload,
+}));
