@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { setComment } from '../../store/action-creaters-middleware';
 import { getInteger, debounce } from '../../util';
 
 type CommentFormProps = {
@@ -7,12 +9,17 @@ type CommentFormProps = {
 
 export default function CommentForm(props: CommentFormProps): JSX.Element {
   const { id } = props;
-  const [state, setState] = useState({ rating: 0, comment: '' , isValid: false});
+  const dispatch = useAppDispatch();
+  const [state, setState] = useState({
+    rating: 0,
+    comment: '',
+    isValid: false,
+  });
 
   useEffect(() => {
     const isValid = state.comment.length >= 50 && state.rating !== 0;
     if (isValid !== state.isValid) {
-      setState({ ...state, isValid});
+      setState({ ...state, isValid });
     }
   }, [state]);
 
@@ -30,6 +37,12 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
 
   const onSubmitHandler = (evt: React.SyntheticEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    dispatch(
+      setComment({
+        id,
+        comment: { rating: state.rating, comment: state.comment },
+      })
+    );
   };
 
   return (
@@ -153,7 +166,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
         <button
           className='reviews__submit form__submit button'
           type='submit'
-          disabled = {!state.isValid}
+          disabled={!state.isValid}
         >
           Submit
         </button>
