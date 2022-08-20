@@ -6,8 +6,7 @@ import Spinner from '../../components/spinner/spinner';
 import { useEffect } from 'react';
 import { spinnerEnabled } from '../../store/action-creaters';
 import RoomMain from '../../components/room-main/room-main';
-
-const DECIMAL = 10;
+import { getInteger } from '../../util';
 
 export default function RoomPage(): JSX.Element {
   const { id } = useParams();
@@ -15,7 +14,7 @@ export default function RoomPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getOffer(parseInt(String(id), DECIMAL)));
+    dispatch(getOffer(getInteger(id)));
     return () => {
       dispatch(spinnerEnabled());
     };

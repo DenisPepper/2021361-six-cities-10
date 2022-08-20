@@ -1,20 +1,5 @@
 import React, { useState } from 'react';
-import { CommentType } from '../../types/comment-type';
-
-/* FIXME: user.id user.isPro, user.name, user.avatarUrl,  */
-const getDefaultState = (id: number):CommentType =>
-  ({
-    id,
-    user: {
-      id: 12,
-      isPro: false,
-      name: 'UserName',
-      avatarUrl: 'https://10.react.pages.academy/static/avatar/1.jpg',
-    },
-    rating: 0,
-    comment:'text content',
-    date: new Date().toISOString(),
-  });
+import { getInteger } from '../../util';
 
 type CommentFormProps = {
   id: number;
@@ -23,20 +8,24 @@ type CommentFormProps = {
 export default function CommentForm(props: CommentFormProps): JSX.Element {
   const { id } = props;
 
-  const [state, setState] = useState(getDefaultState(id));
+  const [state, setState] = useState({id, rating: 0, comment: '',});
 
   const onInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
-    setState({ ...state, [name]: value });
+    setState({ ...state, [name]: getInteger(value) });
   };
 
   const onChangeHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = evt.target;
-    setState({ ...state, [name]: value });
+    setState({ ...state, [name]: getInteger(value) });
+  };
+
+  const onSubmitHandler = (evt: React.SyntheticEvent<HTMLFormElement>) => {
+    evt.preventDefault();
   };
 
   return (
-    <form className='reviews__form form' action='#' method='post'>
+    <form onSubmit={onSubmitHandler} className='reviews__form form' action='#' method='post'>
       <label className='reviews__label form__label' htmlFor='review'>
         Your review
       </label>
