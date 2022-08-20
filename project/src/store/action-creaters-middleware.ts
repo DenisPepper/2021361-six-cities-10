@@ -6,7 +6,7 @@ import {
   TIME_OUT_SHOW_ERROR,
 } from '../settings';
 import { OfferType } from '../types/offer-type';
-import { CommentType } from '../types/comment-type';
+import { CommentType, NewCommentType } from '../types/comment-type';
 import { AppDispatchType, StateType } from '../types/state-type';
 import {
   setOffers,
@@ -16,6 +16,7 @@ import {
   loggedIn,
   offerLoaded,
   offerNotLoaded,
+  commentsLoaded,
 } from './action-creaters';
 import { AuthData, UserData } from '../types/user-auth-types';
 import { dropToken, saveToken } from '../services/token';
@@ -25,6 +26,19 @@ type AsyncThunkType = {
   state: StateType;
   extra: AxiosInstance;
 };
+
+export const setComment = createAsyncThunk<
+  void,
+  NewCommentType,
+  AsyncThunkType
+>('SET_COMMENT', async ({ id, comment }, { dispatch, extra: HTTPClient }) => {
+  try {
+    const { data } = await HTTPClient.post<CommentType[]>(`${ServerRoutes.comments}/${id}`, comment);
+    dispatch(commentsLoaded(data));
+  } catch (error) {
+    // dispatch();
+  }
+});
 
 export const getOffers = createAsyncThunk<void, undefined, AsyncThunkType>(
   'GET_OFFERS',
