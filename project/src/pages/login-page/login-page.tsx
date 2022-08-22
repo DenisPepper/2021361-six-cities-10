@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus, AppPath } from '../../settings';
-import { login } from '../../store/action-creaters-middleware';
+import { login, getFavorites } from '../../store/action-creaters-middleware';
 import LoginConteiner from '../../components/login-conteiner/login-conteiner';
 
 const throwError = (msg: string) => {
@@ -28,6 +28,7 @@ export default function LoginPage(): JSX.Element {
     evt.preventDefault();
     const authData = validate(new FormData(evt.currentTarget));
     dispatch(login(authData));
+    dispatch(getFavorites);
   };
 
   return isAuthorized ? (

@@ -12,7 +12,8 @@ import {
   offerLoaded,
   offerNotLoaded,
   spinnerEnabled,
-  commentsLoaded
+  commentsLoaded,
+  favoritesLoaded
 } from './action-creaters';
 import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../settings';
 import { CommentType } from '../types/comment-type';
@@ -22,6 +23,7 @@ type StateType = {
   room: OfferType | null;
   offers: OfferType[];
   nearOffers: OfferType[];
+  favoriteOffers: OfferType[];
   comments: CommentType[];
   currentID: number;
   currentSort: string;
@@ -37,6 +39,7 @@ const initialState: StateType = {
   room: null,
   offers: [],
   nearOffers: [],
+  favoriteOffers: [],
   comments: [],
   currentID: NaN,
   currentSort: DEFAULT_SORT,
@@ -102,5 +105,9 @@ export default createReducer(initialState, (builder) => {
 
   builder.addCase(commentsLoaded, (state, action) => {
     state.comments = action.payload;
+  });
+
+  builder.addCase(favoritesLoaded, (state, action) => {
+    state.favoriteOffers = action.payload;
   });
 });

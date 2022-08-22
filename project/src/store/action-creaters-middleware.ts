@@ -17,6 +17,7 @@ import {
   offerLoaded,
   offerNotLoaded,
   commentsLoaded,
+  favoritesLoaded
 } from './action-creaters';
 import { AuthData, UserData } from '../types/user-auth-types';
 import { dropToken, saveToken } from '../services/token';
@@ -108,9 +109,17 @@ export const logout = createAsyncThunk<void, undefined, AsyncThunkType>(
   }
 );
 
-export const clearError = createAsyncThunk(
+export const clearError = createAsyncThunk<void, undefined, AsyncThunkType>(
   'CLEAR_ERROR',
   (_args, { dispatch }) => {
     setTimeout(() => dispatch(setError(null)), TIME_OUT_SHOW_ERROR);
+  }
+);
+
+export const getFavorites = createAsyncThunk<void, undefined, AsyncThunkType>(
+  'GET_FAVORITES',
+  async (_args, { dispatch, extra: HTTPClient }) => {
+    const { data } = await HTTPClient.get<OfferType[]>(ServerRoutes.favorite);
+    dispatch(favoritesLoaded(data));
   }
 );

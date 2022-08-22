@@ -2,6 +2,8 @@ import { createAction } from '@reduxjs/toolkit';
 import { OfferType, OfferTypeFullData } from '../types/offer-type';
 import { CommentType } from '../types/comment-type';
 
+export const favoritesLoaded = createAction<OfferType[]>('FAVORITES_LOADED');
+
 export const commentsLoaded = createAction<CommentType[]>('COMMENTS_LOADED');
 
 export const changeCity = createAction('CHANGE_CITY', (payload: string) => ({
@@ -58,3 +60,4 @@ export const setLoadingStatus = createAction(
 export const loggedIn = createAction('LOGGED_IN', (payload: string) => ({
   payload,
 }));
+
