@@ -8,6 +8,7 @@ export default function HeaderNav(): JSX.Element {
     useAppSelector((store) => store.reducer.authorizationStatus) ===
     AuthorizationStatus.Yes;
   const userName = useAppSelector((store) => store.reducer.userName);
+  const favoritesCounter = useAppSelector((store) => store.reducer.favoritesCounter);
   const dispatch = useAppDispatch();
   const onSignOutClickHandler = () => dispatch(logout());
 
@@ -18,8 +19,7 @@ export default function HeaderNav(): JSX.Element {
           <Link className='header__nav-link header__nav-link--profile' to={AppPath.FavoritesPage}>
             <div className='header__avatar-wrapper user__avatar-wrapper'></div>
             <span className='header__user-name user__name'>{userName}</span>
-            {/*FIXME: вычислить количество избранных */}
-            <span className='header__favorite-count'>100500</span>
+            <span className='header__favorite-count'>{favoritesCounter}</span>
           </Link>
         </li>
 

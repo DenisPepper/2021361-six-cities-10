@@ -24,6 +24,7 @@ type StateType = {
   offers: OfferType[];
   nearOffers: OfferType[];
   favoriteOffers: OfferType[];
+  favoritesCounter: number;
   comments: CommentType[];
   currentID: number;
   currentSort: string;
@@ -40,6 +41,7 @@ const initialState: StateType = {
   offers: [],
   nearOffers: [],
   favoriteOffers: [],
+  favoritesCounter: 0,
   comments: [],
   currentID: NaN,
   currentSort: DEFAULT_SORT,
@@ -109,5 +111,6 @@ export default createReducer(initialState, (builder) => {
 
   builder.addCase(favoritesLoaded, (state, action) => {
     state.favoriteOffers = action.payload;
+    state.favoritesCounter = action.payload.length;
   });
 });
