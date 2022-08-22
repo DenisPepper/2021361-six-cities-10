@@ -33,6 +33,7 @@ export const ServerRoutes = {
   login: '/login',
   logout: '/logout',
   comments: '/comments',
+  favorite: '/favorite',
 };
 
 export const URL_MARKER_DEFAULT =

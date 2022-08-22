@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { AppPath } from '../../settings';
 
 export default function FavoritesEmpty(): JSX.Element {
   return (
@@ -17,7 +19,7 @@ export default function FavoritesEmpty(): JSX.Element {
         </div>
       </main>
       <footer className='footer'>
-        <a className='footer__logo-link' href='main.html'>
+        <Link className='footer__logo-link' to={AppPath.MainPage}>
           <img
             className='footer__logo'
             src='img/logo.svg'
@@ -25,7 +27,7 @@ export default function FavoritesEmpty(): JSX.Element {
             width={64}
             height={33}
           />
-        </a>
+        </Link>
       </footer>
     </React.Fragment>
   );
