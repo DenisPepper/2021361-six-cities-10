@@ -1,16 +1,19 @@
+import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus } from '../../settings';
 import { CommentType } from '../../types/comment-type';
 import CommentForm from '../comment-form/comment-form';
 import CommentItem from '../comment-item/comment-item';
 
 type CommentFormProps = {
-  comments: CommentType[];
   id: number
 };
 
 const generateKey = (comment: CommentType): string => `${comment.id}${comment.user.id}${comment.date}`;
 
 export default function CommentSection(props: CommentFormProps): JSX.Element {
-  const { comments, id } = props;
+  const { id } = props;
+  const comments = useAppSelector((state) => state.reducer.comments);
+  const authorized = useAppSelector((state) => state.reducer.authorizationStatus) === AuthorizationStatus.Yes;
 
   return (
     <section className='property__reviews reviews'>
@@ -23,8 +26,7 @@ export default function CommentSection(props: CommentFormProps): JSX.Element {
           <CommentItem key={generateKey(comment)} comment={comment} />
         ))}
       </ul>
-
-      <CommentForm id={id}/>
+      {authorized && <CommentForm id={id}/>}
     </section>
   );
 }

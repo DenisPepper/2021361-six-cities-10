@@ -1,6 +1,14 @@
 import { OfferTypeToSort } from './types/offer-type';
 
+export const DECIMAL = 10;
+
+const FULL_PERCENT = 100;
+const FULL_STARS = 5;
+export const RATING_COEF = FULL_PERCENT / FULL_STARS;
+
 export const TIME_OUT_SHOW_ERROR = 5000;
+
+export const DEFAULT_DELAY = 1000;
 
 export enum AuthorizationStatus {
   Yes = 'YES',
@@ -24,6 +32,7 @@ export const ServerRoutes = {
   hotels: '/hotels',
   login: '/login',
   logout: '/logout',
+  comments: '/comments',
 };
 
 export const URL_MARKER_DEFAULT =

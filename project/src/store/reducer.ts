@@ -8,29 +8,42 @@ import {
   setError,
   setLoadingStatus,
   setAuthorizationStatus,
-  loggedIn
+  loggedIn,
+  offerLoaded,
+  offerNotLoaded,
+  spinnerEnabled,
+  commentsLoaded
 } from './action-creaters';
 import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../settings';
+import { CommentType } from '../types/comment-type';
 
 type StateType = {
   city: string;
+  room: OfferType | null;
   offers: OfferType[];
+  nearOffers: OfferType[];
+  comments: CommentType[];
   currentID: number;
   currentSort: string;
   authorizationStatus: string;
   error: string | null;
   offersLoaded: boolean;
+  spinnerDisabled: boolean;
   userName: string;
 };
 
 const initialState: StateType = {
   city: DEFAULT_CITY,
+  room: null,
   offers: [],
+  nearOffers: [],
+  comments: [],
   currentID: NaN,
   currentSort: DEFAULT_SORT,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   offersLoaded: false,
+  spinnerDisabled: false,
   userName: '',
 };
 
@@ -67,5 +80,27 @@ export default createReducer(initialState, (builder) => {
   builder.addCase(loggedIn, (state, action) => {
     state.authorizationStatus = AuthorizationStatus.Yes;
     state.userName = action.payload;
+  });
+
+  builder.addCase(offerLoaded, (state, action) => {
+    state.room = action.payload.room;
+    state.nearOffers = action.payload.nearOffers;
+    state.comments = action.payload.comments;
+    state.spinnerDisabled = true;
+  });
+
+  builder.addCase(offerNotLoaded, (state) => {
+    state.room = null;
+    state.nearOffers = [];
+    state.comments = [];
+    state.spinnerDisabled = true;
+  });
+
+  builder.addCase(spinnerEnabled, (state) => {
+    state.spinnerDisabled = false;
+  });
+
+  builder.addCase(commentsLoaded, (state, action) => {
+    state.comments = action.payload;
   });
 });

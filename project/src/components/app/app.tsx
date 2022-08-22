@@ -6,17 +6,15 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import RoomPage from '../../pages/room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
-import { CommentType } from '../../types/comment-type';
 import Spinner from '../spinner/spinner';
 import { useAppSelector } from '../../hooks';
 
 type AppProps = {
-  comments: CommentType[];
   cities: string[];
 };
 
 export default function App(props: AppProps): JSX.Element {
-  const { comments, cities } = props;
+  const { cities } = props;
   const offersLoaded = useAppSelector((store) => store.reducer.offersLoaded);
 
   return offersLoaded ? (
@@ -34,7 +32,7 @@ export default function App(props: AppProps): JSX.Element {
             }
           />
           <Route path={AppPath.Offer}>
-            <Route path=':id' element={<RoomPage comments={comments} />} />
+            <Route path=':id' element={<RoomPage />} />
           </Route>
           <Route path={AppPath.Page404} element={<Page404></Page404>}></Route>
         </Route>

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { comments } from './mocks/comments';
 import { store } from './store';
 import { CITIES } from './settings';
 import ErrorMessage from './components/error/error';
@@ -19,7 +18,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ErrorMessage />
-      <App cities={CITIES} comments={comments} />
+      <App cities={CITIES}/>
     </Provider>
   </React.StrictMode>
 );

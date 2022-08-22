@@ -1,3 +1,5 @@
+import { CommentType } from './comment-type';
+
 export type OfferType = {
   bedrooms: number;
   city: {
@@ -37,4 +39,10 @@ export type OfferTypeToSort = {
   id: number;
   price: number;
   rating: number;
+};
+
+export type OfferTypeFullData = {
+  room: OfferType;
+  nearOffers: OfferType[];
+  comments: CommentType[];
 };

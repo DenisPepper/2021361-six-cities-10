@@ -1,20 +1,7 @@
-import React, { useState } from 'react';
-import { CommentType } from '../../types/comment-type';
-
-/* FIXME: user.id user.isPro, user.name, user.avatarUrl,  */
-const getDefaultState = (id: number):CommentType =>
-  ({
-    id,
-    user: {
-      id: 12,
-      isPro: false,
-      name: 'UserName',
-      avatarUrl: 'https://10.react.pages.academy/static/avatar/1.jpg',
-    },
-    rating: 0,
-    comment:'text content',
-    date: new Date().toISOString(),
-  });
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { setComment } from '../../store/action-creaters-middleware';
+import { getInteger, debounce } from '../../util';
 
 type CommentFormProps = {
   id: number;
@@ -22,21 +9,49 @@ type CommentFormProps = {
 
 export default function CommentForm(props: CommentFormProps): JSX.Element {
   const { id } = props;
+  const dispatch = useAppDispatch();
+  const [state, setState] = useState({
+    rating: 0,
+    comment: '',
+    isValid: false,
+  });
 
-  const [state, setState] = useState(getDefaultState(id));
+  useEffect(() => {
+    const isValid = state.comment.length >= 50 && state.rating !== 0;
+    if (isValid !== state.isValid) {
+      setState({ ...state, isValid });
+    }
+  }, [state]);
 
-  const onInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
-    setState({ ...state, [name]: value });
+    setState(() => ({ ...state, [name]: getInteger(value) }));
   };
 
-  const onChangeHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = evt.target;
-    setState({ ...state, [name]: value });
+  const onChangeTextHandler = debounce(
+    (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+      const { name, value } = evt.target;
+      setState(() => ({ ...state, [name]: value }));
+    }
+  );
+
+  const onSubmitHandler = (evt: React.SyntheticEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    dispatch(
+      setComment({
+        id,
+        comment: { rating: state.rating, comment: state.comment },
+      })
+    );
   };
 
   return (
-    <form className='reviews__form form' action='#' method='post'>
+    <form
+      onSubmit={onSubmitHandler}
+      className='reviews__form form'
+      action='#'
+      method='post'
+    >
       <label className='reviews__label form__label' htmlFor='review'>
         Your review
       </label>
@@ -48,7 +63,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
           defaultValue={5}
           id='5-stars'
           type='radio'
-          onInput={onInputHandler}
+          onInput={onChangeInputHandler}
         />
         <label
           htmlFor='5-stars'
@@ -66,7 +81,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
           defaultValue={4}
           id='4-stars'
           type='radio'
-          onInput={onInputHandler}
+          onInput={onChangeInputHandler}
         />
         <label
           htmlFor='4-stars'
@@ -84,7 +99,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
           defaultValue={3}
           id='3-stars'
           type='radio'
-          onInput={onInputHandler}
+          onInput={onChangeInputHandler}
         />
         <label
           htmlFor='3-stars'
@@ -102,7 +117,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
           defaultValue={2}
           id='2-stars'
           type='radio'
-          onInput={onInputHandler}
+          onInput={onChangeInputHandler}
         />
         <label
           htmlFor='2-stars'
@@ -120,7 +135,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
           defaultValue={1}
           id='1-star'
           type='radio'
-          onInput={onInputHandler}
+          onInput={onChangeInputHandler}
         />
         <label
           htmlFor='1-star'
@@ -139,7 +154,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
         name='comment'
         placeholder='Tell how was your stay, what you like and what can be improved'
         defaultValue={''}
-        onInput={onChangeHandler}
+        onInput={onChangeTextHandler}
       />
 
       <div className='reviews__button-wrapper'>
@@ -151,7 +166,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
         <button
           className='reviews__submit form__submit button'
           type='submit'
-          disabled
+          disabled={!state.isValid}
         >
           Submit
         </button>
