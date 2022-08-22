@@ -15,12 +15,12 @@ export default function HeaderNav(): JSX.Element {
     <nav className='header__nav'>
       <ul className='header__nav-list'>
         <li className='header__nav-item user'>
-          <a className='header__nav-link header__nav-link--profile' href='#ref'>
+          <Link className='header__nav-link header__nav-link--profile' to={AppPath.FavoritesPage}>
             <div className='header__avatar-wrapper user__avatar-wrapper'></div>
             <span className='header__user-name user__name'>{userName}</span>
             {/*FIXME: вычислить количество избранных */}
             <span className='header__favorite-count'>100500</span>
-          </a>
+          </Link>
         </li>
 
         <li onClick={onSignOutClickHandler} className='header__nav-item'>
