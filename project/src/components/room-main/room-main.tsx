@@ -16,7 +16,7 @@ export default function RoomMain(): JSX.Element {
       <section className='property'>
         <div className='property__gallery-container container'>
           <div className='property__gallery'>
-            {room.images.map((element) => (
+            {room.images.slice(0, 6).map((element) => (
               <RoomImage key={element} src={element}></RoomImage>
             ))}
           </div>
