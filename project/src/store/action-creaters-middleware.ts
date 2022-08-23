@@ -138,7 +138,7 @@ export const changeFavoriteStatus = createAsyncThunk<
   async ({ id, isFavorite }, { dispatch, extra: HTTPClient }) => {
     try {
       const { data } = await HTTPClient.post<OfferType>(`${ServerRoutes.favorite}/${id}/${Number(isFavorite)}`);
-      Number(isFavorite) === 0 ? dispatch(decrementFavoritesOffers(data)) : dispatch(incrementFavoritesOffers(data));
+      isFavorite ? dispatch(incrementFavoritesOffers(data)) : dispatch(decrementFavoritesOffers(data));
     } catch (error) {
       // dispatch();
     }

@@ -118,11 +118,13 @@ export default createReducer(initialState, (builder) => {
 
   builder.addCase(incrementFavoritesOffers, (state, action) => {
     state.favoriteOffers = [...state.favoriteOffers, action.payload];
+    state.offers = state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer);
     state.favoritesCounter = state.favoriteOffers.length;
   });
 
   builder.addCase(decrementFavoritesOffers, (state, action) => {
     state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== action.payload.id);
+    state.offers = state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer);
     state.favoritesCounter = state.favoriteOffers.length;
   });
 });
