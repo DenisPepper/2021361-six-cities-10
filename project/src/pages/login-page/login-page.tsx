@@ -28,7 +28,6 @@ export default function LoginPage(): JSX.Element {
     evt.preventDefault();
     const authData = validate(new FormData(evt.currentTarget));
     dispatch(login(authData));
-    dispatch(getFavorites);
   };
 
   return isAuthorized ? (
