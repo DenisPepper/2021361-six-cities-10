@@ -22,7 +22,7 @@ export default function CommentSection(props: CommentFormProps): JSX.Element {
       </h2>
 
       <ul className='reviews__list'>
-        {comments.map((comment) => (
+        {comments.slice(0, 10).map((comment) => (
           <CommentItem key={generateKey(comment)} comment={comment} />
         ))}
       </ul>
