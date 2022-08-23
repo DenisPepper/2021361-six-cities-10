@@ -39,7 +39,7 @@ export default function FavoriteCard(props: FavoriteCardProps): JSX.Element {
             <b className='place-card__price-value'>€{room.price}</b>
             <span className='place-card__price-text'>/&nbsp;night</span>
           </div>
-          <FavoriteButton isFavorite={room.isFavorite}/>
+          <FavoriteButton isFavorite={room.isFavorite} id={room.id}/>
         </div>
 
         <div className='place-card__rating rating'>
