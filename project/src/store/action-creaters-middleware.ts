@@ -5,7 +5,7 @@ import {
   ServerRoutes,
   TIME_OUT_SHOW_ERROR,
 } from '../settings';
-import { OfferType } from '../types/offer-type';
+import { OfferType, OfferTypePostFavorite } from '../types/offer-type';
 import { CommentType, NewCommentType } from '../types/comment-type';
 import { AppDispatchType, StateType } from '../types/state-type';
 import {
@@ -17,7 +17,9 @@ import {
   offerLoaded,
   offerNotLoaded,
   commentsLoaded,
-  favoritesLoaded
+  favoritesLoaded,
+  incrementFavoritesOffers,
+  decrementFavoritesOffers
 } from './action-creaters';
 import { AuthData, UserData } from '../types/user-auth-types';
 import { dropToken, saveToken } from '../services/token';
@@ -34,7 +36,10 @@ export const setComment = createAsyncThunk<
   AsyncThunkType
 >('SET_COMMENT', async ({ id, comment }, { dispatch, extra: HTTPClient }) => {
   try {
-    const { data } = await HTTPClient.post<CommentType[]>(`${ServerRoutes.comments}/${id}`, comment);
+    const { data } = await HTTPClient.post<CommentType[]>(
+      `${ServerRoutes.comments}/${id}`,
+      comment
+    );
     dispatch(commentsLoaded(data));
   } catch (error) {
     // dispatch();
@@ -121,5 +126,21 @@ export const getFavorites = createAsyncThunk<void, undefined, AsyncThunkType>(
   async (_args, { dispatch, extra: HTTPClient }) => {
     const { data } = await HTTPClient.get<OfferType[]>(ServerRoutes.favorite);
     dispatch(favoritesLoaded(data));
+  }
+);
+
+export const changeFavoriteStatus = createAsyncThunk<
+  void,
+  OfferTypePostFavorite,
+  AsyncThunkType
+>(
+  'CHANGE_FAVORITE_STATUS',
+  async ({ id, isFavorite }, { dispatch, extra: HTTPClient }) => {
+    try {
+      const { data } = await HTTPClient.post<OfferType>(`${ServerRoutes.favorite}/${id}/${Number(isFavorite)}`);
+      Number(isFavorite) === 0 ? dispatch(decrementFavoritesOffers(data)) : dispatch(incrementFavoritesOffers(data));
+    } catch (error) {
+      // dispatch();
+    }
   }
 );

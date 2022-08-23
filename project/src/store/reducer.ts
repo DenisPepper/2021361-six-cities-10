@@ -13,7 +13,9 @@ import {
   offerNotLoaded,
   spinnerEnabled,
   commentsLoaded,
-  favoritesLoaded
+  favoritesLoaded,
+  incrementFavoritesOffers,
+  decrementFavoritesOffers
 } from './action-creaters';
 import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../settings';
 import { CommentType } from '../types/comment-type';
@@ -112,5 +114,15 @@ export default createReducer(initialState, (builder) => {
   builder.addCase(favoritesLoaded, (state, action) => {
     state.favoriteOffers = action.payload;
     state.favoritesCounter = action.payload.length;
+  });
+
+  builder.addCase(incrementFavoritesOffers, (state, action) => {
+    state.favoriteOffers = [...state.favoriteOffers, action.payload];
+    state.favoritesCounter = state.favoriteOffers.length;
+  });
+
+  builder.addCase(decrementFavoritesOffers, (state, action) => {
+    state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== action.payload.id);
+    state.favoritesCounter = state.favoriteOffers.length;
   });
 });

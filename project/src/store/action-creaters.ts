@@ -2,6 +2,14 @@ import { createAction } from '@reduxjs/toolkit';
 import { OfferType, OfferTypeFullData } from '../types/offer-type';
 import { CommentType } from '../types/comment-type';
 
+export const incrementFavoritesOffers = createAction<OfferType>(
+  'INCREMENT_FAVORITES_OFFERS'
+);
+
+export const decrementFavoritesOffers = createAction<OfferType>(
+  'DECREMENT_FAVORITES_OFFERS'
+);
+
 export const favoritesLoaded = createAction<OfferType[]>('FAVORITES_LOADED');
 
 export const commentsLoaded = createAction<CommentType[]>('COMMENTS_LOADED');
@@ -60,4 +68,3 @@ export const setLoadingStatus = createAction(
 export const loggedIn = createAction('LOGGED_IN', (payload: string) => ({
   payload,
 }));
-

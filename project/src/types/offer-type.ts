@@ -41,6 +41,11 @@ export type OfferTypeToSort = {
   rating: number;
 };
 
+export type OfferTypePostFavorite = {
+  id: number;
+  isFavorite: boolean;
+};
+
 export type OfferTypeFullData = {
   room: OfferType;
   nearOffers: OfferType[];
