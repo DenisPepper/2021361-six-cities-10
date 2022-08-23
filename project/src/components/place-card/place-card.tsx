@@ -13,7 +13,12 @@ type PlaceCardProps = {
 
 export default function PlaceCard(props: PlaceCardProps): JSX.Element {
   const { id, callback, isNearList } = props;
-  const onMouseOverHandler = () => callback(id);
+  const onMouseOverHandler = () => {
+    if (!isNearList) {
+      callback(id);
+    }
+  };
+
   const offer = useAppSelector((store) =>
     store.reducer.offers.find((e) => e.id === id)
   );

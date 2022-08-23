@@ -6,6 +6,9 @@ import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, ICON_SIZE, DEFAULT_MAP_SETTINGS
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks';
 import { StateType } from '../../types/state-type';
+import { useParams } from 'react-router-dom';
+import { getInteger } from '../../util';
+
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -19,15 +22,23 @@ const currentCustomIcon = new Icon({
   iconAnchor: [ICON_SIZE / 2, ICON_SIZE],
 });
 
-const selectLocations = (store: StateType) => {
+const selectCityLocations = (store: StateType) => {
   const city = store.reducer.city;
   const offers = store.reducer.offers.filter((offer) => offer.city.name === city);
   return offers.map((offer) => ({location: offer.location, id: offer.id, cityLocation: offer.city.location}));
 };
 
+const selectNearLocations = (id: number) => (store: StateType) => {
+  const nearLocations = store.reducer.nearOffers.map(
+    (offer) => ({location: offer.location, id: offer.id, cityLocation: offer.city.location}));
+  const thisOffer = store.reducer.offers.find((offer) => offer.id === id);
+  return [...nearLocations, {location: thisOffer?.location, id, cityLocation: thisOffer?.city.location}];
+};
+
 export default function Map(): JSX.Element {
-  const offersLocations = useAppSelector(selectLocations);
-  const currentID = useAppSelector((state) => state.reducer.currentID);
+  const { id: idFromPath } = useParams();
+  const offersLocations = useAppSelector(idFromPath ? selectNearLocations(getInteger(idFromPath)) : selectCityLocations);
+  const currentID = useAppSelector((state) => state.reducer.currentID) || getInteger(idFromPath);
   const location = offersLocations[0].cityLocation || DEFAULT_MAP_SETTINGS;
 
   const mapRef = useRef(null);
@@ -38,7 +49,9 @@ export default function Map(): JSX.Element {
     }
     map.panTo({lat: location.latitude, lng: location.longitude});
     offersLocations.forEach((element) => {
-      createMarker(element.location, element.id, currentID).addTo(map);
+      if (element.location) {
+        createMarker(element.location, element.id, currentID).addTo(map);
+      }
     });
   }, [map, offersLocations, location.latitude, location.longitude, currentID]);
   return <section style={{height: '600px'}} ref={mapRef} className='cities__map map'></section>;
