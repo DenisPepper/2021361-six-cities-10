@@ -17,3 +17,15 @@ export const debounce = (callback: C, delay = DEFAULT_DELAY) => {
     timeoutId = setTimeout(() => callback(value), delay);
   };
 };
+
+export const getRandomInteger = (min: number, max: number): number => {
+  if (!Number.isInteger(min) || !Number.isInteger(max)) {
+    throw new Error('one of the params is not an integer');
+  }
+  if (min < 0 || max <= min) {
+    throw new Error(
+      'params do not meet the conditions: min, max > 0, max > min'
+    );
+  }
+  return min + Math.floor(Math.random() * (max - min + 1));
+};

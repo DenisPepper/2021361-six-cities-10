@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router-dom';
-
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AuthorizationStatus, AppPath } from '../../settings';
+import { AuthorizationStatus, AppPath, CITIES } from '../../settings';
 import { login } from '../../store/action-creaters-middleware';
 import LoginConteiner from '../../components/login-conteiner/login-conteiner';
+import { getRandomInteger } from '../../util';
 
 const throwError = (msg: string) => {
   throw new Error(msg);
@@ -20,10 +20,14 @@ const validate = (form: FormData) => ({
 });
 
 export default function LoginPage(): JSX.Element {
+  const city = CITIES[getRandomInteger(0, CITIES.length - 1)];
+
   const dispatch = useAppDispatch();
+
   const isAuthorized =
     useAppSelector((store) => store.reducer.authorizationStatus) ===
     AuthorizationStatus.Yes;
+
   const onSubmitHandler = (evt: React.SyntheticEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const authData = validate(new FormData(evt.currentTarget));
@@ -35,6 +39,6 @@ export default function LoginPage(): JSX.Element {
   return isAuthorized ? (
     <Navigate to={AppPath.MainPage} />
   ) : (
-    <LoginConteiner callback={onSubmitHandler} />
+    <LoginConteiner callback={onSubmitHandler} city={city}/>
   );
 }

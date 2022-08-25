@@ -1,11 +1,19 @@
+import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
+import { useAppDispatch } from '../../hooks';
+import { AppPath } from '../../settings';
+import { changeCity } from '../../store/action-creaters';
 
 type LoginProps = {
   callback: (evt: React.SyntheticEvent<HTMLFormElement>) => void;
+  city: string;
 };
 
 export default function LoginConteiner(props: LoginProps) {
-  const { callback } = props;
+  const { callback, city } = props;
+  const dispatch = useAppDispatch();
+  const onClickHandler = () => dispatch(changeCity(city));
+
   return (
     <div className='page page--gray page--login'>
       <Header isLoginPage />
@@ -49,9 +57,13 @@ export default function LoginConteiner(props: LoginProps) {
           </section>
           <section className='locations locations--login locations--current'>
             <div className='locations__item'>
-              <a className='locations__item-link' href='#ref'>
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                onClick={onClickHandler}
+                className='locations__item-link'
+                to={AppPath.MainPage}
+              >
+                <span>{city}</span>
+              </Link>
             </div>
           </section>
         </div>
