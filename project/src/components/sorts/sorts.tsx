@@ -13,9 +13,9 @@ export default function Sorts(props: SortsProps): JSX.Element {
   const [isOpened, setOpened] = useState(false);
   const dispath = useAppDispatch();
 
-  const onClickHandler = () => setOpened(!isOpened);
+  const handleSortClick = () => setOpened(!isOpened);
 
-  const onSelectHandler = (select: string) => {
+  const handleSortSelect = (select: string) => {
     if (select !== currentSort) {
       dispath(setCurrentSort(select));
     }
@@ -26,7 +26,7 @@ export default function Sorts(props: SortsProps): JSX.Element {
     <form className='places__sorting' action='#' method='get'>
       <span className='places__sorting-caption'>Sort by</span>
       <span
-        onClick={onClickHandler}
+        onClick={handleSortClick}
         className='places__sorting-type'
         tabIndex={0}
       >
@@ -41,7 +41,7 @@ export default function Sorts(props: SortsProps): JSX.Element {
             key={sort}
             sort={sort}
             currentSort={currentSort}
-            callback={onSelectHandler}
+            callback={handleSortSelect}
           />
         ))}
       </ul>

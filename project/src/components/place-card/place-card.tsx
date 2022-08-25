@@ -13,7 +13,7 @@ type PlaceCardProps = {
 
 export default function PlaceCard(props: PlaceCardProps): JSX.Element {
   const { id, callback, isNearList } = props;
-  const onMouseOverHandler = () => {
+  const handleCardOnMouseOver = () => {
     if (!isNearList) {
       callback(id);
     }
@@ -28,7 +28,7 @@ export default function PlaceCard(props: PlaceCardProps): JSX.Element {
       className={`${
         isNearList ? 'near-places__card' : 'cities__card'
       } place-card`}
-      onMouseOver={onMouseOverHandler}
+      onMouseOver={handleCardOnMouseOver}
     >
       {offer.isPremium ? (
         <div className='place-card__mark'>

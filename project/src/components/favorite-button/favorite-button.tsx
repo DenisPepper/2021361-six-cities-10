@@ -18,7 +18,7 @@ export default function FavoriteButton(
     useAppSelector((store) => store.reducer.authorizationStatus) ===
     AuthorizationStatus.Yes;
 
-  const onClickHandler = () => {
+  const handleButtonClick = () => {
     isAuthorized
       ? dispatch(changeFavoriteStatus({ id, isFavorite: !isFavorite }))
       : navigate(AppPath.LoginPage);
@@ -26,7 +26,7 @@ export default function FavoriteButton(
 
   return (
     <button
-      onClick={onClickHandler}
+      onClick={handleButtonClick}
       className={`place-card__bookmark-button ${
         isFavorite ? 'place-card__bookmark-button--active' : ''
       } button`}

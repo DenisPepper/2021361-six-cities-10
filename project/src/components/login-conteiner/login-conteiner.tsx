@@ -12,7 +12,7 @@ type LoginProps = {
 export default function LoginConteiner(props: LoginProps) {
   const { callback, city } = props;
   const dispatch = useAppDispatch();
-  const onClickHandler = () => dispatch(changeCity(city));
+  const handleCityClick = () => dispatch(changeCity(city));
 
   return (
     <div className='page page--gray page--login'>
@@ -58,7 +58,7 @@ export default function LoginConteiner(props: LoginProps) {
           <section className='locations locations--login locations--current'>
             <div className='locations__item'>
               <Link
-                onClick={onClickHandler}
+                onClick={handleCityClick}
                 className='locations__item-link'
                 to={AppPath.MainPage}
               >

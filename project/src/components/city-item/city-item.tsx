@@ -7,7 +7,7 @@ type CityItemProps = {
 export default function CityItem(props: CityItemProps): JSX.Element {
   const { city, active, callback } = props;
 
-  const onClickHandler = (evt: React.MouseEvent<HTMLElement>) => {
+  const handleItemClick = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
     callback(String(evt.currentTarget.textContent));
   };
@@ -16,7 +16,7 @@ export default function CityItem(props: CityItemProps): JSX.Element {
     <li className='locations__item'>
       <a
         href='ref'
-        onClick={onClickHandler}
+        onClick={handleItemClick}
         className={`locations__item-link tabs__item ${active ? 'tabs__item--active' : ''}`}
       >
         <span>{city}</span>

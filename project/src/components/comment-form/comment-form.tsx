@@ -32,19 +32,19 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
     }
   }, [state]);
 
-  const onChangeInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
     setState(() => ({ ...state, [name]: getInteger(value) }));
   };
 
-  const onChangeTextHandler = debounce(
+  const handleTextChange = debounce(
     (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
       const { name, value } = evt.target;
       setState(() => ({ ...state, [name]: value }));
     }
   );
 
-  const onSubmitHandler = (evt: React.SyntheticEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: React.SyntheticEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch(
       setComment({
@@ -57,7 +57,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
 
   return (
     <form
-      onSubmit={onSubmitHandler}
+      onSubmit={handleFormSubmit}
       className='reviews__form form'
       action='#'
       method='post'
@@ -70,7 +70,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
         {RATINGS.map((rating) => (
           <CommentFormInputRating
             key={rating.value}
-            callback={onChangeInputHandler}
+            callback={handleInputChange}
             title={rating.title}
             count={rating.value}
           />
@@ -83,7 +83,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
         name='comment'
         placeholder='Tell how was your stay, what you like and what can be improved'
         defaultValue={''}
-        onInput={onChangeTextHandler}
+        onInput={handleTextChange}
       />
 
       <div className='reviews__button-wrapper'>

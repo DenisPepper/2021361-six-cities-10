@@ -10,7 +10,7 @@ export default function HeaderNav(): JSX.Element {
   const userName = useAppSelector((store) => store.reducer.userName);
   const favoritesCounter = useAppSelector((store) => store.reducer.favoritesCounter);
   const dispatch = useAppDispatch();
-  const onSignOutClickHandler = () => dispatch(logout());
+  const handleSignOutClick = () => dispatch(logout());
 
   return isAuthorized ? (
     <nav className='header__nav'>
@@ -23,7 +23,7 @@ export default function HeaderNav(): JSX.Element {
           </Link>
         </li>
 
-        <li onClick={onSignOutClickHandler} className='header__nav-item'>
+        <li onClick={handleSignOutClick} className='header__nav-item'>
           <a className='header__nav-link' href='#ref'>
             <span className='header__signout'>Sign out</span>
           </a>

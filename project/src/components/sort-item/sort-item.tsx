@@ -7,13 +7,13 @@ type SortItemProps = {
 export default function SortItem(props: SortItemProps): JSX.Element {
   const { sort, currentSort, callback } = props;
 
-  const onClickHandler = (evt: React.MouseEvent<HTMLElement>) => {
+  const handleItemClick = (evt: React.MouseEvent<HTMLElement>) => {
     callback(String(evt.currentTarget.textContent));
   };
 
   return (
     <li
-      onClick={onClickHandler}
+      onClick={handleItemClick}
       className={`places__option ${isActive(sort, currentSort)}`}
       tabIndex={0}
     >
