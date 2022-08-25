@@ -1,15 +1,15 @@
 type CityItemProps = {
   city: string;
-  callback: (city: string) => void;
+  onItemClick: (city: string) => void;
   active: boolean;
 };
 
 export default function CityItem(props: CityItemProps): JSX.Element {
-  const { city, active, callback } = props;
+  const { city, active, onItemClick } = props;
 
   const handleItemClick = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
-    callback(String(evt.currentTarget.textContent));
+    onItemClick(String(evt.currentTarget.textContent));
   };
 
   return (
@@ -17,7 +17,9 @@ export default function CityItem(props: CityItemProps): JSX.Element {
       <a
         href='ref'
         onClick={handleItemClick}
-        className={`locations__item-link tabs__item ${active ? 'tabs__item--active' : ''}`}
+        className={`locations__item-link tabs__item ${
+          active ? 'tabs__item--active' : ''
+        }`}
       >
         <span>{city}</span>
       </a>

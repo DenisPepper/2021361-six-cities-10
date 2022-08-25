@@ -1,7 +1,7 @@
 import React from 'react';
 
 type RatingProps = {
-  callback: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  onRatingInput: (evt: React.ChangeEvent<HTMLInputElement>) => void;
   title: string;
   count: number;
 };
@@ -9,7 +9,7 @@ type RatingProps = {
 export default function CommentFormInputRating(
   props: RatingProps
 ): JSX.Element {
-  const { callback, title, count } = props;
+  const { onRatingInput, title, count } = props;
   return (
     <React.Fragment>
       <input
@@ -18,7 +18,7 @@ export default function CommentFormInputRating(
         defaultValue={count}
         id={`${count}-star`}
         type='radio'
-        onInput={callback}
+        onInput={onRatingInput}
       />
       <label
         htmlFor={`${count}-star`}

@@ -49,8 +49,8 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
     dispatch(
       setComment({
         id,
-        comment: { rating: state.rating, comment: state.comment},
-        form: evt.currentTarget
+        comment: { rating: state.rating, comment: state.comment },
+        form: evt.currentTarget,
       })
     );
   };
@@ -70,7 +70,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
         {RATINGS.map((rating) => (
           <CommentFormInputRating
             key={rating.value}
-            callback={handleInputChange}
+            onRatingInput={handleInputChange}
             title={rating.title}
             count={rating.value}
           />

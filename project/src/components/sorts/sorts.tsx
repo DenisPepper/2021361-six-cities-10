@@ -9,7 +9,7 @@ type SortsProps = {
 };
 
 export default function Sorts(props: SortsProps): JSX.Element {
-  const {currentSort} = props;
+  const { currentSort } = props;
   const [isOpened, setOpened] = useState(false);
   const dispath = useAppDispatch();
 
@@ -41,7 +41,7 @@ export default function Sorts(props: SortsProps): JSX.Element {
             key={sort}
             sort={sort}
             currentSort={currentSort}
-            callback={handleSortSelect}
+            onSortSelect={handleSortSelect}
           />
         ))}
       </ul>

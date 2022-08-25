@@ -31,7 +31,7 @@ export default function LoginPage(): JSX.Element {
   const handleFormSubmit = (evt: React.SyntheticEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const authData = validate(new FormData(evt.currentTarget));
-    if(authData.password.match(/(?=.*[a-zа-яё]|.*[A-ZА-ЯЁ])(?=.*\d).*/)) {
+    if (authData.password.match(/(?=.*[a-zа-яё]|.*[A-ZА-ЯЁ])(?=.*\d).*/)) {
       dispatch(login(authData));
     }
   };
@@ -39,6 +39,6 @@ export default function LoginPage(): JSX.Element {
   return isAuthorized ? (
     <Navigate to={AppPath.MainPage} />
   ) : (
-    <LoginConteiner callback={handleFormSubmit} city={city}/>
+    <LoginConteiner onFormSubmit={handleFormSubmit} city={city} />
   );
 }

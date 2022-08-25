@@ -5,12 +5,12 @@ import { AppPath } from '../../settings';
 import { changeCity } from '../../store/action-creaters';
 
 type LoginProps = {
-  callback: (evt: React.SyntheticEvent<HTMLFormElement>) => void;
+  onFormSubmit: (evt: React.SyntheticEvent<HTMLFormElement>) => void;
   city: string;
 };
 
 export default function LoginConteiner(props: LoginProps) {
-  const { callback, city } = props;
+  const { onFormSubmit, city } = props;
   const dispatch = useAppDispatch();
   const handleCityClick = () => dispatch(changeCity(city));
 
@@ -22,7 +22,7 @@ export default function LoginConteiner(props: LoginProps) {
           <section className='login'>
             <h1 className='login__title'>Sign in</h1>
             <form
-              onSubmit={callback}
+              onSubmit={onFormSubmit}
               className='login__form form'
               action='#'
               method='post'

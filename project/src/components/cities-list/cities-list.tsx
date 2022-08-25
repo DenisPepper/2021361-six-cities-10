@@ -11,7 +11,7 @@ export default function CitiesList(props: CitiesListProps): JSX.Element {
   const dispatch = useAppDispatch();
   const currentCity = useAppSelector((state) => state.reducer.city);
 
-  const callback = (value: string) => {
+  const onItemClick = (value: string) => {
     dispatch(changeCity(value));
   };
 
@@ -24,7 +24,7 @@ export default function CitiesList(props: CitiesListProps): JSX.Element {
               key={city}
               city={city}
               active={city === currentCity}
-              callback={callback}
+              onItemClick={onItemClick}
             />
           ))}
         </ul>
@@ -32,5 +32,3 @@ export default function CitiesList(props: CitiesListProps): JSX.Element {
     </div>
   );
 }
-
-
