@@ -23,6 +23,7 @@ import {
 } from './action-creaters';
 import { AuthData, UserData } from '../types/user-auth-types';
 import { dropToken, saveToken } from '../services/token';
+import { AppErrorHandler } from '../services/app-error-handler';
 
 type AsyncThunkType = {
   dispatch: AppDispatchType;
@@ -34,15 +35,16 @@ export const setComment = createAsyncThunk<
   void,
   NewCommentType,
   AsyncThunkType
->('SET_COMMENT', async ({ id, comment }, { dispatch, extra: HTTPClient }) => {
+>('SET_COMMENT', async ({ id, comment, form }, { dispatch, extra: HTTPClient }) => {
   try {
     const { data } = await HTTPClient.post<CommentType[]>(
       `${ServerRoutes.comments}/${id}`,
       comment
     );
     dispatch(commentsLoaded(data));
+    form.reset();
   } catch (error) {
-    // dispatch();
+    AppErrorHandler('Your comment has not been sent. Try again later!');
   }
 });
 

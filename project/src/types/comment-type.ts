@@ -14,4 +14,5 @@ export type CommentType = {
 export type NewCommentType = {
   id: number;
   comment: { comment: string; rating: number };
+  form: HTMLFormElement;
 };
