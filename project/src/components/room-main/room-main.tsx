@@ -5,12 +5,24 @@ import CommentSection from '../../components/comments-section/comments-section';
 import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import { useAppSelector } from '../../hooks';
-import { DEFAULT_SORT } from '../../settings';
+import { AppPath, AuthorizationStatus, DEFAULT_SORT } from '../../settings';
 import { shallowEqual } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { changeFavoriteStatus } from '../../store/action-creaters-middleware';
 
 export default function RoomMain(): JSX.Element {
-  const room = useAppSelector((state) => state.reducer.room, shallowEqual);
-  const nearOffers = useAppSelector((state) => state.reducer.nearOffers, shallowEqual);
+  const room = useAppSelector((state) => state.reducer.room);
+  const nearOffers = useAppSelector((state) => state.reducer.nearOffers,shallowEqual);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isAuthorized = useAppSelector((store) => store.reducer.authorizationStatus,shallowEqual) === AuthorizationStatus.Yes;
+
+  const handleButtonClick = () => {
+    isAuthorized
+      ? dispatch(changeFavoriteStatus({ id: Number(room?.id), isFavorite: !room?.isFavorite }))
+      : navigate(AppPath.LoginPage);
+  };
 
   return room ? (
     <main className='page__main page__main--property'>
@@ -34,7 +46,10 @@ export default function RoomMain(): JSX.Element {
             <div className='property__name-wrapper'>
               <h1 className='property__name'>{room.title}</h1>
               <button
-                className='property__bookmark-button button'
+                onClick={handleButtonClick}
+                className={`property__bookmark-button ${
+                  room.isFavorite ? 'property__bookmark-button--active' : ''
+                } button`}
                 type='button'
               >
                 <svg className='property__bookmark-icon' width={31} height={33}>

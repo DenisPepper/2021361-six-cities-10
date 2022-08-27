@@ -15,7 +15,7 @@ import {
   commentsLoaded,
   favoritesLoaded,
   incrementFavoritesOffers,
-  decrementFavoritesOffers
+  decrementFavoritesOffers,
 } from './action-creaters';
 import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../settings';
 import { CommentType } from '../types/comment-type';
@@ -118,13 +118,25 @@ export default createReducer(initialState, (builder) => {
 
   builder.addCase(incrementFavoritesOffers, (state, action) => {
     state.favoriteOffers = [...state.favoriteOffers, action.payload];
-    state.offers = state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer);
+    state.offers = state.offers.map((offer) =>
+      offer.id === action.payload.id ? action.payload : offer
+    );
     state.favoritesCounter = state.favoriteOffers.length;
+    if (state.room && state.room.id === action.payload.id) {
+      state.room = action.payload;
+    }
   });
 
   builder.addCase(decrementFavoritesOffers, (state, action) => {
-    state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== action.payload.id);
-    state.offers = state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer);
+    state.favoriteOffers = state.favoriteOffers.filter(
+      (offer) => offer.id !== action.payload.id
+    );
+    state.offers = state.offers.map((offer) =>
+      offer.id === action.payload.id ? action.payload : offer
+    );
     state.favoritesCounter = state.favoriteOffers.length;
+    if (state.room && state.room.id === action.payload.id) {
+      state.room = action.payload;
+    }
   });
 });
