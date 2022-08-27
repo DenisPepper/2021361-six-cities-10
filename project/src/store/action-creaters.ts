@@ -14,9 +14,12 @@ export const favoritesLoaded = createAction<OfferType[]>('FAVORITES_LOADED');
 
 export const commentsLoaded = createAction<CommentType[]>('COMMENTS_LOADED');
 
-export const changeCity = createAction('CHANGE_CITY', (payload: string) => ({
-  payload,
-}));
+export const setCurrentCity = createAction(
+  'CHANGE_CITY',
+  (payload: string) => ({
+    payload,
+  })
+);
 
 export const setOffers = createAction('SET_OFFERS', (payload: OfferType[]) => ({
   payload,

@@ -93,9 +93,9 @@ export const checkAuthorizationStatus = createAsyncThunk<
   }
 });
 
-export const login = createAsyncThunk<void, AuthData, AsyncThunkType>(
+export const login = createAsyncThunk<string, AuthData, AsyncThunkType>(
   'LOGIN',
-  async ({ login: email, password }, { dispatch, extra: HTTPClient }) => {
+  async ({ login: email, password }, { extra: HTTPClient }) => {
     const {
       data: { token, email: userEmail },
     } = await HTTPClient.post<UserData>(ServerRoutes.login, {
@@ -103,7 +103,7 @@ export const login = createAsyncThunk<void, AuthData, AsyncThunkType>(
       password,
     });
     saveToken(token);
-    dispatch(loggedIn(userEmail));
+    return userEmail;
   }
 );
 

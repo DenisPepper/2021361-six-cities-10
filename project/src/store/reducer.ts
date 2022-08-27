@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferType } from '../types/offer-type';
 import {
-  changeCity,
+  setCurrentCity,
   setOffers,
   setCurrentSort,
   setCurrentID,
@@ -21,7 +21,7 @@ import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../settings';
 import { CommentType } from '../types/comment-type';
 
 type StateType = {
-  city: string;
+  currentcity: string;
   room: OfferType | null;
   offers: OfferType[];
   nearOffers: OfferType[];
@@ -38,7 +38,7 @@ type StateType = {
 };
 
 const initialState: StateType = {
-  city: DEFAULT_CITY,
+  currentcity: DEFAULT_CITY,
   room: null,
   offers: [],
   nearOffers: [],
@@ -55,8 +55,8 @@ const initialState: StateType = {
 };
 
 export default createReducer(initialState, (builder) => {
-  builder.addCase(changeCity, (state, action) => {
-    state.city = action.payload;
+  builder.addCase(setCurrentCity, (state, action) => {
+    state.currentcity = action.payload;
   });
 
   builder.addCase(setOffers, (state, action) => {
@@ -78,15 +78,6 @@ export default createReducer(initialState, (builder) => {
 
   builder.addCase(setLoadingStatus, (state, action) => {
     state.offersLoaded = action.payload;
-  });
-
-  builder.addCase(setAuthorizationStatus, (state, action) => {
-    state.authorizationStatus = action.payload;
-  });
-
-  builder.addCase(loggedIn, (state, action) => {
-    state.authorizationStatus = AuthorizationStatus.Yes;
-    state.userName = action.payload;
   });
 
   builder.addCase(offerLoaded, (state, action) => {
