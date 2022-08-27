@@ -24,6 +24,14 @@ export enum AppPath {
   Offer = '/offer/',
 }
 
+export enum NameSpace {
+  Auth = 'AUTH',
+  Current = 'CURRENT',
+  Error = 'ERROR',
+  Favorites = 'FAVORITES',
+  Offers = 'OFFERS'
+}
+
 export const BASE_URL = 'https://10.react.pages.academy/six-cities';
 
 export const REQUEST_TIMEOUT = 5000;
@@ -61,20 +69,23 @@ export const DEFAULT_MAP_SETTINGS = {
   zoom: 13,
 };
 
-export const SORTS:string[] = [
+export const SORTS: string[] = [
   'Popular',
   'Price: low to high',
   'Price: high to low',
   'Top rated first',
 ];
 
-type Compare = (a: OfferTypeToSort, b: OfferTypeToSort) => number;
+type Comparator = (a: OfferTypeToSort, b: OfferTypeToSort) => number;
 
-export const SortsRules: Record<string, Compare> = {
-  'Popular': (a: OfferTypeToSort, b: OfferTypeToSort) => a.id - b.id,
-  'Price: low to high': (a: OfferTypeToSort, b: OfferTypeToSort) => a.price - b.price,
-  'Price: high to low': (a: OfferTypeToSort, b: OfferTypeToSort) => b.price - a.price,
-  'Top rated first': (a: OfferTypeToSort, b: OfferTypeToSort) => b.rating - a.rating,
+export const SortsRules: Record<string, Comparator> = {
+  Popular: (a: OfferTypeToSort, b: OfferTypeToSort) => a.id - b.id,
+  'Price: low to high': (a: OfferTypeToSort, b: OfferTypeToSort) =>
+    a.price - b.price,
+  'Price: high to low': (a: OfferTypeToSort, b: OfferTypeToSort) =>
+    b.price - a.price,
+  'Top rated first': (a: OfferTypeToSort, b: OfferTypeToSort) =>
+    b.rating - a.rating,
 };
 
 export const DEFAULT_SORT = SORTS[0];
