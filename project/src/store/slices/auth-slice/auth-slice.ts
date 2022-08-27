@@ -5,7 +5,12 @@ import {
   login,
 } from '../../action-creaters-middleware';
 
-const initialState = {
+type StateType = {
+  authorizationStatus: string;
+  userName: string;
+};
+
+const initialState: StateType = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userName: '',
 };
