@@ -4,6 +4,7 @@ import MainPageFilledSection from '../main-page-filled-section/main-page-filled-
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
 import { StateType } from '../../types/state-type';
+import { shallowEqual } from 'react-redux';
 
 type MainPageProps = {
   cities: string[];
@@ -17,7 +18,7 @@ const selectSomeOffersData = (store: StateType) => {
 
 export default function MainPage(props: MainPageProps): JSX.Element {
   const { cities } = props;
-  const offers = useAppSelector(selectSomeOffersData);
+  const offers = useAppSelector(selectSomeOffersData, shallowEqual);
   const isEmpty = offers.length === 0;
 
   return (

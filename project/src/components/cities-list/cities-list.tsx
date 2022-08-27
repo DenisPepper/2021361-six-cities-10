@@ -1,6 +1,7 @@
 import CityItem from '../city-item/city-item';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity } from '../../store/action-creaters';
+import { shallowEqual } from 'react-redux';
 
 type CitiesListProps = {
   cities: string[];
@@ -9,7 +10,7 @@ type CitiesListProps = {
 export default function CitiesList(props: CitiesListProps): JSX.Element {
   const { cities } = props;
   const dispatch = useAppDispatch();
-  const currentCity = useAppSelector((state) => state.reducer.city);
+  const currentCity = useAppSelector((state) => state.reducer.city, shallowEqual);
 
   const onItemClick = (value: string) => {
     dispatch(changeCity(value));

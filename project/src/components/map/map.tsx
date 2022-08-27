@@ -8,6 +8,7 @@ import { useAppSelector } from '../../hooks';
 import { StateType } from '../../types/state-type';
 import { useParams } from 'react-router-dom';
 import { getInteger } from '../../util';
+import { shallowEqual } from 'react-redux';
 
 
 const defaultCustomIcon = new Icon({
@@ -37,8 +38,8 @@ const selectNearLocations = (id: number) => (store: StateType) => {
 
 export default function Map(): JSX.Element {
   const { id: idFromPath } = useParams();
-  const offersLocations = useAppSelector(idFromPath ? selectNearLocations(getInteger(idFromPath)) : selectCityLocations);
-  const currentID = useAppSelector((state) => state.reducer.currentID) || getInteger(idFromPath);
+  const offersLocations = useAppSelector(idFromPath ? selectNearLocations(getInteger(idFromPath)) : selectCityLocations, shallowEqual);
+  const currentID = useAppSelector((state) => state.reducer.currentID, shallowEqual) || getInteger(idFromPath);
   const location = offersLocations[0].cityLocation || DEFAULT_MAP_SETTINGS;
 
   const mapRef = useRef(null);

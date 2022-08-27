@@ -4,6 +4,7 @@ import { CommentType } from '../../types/comment-type';
 import CommentForm from '../comment-form/comment-form';
 import CommentItem from '../comment-item/comment-item';
 import dayjs from 'dayjs';
+import { shallowEqual } from 'react-redux';
 
 type CommentFormProps = {
   id: number
@@ -15,8 +16,8 @@ const comparator = (a: CommentType, b: CommentType) => dayjs(b.date).diff(dayjs(
 
 export default function CommentSection(props: CommentFormProps): JSX.Element {
   const { id } = props;
-  const comments = useAppSelector((state) => state.reducer.comments);
-  const authorized = useAppSelector((state) => state.reducer.authorizationStatus) === AuthorizationStatus.Yes;
+  const comments = useAppSelector((state) => state.reducer.comments, shallowEqual);
+  const authorized = useAppSelector((state) => state.reducer.authorizationStatus, shallowEqual) === AuthorizationStatus.Yes;
 
   return (
     <section className='property__reviews reviews'>

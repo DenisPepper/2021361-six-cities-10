@@ -2,13 +2,14 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { AuthorizationStatus, AppPath } from '../../settings';
 import { Link } from 'react-router-dom';
 import { logout } from '../../store/action-creaters-middleware';
+import { shallowEqual } from 'react-redux';
 
 export default function HeaderNav(): JSX.Element {
   const isAuthorized =
     useAppSelector((store) => store.reducer.authorizationStatus) ===
     AuthorizationStatus.Yes;
-  const userName = useAppSelector((store) => store.reducer.userName);
-  const favoritesCounter = useAppSelector((store) => store.reducer.favoritesCounter);
+  const userName = useAppSelector((store) => store.reducer.userName, shallowEqual);
+  const favoritesCounter = useAppSelector((store) => store.reducer.favoritesCounter, shallowEqual);
   const dispatch = useAppDispatch();
   const handleSignOutClick = () => dispatch(logout());
 

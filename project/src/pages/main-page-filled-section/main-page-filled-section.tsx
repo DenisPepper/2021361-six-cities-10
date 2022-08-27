@@ -3,6 +3,7 @@ import Sorts from '../../components/sorts/sorts';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import { useAppSelector } from '../../hooks';
 import { OfferTypeToSort } from '../../types/offer-type';
+import { shallowEqual } from 'react-redux';
 
 type MainPageFilledSectionProps = {
   offers: OfferTypeToSort[];
@@ -12,7 +13,7 @@ export default function MainPageFilledSection(
   props: MainPageFilledSectionProps
 ): JSX.Element {
   const { offers } = props;
-  const currentSort = useAppSelector((store) => store.reducer.currentSort);
+  const currentSort = useAppSelector((store) => store.reducer.currentSort, shallowEqual);
 
   return (
     <div className='cities__places-container container'>

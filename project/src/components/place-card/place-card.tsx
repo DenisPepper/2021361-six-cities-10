@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import Page404 from '../../pages/404-page/404-page';
 import FavoriteButton from '../../components/favorite-button/favorite-button';
+import { shallowEqual } from 'react-redux';
 
 type PlaceCardProps = {
   id: number;
@@ -20,8 +21,7 @@ export default function PlaceCard(props: PlaceCardProps): JSX.Element {
   };
 
   const offer = useAppSelector((store) =>
-    store.reducer.offers.find((e) => e.id === id)
-  );
+    store.reducer.offers.find((e) => e.id === id), shallowEqual);
 
   return offer ? (
     <article

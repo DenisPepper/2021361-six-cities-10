@@ -1,3 +1,4 @@
+import { shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus, AppPath } from '../../settings';
@@ -15,7 +16,7 @@ export default function FavoriteButton(
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isAuthorized =
-    useAppSelector((store) => store.reducer.authorizationStatus) ===
+    useAppSelector((store) => store.reducer.authorizationStatus, shallowEqual) ===
     AuthorizationStatus.Yes;
 
   const handleButtonClick = () => {

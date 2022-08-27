@@ -8,6 +8,7 @@ import RoomPage from '../../pages/room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
 import Spinner from '../spinner/spinner';
 import { useAppSelector } from '../../hooks';
+import { shallowEqual } from 'react-redux';
 
 type AppProps = {
   cities: string[];
@@ -15,7 +16,7 @@ type AppProps = {
 
 export default function App(props: AppProps): JSX.Element {
   const { cities } = props;
-  const offersLoaded = useAppSelector((store) => store.reducer.offersLoaded);
+  const offersLoaded = useAppSelector((store) => store.reducer.offersLoaded, shallowEqual);
 
   return offersLoaded ? (
     <BrowserRouter>

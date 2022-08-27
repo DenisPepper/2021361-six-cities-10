@@ -7,10 +7,11 @@ import { useEffect } from 'react';
 import { spinnerEnabled } from '../../store/action-creaters';
 import RoomMain from '../../components/room-main/room-main';
 import { getInteger } from '../../util';
+import { shallowEqual } from 'react-redux';
 
 export default function RoomPage(): JSX.Element {
   const { id } = useParams();
-  const spinnerDisabled = useAppSelector((store) => store.reducer.spinnerDisabled);
+  const spinnerDisabled = useAppSelector((store) => store.reducer.spinnerDisabled, shallowEqual);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

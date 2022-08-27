@@ -4,6 +4,7 @@ import { AuthorizationStatus, AppPath, CITIES } from '../../settings';
 import { login } from '../../store/action-creaters-middleware';
 import LoginConteiner from '../../components/login-conteiner/login-conteiner';
 import { getRandomInteger } from '../../util';
+import { shallowEqual } from 'react-redux';
 
 const throwError = (msg: string) => {
   throw new Error(msg);
@@ -25,7 +26,7 @@ export default function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const isAuthorized =
-    useAppSelector((store) => store.reducer.authorizationStatus) ===
+    useAppSelector((store) => store.reducer.authorizationStatus, shallowEqual) ===
     AuthorizationStatus.Yes;
 
   const handleFormSubmit = (evt: React.SyntheticEvent<HTMLFormElement>) => {

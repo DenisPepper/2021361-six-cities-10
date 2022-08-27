@@ -6,10 +6,11 @@ import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import { useAppSelector } from '../../hooks';
 import { DEFAULT_SORT } from '../../settings';
+import { shallowEqual } from 'react-redux';
 
 export default function RoomMain(): JSX.Element {
-  const room = useAppSelector((state) => state.reducer.room);
-  const nearOffers = useAppSelector((state) => state.reducer.nearOffers);
+  const room = useAppSelector((state) => state.reducer.room, shallowEqual);
+  const nearOffers = useAppSelector((state) => state.reducer.nearOffers, shallowEqual);
 
   return room ? (
     <main className='page__main page__main--property'>

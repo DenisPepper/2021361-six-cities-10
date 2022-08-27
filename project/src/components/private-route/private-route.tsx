@@ -1,3 +1,4 @@
+import { shallowEqual } from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import {AppPath, AuthorizationStatus} from '../../settings';
@@ -8,7 +9,7 @@ type PrivateRouteProps = {
 
 export default function PrivateRoute(props: PrivateRouteProps): JSX.Element {
   const {children} = props;
-  const authorizationStatus = useAppSelector((store) => store.reducer.authorizationStatus);
+  const authorizationStatus = useAppSelector((store) => store.reducer.authorizationStatus, shallowEqual);
 
   return (
     authorizationStatus === AuthorizationStatus.Yes
