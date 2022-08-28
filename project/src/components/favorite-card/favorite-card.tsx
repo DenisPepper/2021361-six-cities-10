@@ -3,6 +3,8 @@ import { OfferType } from '../../types/offer-type';
 import { converToPercent } from '../../util';
 import { AppPath } from '../../settings';
 import { useState } from 'react';
+import FavoriteButton from '../../components/favorite-button/favorite-button';
+
 type FavoriteCardProps = {
   room: OfferType;
 };
@@ -37,15 +39,7 @@ export default function FavoriteCard(props: FavoriteCardProps): JSX.Element {
             <b className='place-card__price-value'>€{room.price}</b>
             <span className='place-card__price-text'>/&nbsp;night</span>
           </div>
-          <button
-            className='place-card__bookmark-button place-card__bookmark-button--active button'
-            type='button'
-          >
-            <svg className='place-card__bookmark-icon' width={18} height={19}>
-              <use xlinkHref='#icon-bookmark' />
-            </svg>
-            <span className='visually-hidden'>In bookmarks</span>
-          </button>
+          <FavoriteButton isFavorite={room.isFavorite} id={room.id}/>
         </div>
 
         <div className='place-card__rating rating'>

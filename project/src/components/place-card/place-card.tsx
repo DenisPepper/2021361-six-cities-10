@@ -3,24 +3,32 @@ import { AppPath } from '../../settings';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import Page404 from '../../pages/404-page/404-page';
+import FavoriteButton from '../../components/favorite-button/favorite-button';
+import { shallowEqual } from 'react-redux';
+import { offerByID } from '../../store/selectors/selectors';
 
 type PlaceCardProps = {
   id: number;
-  callback: (id: number) => void;
+  onMouseOver: (id: number) => void;
   isNearList: boolean;
 };
 
 export default function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const { id, callback, isNearList } = props;
-  const onMouseOverHandler = () => callback(id);
-  const offer = useAppSelector((store) => store.reducer.offers.find((e) => e.id === id));
+  const { id, onMouseOver, isNearList } = props;
+  const handleCardOnMouseOver = () => {
+    if (!isNearList) {
+      onMouseOver(id);
+    }
+  };
+
+  const offer = useAppSelector(offerByID(id), shallowEqual);
 
   return offer ? (
     <article
       className={`${
         isNearList ? 'near-places__card' : 'cities__card'
       } place-card`}
-      onMouseOver={onMouseOverHandler}
+      onMouseOver={handleCardOnMouseOver}
     >
       {offer.isPremium ? (
         <div className='place-card__mark'>
@@ -48,17 +56,11 @@ export default function PlaceCard(props: PlaceCardProps): JSX.Element {
             <b className='place-card__price-value'>&euro;{offer.price}</b>
             <span className='place-card__price-text'>&#47;&nbsp;night</span>
           </div>
-          <button className='place-card__bookmark-button button' type='button'>
-            <svg className='place-card__bookmark-icon' width='18' height='19'>
-              <use xlinkHref='#icon-bookmark'></use>
-            </svg>
-            <span className='visually-hidden'>To bookmarks</span>
-          </button>
+          <FavoriteButton isFavorite={offer.isFavorite} id={id} />
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
-            <span style={{ width: `${converToPercent(offer.rating)}%` }}>
-            </span>
+            <span style={{ width: `${converToPercent(offer.rating)}%` }}></span>
             <span className='visually-hidden'>Rating</span>
           </div>
         </div>
@@ -68,5 +70,7 @@ export default function PlaceCard(props: PlaceCardProps): JSX.Element {
         <p className='place-card__type'>{offer.type}</p>
       </div>
     </article>
-  ) : (<Page404 />);
+  ) : (
+    <Page404 />
+  );
 }

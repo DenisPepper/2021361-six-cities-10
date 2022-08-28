@@ -5,9 +5,10 @@ import App from './components/app/app';
 import { store } from './store';
 import { CITIES } from './settings';
 import ErrorMessage from './components/error/error';
-import { getOffers, checkAuthorizationStatus } from './store/action-creaters-middleware';
+import { getOffers, getFavorites, checkAuthorizationStatus } from './store/action-creaters-middleware';
 
 store.dispatch(getOffers());
+store.dispatch(getFavorites());
 store.dispatch(checkAuthorizationStatus());
 
 const root = ReactDOM.createRoot(

@@ -5,18 +5,42 @@ import CommentSection from '../../components/comments-section/comments-section';
 import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import { useAppSelector } from '../../hooks';
-import { DEFAULT_SORT } from '../../settings';
+import { AppPath, AuthorizationStatus, DEFAULT_SORT } from '../../settings';
+import { shallowEqual } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { changeFavoriteStatus } from '../../store/action-creaters-middleware';
+import {
+  actualRoom,
+  nearOffers,
+  authStatus,
+} from '../../store/selectors/selectors';
 
 export default function RoomMain(): JSX.Element {
-  const room = useAppSelector((state) => state.reducer.room);
-  const nearOffers = useAppSelector((state) => state.reducer.nearOffers);
+  const room = useAppSelector(actualRoom);
+  const nearRooms = useAppSelector(nearOffers, shallowEqual);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isAuthorized =
+    useAppSelector(authStatus, shallowEqual) === AuthorizationStatus.Yes;
+
+  const handleButtonClick = () => {
+    isAuthorized
+      ? dispatch(
+        changeFavoriteStatus({
+          id: Number(room?.id),
+          isFavorite: !room?.isFavorite,
+        })
+      )
+      : navigate(AppPath.LoginPage);
+  };
 
   return room ? (
     <main className='page__main page__main--property'>
       <section className='property'>
         <div className='property__gallery-container container'>
           <div className='property__gallery'>
-            {room.images.map((element) => (
+            {room.images.slice(0, 6).map((element) => (
               <RoomImage key={element} src={element}></RoomImage>
             ))}
           </div>
@@ -33,7 +57,10 @@ export default function RoomMain(): JSX.Element {
             <div className='property__name-wrapper'>
               <h1 className='property__name'>{room.title}</h1>
               <button
-                className='property__bookmark-button button'
+                onClick={handleButtonClick}
+                className={`property__bookmark-button ${
+                  room.isFavorite ? 'property__bookmark-button--active' : ''
+                } button`}
                 type='button'
               >
                 <svg className='property__bookmark-icon' width={31} height={33}>
@@ -120,7 +147,7 @@ export default function RoomMain(): JSX.Element {
             Other places in the neighbourhood
           </h2>
           <PlaceCardList
-            offers={nearOffers}
+            offers={nearRooms}
             isNearList
             currentSort={DEFAULT_SORT}
           />

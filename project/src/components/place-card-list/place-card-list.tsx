@@ -1,6 +1,6 @@
 import PlaceCard from '../place-card/place-card';
 import { useAppDispatch } from '../../hooks/index';
-import { setCurrentID } from '../../store/action-creaters';
+import { setCurrentID } from '../../store/slices/currents-slice/currents-slice';
 import { SortsRules } from '../../settings';
 import { OfferTypeToSort } from '../../types/offer-type';
 
@@ -14,7 +14,7 @@ export default function PlaceCardList(props: PlaceCardListProps): JSX.Element {
   const { offers, isNearList, currentSort } = props;
   const dispatch = useAppDispatch();
 
-  const callback = (id: number) => dispatch(setCurrentID(id));
+  const onMouseOver = (id: number) => dispatch(setCurrentID(id));
 
   return (
     <div
@@ -26,7 +26,7 @@ export default function PlaceCardList(props: PlaceCardListProps): JSX.Element {
         <PlaceCard
           key={offer.id}
           id={offer.id}
-          callback={callback}
+          onMouseOver={onMouseOver}
           isNearList={isNearList}
         />
       ))}

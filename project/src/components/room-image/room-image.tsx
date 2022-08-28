@@ -1,8 +1,10 @@
+import { memo } from 'react';
+
 type RoomImageProps = {
   src: string;
 };
 
-export default function RoomImage(props: RoomImageProps): JSX.Element {
+function RoomImage(props: RoomImageProps): JSX.Element {
   const { src } = props;
 
   return (
@@ -11,3 +13,5 @@ export default function RoomImage(props: RoomImageProps): JSX.Element {
     </div>
   );
 }
+
+export default memo(RoomImage, (src, prevSrc) => src === prevSrc);

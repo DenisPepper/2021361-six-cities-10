@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { setCurrentSort } from '../../store/action-creaters';
+import { setCurrentSort } from '../../store/slices/currents-slice/currents-slice';
 import { SORTS } from '../../settings';
 import SortItem from '../sort-item/sort-item';
 
@@ -9,13 +9,13 @@ type SortsProps = {
 };
 
 export default function Sorts(props: SortsProps): JSX.Element {
-  const {currentSort} = props;
+  const { currentSort } = props;
   const [isOpened, setOpened] = useState(false);
   const dispath = useAppDispatch();
 
-  const onClickHandler = () => setOpened(!isOpened);
+  const handleSortClick = () => setOpened(!isOpened);
 
-  const onSelectHandler = (select: string) => {
+  const handleSortSelect = (select: string) => {
     if (select !== currentSort) {
       dispath(setCurrentSort(select));
     }
@@ -26,7 +26,7 @@ export default function Sorts(props: SortsProps): JSX.Element {
     <form className='places__sorting' action='#' method='get'>
       <span className='places__sorting-caption'>Sort by</span>
       <span
-        onClick={onClickHandler}
+        onClick={handleSortClick}
         className='places__sorting-type'
         tabIndex={0}
       >
@@ -41,7 +41,7 @@ export default function Sorts(props: SortsProps): JSX.Element {
             key={sort}
             sort={sort}
             currentSort={currentSort}
-            callback={onSelectHandler}
+            onSortSelect={handleSortSelect}
           />
         ))}
       </ul>

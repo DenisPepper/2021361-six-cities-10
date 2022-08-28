@@ -2,6 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { setComment } from '../../store/action-creaters-middleware';
 import { getInteger, debounce } from '../../util';
+import CommentFormInputRating from '../comment-form-input-rating/comment-form-input-rating';
+
+const RATINGS = [
+  { value: 5, title: 'perfect' },
+  { value: 4, title: 'good' },
+  { value: 3, title: 'not bad' },
+  { value: 2, title: 'badly' },
+  { value: 1, title: 'terribly' },
+];
 
 type CommentFormProps = {
   id: number;
@@ -23,31 +32,32 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
     }
   }, [state]);
 
-  const onChangeInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
     setState(() => ({ ...state, [name]: getInteger(value) }));
   };
 
-  const onChangeTextHandler = debounce(
+  const handleTextChange = debounce(
     (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
       const { name, value } = evt.target;
       setState(() => ({ ...state, [name]: value }));
     }
   );
 
-  const onSubmitHandler = (evt: React.SyntheticEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: React.SyntheticEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch(
       setComment({
         id,
         comment: { rating: state.rating, comment: state.comment },
+        form: evt.currentTarget,
       })
     );
   };
 
   return (
     <form
-      onSubmit={onSubmitHandler}
+      onSubmit={handleFormSubmit}
       className='reviews__form form'
       action='#'
       method='post'
@@ -57,95 +67,14 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
       </label>
 
       <div className='reviews__rating-form form__rating'>
-        <input
-          className='form__rating-input visually-hidden'
-          name='rating'
-          defaultValue={5}
-          id='5-stars'
-          type='radio'
-          onInput={onChangeInputHandler}
-        />
-        <label
-          htmlFor='5-stars'
-          className='reviews__rating-label form__rating-label'
-          title='perfect'
-        >
-          <svg className='form__star-image' width={37} height={33}>
-            <use xlinkHref='#icon-star' />
-          </svg>
-        </label>
-
-        <input
-          className='form__rating-input visually-hidden'
-          name='rating'
-          defaultValue={4}
-          id='4-stars'
-          type='radio'
-          onInput={onChangeInputHandler}
-        />
-        <label
-          htmlFor='4-stars'
-          className='reviews__rating-label form__rating-label'
-          title='good'
-        >
-          <svg className='form__star-image' width={37} height={33}>
-            <use xlinkHref='#icon-star' />
-          </svg>
-        </label>
-
-        <input
-          className='form__rating-input visually-hidden'
-          name='rating'
-          defaultValue={3}
-          id='3-stars'
-          type='radio'
-          onInput={onChangeInputHandler}
-        />
-        <label
-          htmlFor='3-stars'
-          className='reviews__rating-label form__rating-label'
-          title='not bad'
-        >
-          <svg className='form__star-image' width={37} height={33}>
-            <use xlinkHref='#icon-star' />
-          </svg>
-        </label>
-
-        <input
-          className='form__rating-input visually-hidden'
-          name='rating'
-          defaultValue={2}
-          id='2-stars'
-          type='radio'
-          onInput={onChangeInputHandler}
-        />
-        <label
-          htmlFor='2-stars'
-          className='reviews__rating-label form__rating-label'
-          title='badly'
-        >
-          <svg className='form__star-image' width={37} height={33}>
-            <use xlinkHref='#icon-star' />
-          </svg>
-        </label>
-
-        <input
-          className='form__rating-input visually-hidden'
-          name='rating'
-          defaultValue={1}
-          id='1-star'
-          type='radio'
-          onInput={onChangeInputHandler}
-        />
-        <label
-          htmlFor='1-star'
-          className='reviews__rating-label form__rating-label'
-          title='terribly'
-        >
-          <svg className='form__star-image' width={37} height={33}>
-            <use xlinkHref='#icon-star' />
-          </svg>
-        </label>
+        {RATINGS.map((rating) => (
+          <CommentFormInputRating
+            key={rating.value}
+            onRatingInput={handleInputChange}
+            title={rating.title}
+            count={rating.value}
+          />
+        ))}
       </div>
 
       <textarea
@@ -154,7 +83,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
         name='comment'
         placeholder='Tell how was your stay, what you like and what can be improved'
         defaultValue={''}
-        onInput={onChangeTextHandler}
+        onInput={handleTextChange}
       />
 
       <div className='reviews__button-wrapper'>

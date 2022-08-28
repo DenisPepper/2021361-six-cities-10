@@ -1,25 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
+import { ServerRoutes, TIME_OUT_SHOW_ERROR } from '../settings';
 import {
-  AuthorizationStatus,
-  ServerRoutes,
-  TIME_OUT_SHOW_ERROR,
-} from '../settings';
-import { OfferType } from '../types/offer-type';
+  OfferType,
+  OfferTypeFullData,
+  OfferTypePostFavorite,
+  OfferTypeChangeFavorite,
+} from '../types/offer-type';
 import { CommentType, NewCommentType } from '../types/comment-type';
 import { AppDispatchType, StateType } from '../types/state-type';
-import {
-  setOffers,
-  setAuthorizationStatus,
-  setError,
-  setLoadingStatus,
-  loggedIn,
-  offerLoaded,
-  offerNotLoaded,
-  commentsLoaded,
-} from './action-creaters';
 import { AuthData, UserData } from '../types/user-auth-types';
 import { dropToken, saveToken } from '../services/token';
+import { setError } from './slices/error-slice/error-slice';
 
 type AsyncThunkType = {
   dispatch: AppDispatchType;
@@ -28,66 +20,55 @@ type AsyncThunkType = {
 };
 
 export const setComment = createAsyncThunk<
-  void,
+  CommentType[],
   NewCommentType,
   AsyncThunkType
->('SET_COMMENT', async ({ id, comment }, { dispatch, extra: HTTPClient }) => {
-  try {
-    const { data } = await HTTPClient.post<CommentType[]>(`${ServerRoutes.comments}/${id}`, comment);
-    dispatch(commentsLoaded(data));
-  } catch (error) {
-    // dispatch();
-  }
+>('SET_COMMENT', async ({ id, comment, form }, { extra: HTTPClient }) => {
+  const { data } = await HTTPClient.post<CommentType[]>(
+    `${ServerRoutes.comments}/${id}`,
+    comment
+  );
+  form.reset();
+  return data;
 });
 
-export const getOffers = createAsyncThunk<void, undefined, AsyncThunkType>(
-  'GET_OFFERS',
-  async (_args, { dispatch, extra: HTTPClient }) => {
-    try {
-      const { data } = await HTTPClient.get<OfferType[]>(ServerRoutes.hotels);
-      dispatch(setOffers(data));
-    } catch (error) {
-      dispatch(setLoadingStatus(false));
-    }
-  }
-);
+export const getOffers = createAsyncThunk<
+  OfferType[],
+  undefined,
+  AsyncThunkType
+>('GET_OFFERS', async (_args, { extra: HTTPClient }) => {
+  const { data } = await HTTPClient.get<OfferType[]>(ServerRoutes.hotels);
+  return data;
+});
 
-export const getOffer = createAsyncThunk<void, number, AsyncThunkType>(
-  'GET_OFFER',
-  async (id, { dispatch, extra: HTTPClient }) => {
-    try {
-      const { data: room } = await HTTPClient.get<OfferType>(
-        `${ServerRoutes.hotels}/${id}`
-      );
-      const { data: nearOffers } = await HTTPClient.get<OfferType[]>(
-        `${ServerRoutes.hotels}/${id}/nearby`
-      );
-      const { data: comments } = await HTTPClient.get<CommentType[]>(
-        `${ServerRoutes.comments}/${id}`
-      );
-      dispatch(offerLoaded({ room, nearOffers, comments }));
-    } catch (error) {
-      dispatch(offerNotLoaded());
-    }
-  }
-);
+export const getOffer = createAsyncThunk<
+  OfferTypeFullData,
+  number,
+  AsyncThunkType
+>('GET_OFFER', async (id, { extra: HTTPClient }) => {
+  const { data: room } = await HTTPClient.get<OfferType>(
+    `${ServerRoutes.hotels}/${id}`
+  );
+  const { data: nearOffers } = await HTTPClient.get<OfferType[]>(
+    `${ServerRoutes.hotels}/${id}/nearby`
+  );
+  const { data: comments } = await HTTPClient.get<CommentType[]>(
+    `${ServerRoutes.comments}/${id}`
+  );
+  return { room, nearOffers, comments };
+});
 
 export const checkAuthorizationStatus = createAsyncThunk<
   void,
   undefined,
   AsyncThunkType
->('CHECK_AUTH', async (_args, { dispatch, extra: HTTPClient }) => {
-  try {
-    await HTTPClient.get<string>(ServerRoutes.login);
-    dispatch(setAuthorizationStatus(AuthorizationStatus.Yes));
-  } catch {
-    dispatch(setAuthorizationStatus(AuthorizationStatus.No));
-  }
+>('CHECK_AUTH', async (_args, { extra: HTTPClient }) => {
+  await HTTPClient.get<string>(ServerRoutes.login);
 });
 
-export const login = createAsyncThunk<void, AuthData, AsyncThunkType>(
+export const login = createAsyncThunk<string, AuthData, AsyncThunkType>(
   'LOGIN',
-  async ({ login: email, password }, { dispatch, extra: HTTPClient }) => {
+  async ({ login: email, password }, { extra: HTTPClient }) => {
     const {
       data: { token, email: userEmail },
     } = await HTTPClient.post<UserData>(ServerRoutes.login, {
@@ -95,22 +76,44 @@ export const login = createAsyncThunk<void, AuthData, AsyncThunkType>(
       password,
     });
     saveToken(token);
-    dispatch(loggedIn(userEmail));
+    return userEmail;
   }
 );
 
 export const logout = createAsyncThunk<void, undefined, AsyncThunkType>(
   'LOGOUT',
-  async (_args, { dispatch, extra: HTTPClient }) => {
+  async (_args, { extra: HTTPClient }) => {
     await HTTPClient.delete<UserData>(ServerRoutes.logout);
     dropToken();
-    dispatch(setAuthorizationStatus(AuthorizationStatus.No));
   }
 );
 
-export const clearError = createAsyncThunk(
+export const clearError = createAsyncThunk<void, undefined, AsyncThunkType>(
   'CLEAR_ERROR',
   (_args, { dispatch }) => {
     setTimeout(() => dispatch(setError(null)), TIME_OUT_SHOW_ERROR);
+  }
+);
+
+export const getFavorites = createAsyncThunk<
+  OfferType[],
+  undefined,
+  AsyncThunkType
+>('GET_FAVORITES', async (_args, { extra: HTTPClient }) => {
+  const { data } = await HTTPClient.get<OfferType[]>(ServerRoutes.favorite);
+  return data;
+});
+
+export const changeFavoriteStatus = createAsyncThunk<
+  OfferTypeChangeFavorite,
+  OfferTypePostFavorite,
+  AsyncThunkType
+>(
+  'CHANGE_FAVORITE_STATUS',
+  async ({ id, isFavorite }, { extra: HTTPClient }) => {
+    const { data } = await HTTPClient.post<OfferType>(
+      `${ServerRoutes.favorite}/${id}/${Number(isFavorite)}`
+    );
+    return {offer: data, increment: isFavorite};
   }
 );

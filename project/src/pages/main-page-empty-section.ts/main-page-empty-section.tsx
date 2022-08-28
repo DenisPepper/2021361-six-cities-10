@@ -1,7 +1,9 @@
+import { shallowEqual } from 'react-redux';
 import { useAppSelector } from '../../hooks';
+import { currentCity } from '../../store/selectors/selectors';
 
 export default function MainPageEmptySection(): JSX.Element {
-  const city = useAppSelector((state) => state.reducer.city);
+  const city = useAppSelector(currentCity, shallowEqual);
 
   return (
     <div className='cities__places-container cities__places-container--empty container'>
