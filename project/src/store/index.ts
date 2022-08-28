@@ -1,10 +1,9 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import reducer from './reducer';
+import { configureStore } from '@reduxjs/toolkit';
 import { createHTTPClient } from '../services/api';
-
-const reducers = combineReducers({ reducer });
+import { rootReducer } from './root-reducer';
 
 export const store = configureStore({
-  reducer: reducers,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk:{extraArgument: createHTTPClient()}}),
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ thunk: { extraArgument: createHTTPClient() } }),
 });

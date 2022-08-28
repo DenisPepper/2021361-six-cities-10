@@ -46,6 +46,11 @@ export type OfferTypePostFavorite = {
   isFavorite: boolean;
 };
 
+export type OfferTypeChangeFavorite = {
+  offer: OfferType;
+  increment: boolean;
+};
+
 export type OfferTypeFullData = {
   room: OfferType;
   nearOffers: OfferType[];

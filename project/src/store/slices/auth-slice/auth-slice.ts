@@ -3,6 +3,7 @@ import { AuthorizationStatus, NameSpace } from '../../../settings';
 import {
   checkAuthorizationStatus,
   login,
+  logout,
 } from '../../action-creaters-middleware';
 
 type StateType = {
@@ -34,7 +35,7 @@ export const authSlice = createSlice({
         state.userName = action.payload;
       })
 
-      .addCase(login.rejected, (state) => {
+      .addCase(logout.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.No;
         state.userName = '';
       });
