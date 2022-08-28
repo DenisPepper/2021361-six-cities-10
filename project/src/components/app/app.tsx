@@ -9,6 +9,7 @@ import PrivateRoute from '../private-route/private-route';
 import Spinner from '../spinner/spinner';
 import { useAppSelector } from '../../hooks';
 import { shallowEqual } from 'react-redux';
+import { isOffersloaded } from '../../store/selectors/selectors';
 
 type AppProps = {
   cities: string[];
@@ -16,14 +17,14 @@ type AppProps = {
 
 export default function App(props: AppProps): JSX.Element {
   const { cities } = props;
-  const offersLoaded = useAppSelector((store) => store.reducer.offersLoaded, shallowEqual);
+  const offersLoaded = useAppSelector(isOffersloaded, shallowEqual);
 
   return offersLoaded ? (
     <BrowserRouter>
       <Routes>
         <Route path={AppPath.MainPage}>
           <Route index element={<MainPage cities={cities} />} />
-          <Route path={AppPath.LoginPage} element={<LoginPage/>} />
+          <Route path={AppPath.LoginPage} element={<LoginPage />} />
           <Route
             path={AppPath.FavoritesPage}
             element={

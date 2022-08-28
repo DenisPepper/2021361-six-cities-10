@@ -29,7 +29,9 @@ export enum NameSpace {
   Current = 'CURRENT',
   Error = 'ERROR',
   Favorites = 'FAVORITES',
-  Offers = 'OFFERS'
+  Offers = 'OFFERS',
+  Comments = 'COMMENTS',
+  Spinner = 'SPINNER'
 }
 
 export const BASE_URL = 'https://10.react.pages.academy/six-cities';

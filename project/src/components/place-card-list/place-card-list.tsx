@@ -1,6 +1,6 @@
 import PlaceCard from '../place-card/place-card';
 import { useAppDispatch } from '../../hooks/index';
-import { setCurrentID } from '../../store/action-creaters';
+import { setCurrentID } from '../../store/slices/currents-slice/currents-slice';
 import { SortsRules } from '../../settings';
 import { OfferTypeToSort } from '../../types/offer-type';
 

@@ -1,19 +1,17 @@
 import { shallowEqual } from 'react-redux';
-import {Navigate} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
-import {AppPath, AuthorizationStatus} from '../../settings';
+import { AppPath, AuthorizationStatus } from '../../settings';
+import { authStatus } from '../../store/selectors/selectors';
 
 type PrivateRouteProps = {
   children: JSX.Element;
-}
+};
 
 export default function PrivateRoute(props: PrivateRouteProps): JSX.Element {
-  const {children} = props;
-  const authorizationStatus = useAppSelector((store) => store.reducer.authorizationStatus, shallowEqual);
+  const { children } = props;
+  const authorized =
+    useAppSelector(authStatus, shallowEqual) === AuthorizationStatus.Yes;
 
-  return (
-    authorizationStatus === AuthorizationStatus.Yes
-      ? children
-      : <Navigate to={AppPath.LoginPage} />
-  );
+  return authorized ? children : <Navigate to={AppPath.LoginPage} />;
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { setCurrentSort } from '../../store/action-creaters';
+import { setCurrentSort } from '../../store/slices/currents-slice/currents-slice';
 import { SORTS } from '../../settings';
 import SortItem from '../sort-item/sort-item';
 

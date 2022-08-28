@@ -10,17 +10,28 @@ import { shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { changeFavoriteStatus } from '../../store/action-creaters-middleware';
+import {
+  actualRoom,
+  nearOffers,
+  authStatus,
+} from '../../store/selectors/selectors';
 
 export default function RoomMain(): JSX.Element {
-  const room = useAppSelector((state) => state.reducer.room);
-  const nearOffers = useAppSelector((state) => state.reducer.nearOffers,shallowEqual);
+  const room = useAppSelector(actualRoom);
+  const nearRooms = useAppSelector(nearOffers, shallowEqual);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const isAuthorized = useAppSelector((store) => store.reducer.authorizationStatus,shallowEqual) === AuthorizationStatus.Yes;
+  const isAuthorized =
+    useAppSelector(authStatus, shallowEqual) === AuthorizationStatus.Yes;
 
   const handleButtonClick = () => {
     isAuthorized
-      ? dispatch(changeFavoriteStatus({ id: Number(room?.id), isFavorite: !room?.isFavorite }))
+      ? dispatch(
+        changeFavoriteStatus({
+          id: Number(room?.id),
+          isFavorite: !room?.isFavorite,
+        })
+      )
       : navigate(AppPath.LoginPage);
   };
 
@@ -136,7 +147,7 @@ export default function RoomMain(): JSX.Element {
             Other places in the neighbourhood
           </h2>
           <PlaceCardList
-            offers={nearOffers}
+            offers={nearRooms}
             isNearList
             currentSort={DEFAULT_SORT}
           />

@@ -1,7 +1,8 @@
 import CityItem from '../city-item/city-item';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/action-creaters';
+import { setCurrentCity } from '../../store/slices/currents-slice/currents-slice';
 import { shallowEqual } from 'react-redux';
+import { currentCity } from '../../store/selectors/selectors';
 
 type CitiesListProps = {
   cities: string[];
@@ -10,21 +11,21 @@ type CitiesListProps = {
 export default function CitiesList(props: CitiesListProps): JSX.Element {
   const { cities } = props;
   const dispatch = useAppDispatch();
-  const currentCity = useAppSelector((state) => state.reducer.city, shallowEqual);
+  const city = useAppSelector(currentCity, shallowEqual);
 
   const onItemClick = (value: string) => {
-    dispatch(changeCity(value));
+    dispatch(setCurrentCity(value));
   };
 
   return (
     <div className='tabs'>
       <section className='locations container'>
         <ul className='locations__list tabs__list'>
-          {cities.map((city) => (
+          {cities.map((element) => (
             <CityItem
-              key={city}
-              city={city}
-              active={city === currentCity}
+              key={element}
+              city={element}
+              active={element === city}
               onItemClick={onItemClick}
             />
           ))}

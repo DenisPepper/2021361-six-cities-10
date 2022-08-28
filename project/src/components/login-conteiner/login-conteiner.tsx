@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
 import { useAppDispatch } from '../../hooks';
 import { AppPath } from '../../settings';
-import { changeCity } from '../../store/action-creaters';
+import { setCurrentCity } from '../../store/slices/currents-slice/currents-slice';
 
 type LoginProps = {
   onFormSubmit: (evt: React.SyntheticEvent<HTMLFormElement>) => void;
@@ -12,7 +12,7 @@ type LoginProps = {
 export default function LoginConteiner(props: LoginProps) {
   const { onFormSubmit, city } = props;
   const dispatch = useAppDispatch();
-  const handleCityClick = () => dispatch(changeCity(city));
+  const handleCityClick = () => dispatch(setCurrentCity(city));
 
   return (
     <div className='page page--gray page--login'>

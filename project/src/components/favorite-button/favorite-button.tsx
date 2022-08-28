@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus, AppPath } from '../../settings';
 import { changeFavoriteStatus } from '../../store/action-creaters-middleware';
+import { authStatus } from '../../store/selectors/selectors';
 
 type FavoriteButtonProps = {
   id: number;
@@ -15,9 +16,7 @@ export default function FavoriteButton(
   const { id, isFavorite } = props;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isAuthorized =
-    useAppSelector((store) => store.reducer.authorizationStatus, shallowEqual) ===
-    AuthorizationStatus.Yes;
+  const isAuthorized = useAppSelector(authStatus, shallowEqual) === AuthorizationStatus.Yes;
 
   const handleButtonClick = () => {
     isAuthorized
