@@ -8,3 +8,12 @@ export type UserData = {
   email: string;
   token: string;
 };
+
+export type UserInfoData = {
+  avatarUrl: string;
+  email: string;
+  id: number;
+  isPro: boolean;
+  name: string;
+  token: string;
+};

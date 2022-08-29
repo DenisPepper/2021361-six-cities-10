@@ -22,12 +22,14 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(checkAuthorizationStatus.fulfilled, (state) => {
+      .addCase(checkAuthorizationStatus.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Yes;
+        state.userName = action.payload.email;
       })
 
       .addCase(checkAuthorizationStatus.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.No;
+        state.userName = '';
       })
 
       .addCase(login.fulfilled, (state, action) => {
