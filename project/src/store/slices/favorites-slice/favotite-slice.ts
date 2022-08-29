@@ -29,11 +29,9 @@ export const favoriteSlice = createSlice({
 
       .addCase(changeFavoriteStatus.fulfilled, (state, action) => {
         const offer = action.payload.offer;
-        action.payload.increment
-          ? (state.favoriteOffers = [...state.favoriteOffers, offer])
-          : state.favoriteOffers = state.favoriteOffers.filter((element) => element.id !== offer.id);
-
-        state.favoritesCounter = state.favoriteOffers.length;
+        const updatedOffers = action.payload.increment ? [...state.favoriteOffers, offer] : state.favoriteOffers.filter((element) => element.id !== offer.id);
+        state.favoriteOffers = updatedOffers;
+        state.favoritesCounter = updatedOffers.length;
 
       });
   },
