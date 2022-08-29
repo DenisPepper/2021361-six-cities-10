@@ -31,7 +31,7 @@ export const favoriteSlice = createSlice({
         const offer = action.payload.offer;
         action.payload.increment
           ? (state.favoriteOffers = [...state.favoriteOffers, offer])
-          : state.favoriteOffers.filter((element) => element.id !== offer.id);
+          : state.favoriteOffers = state.favoriteOffers.filter((element) => element.id !== offer.id);
 
         state.favoritesCounter = state.favoriteOffers.length;
 

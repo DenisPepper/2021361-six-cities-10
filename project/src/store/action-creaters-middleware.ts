@@ -9,7 +9,7 @@ import {
 } from '../types/offer-type';
 import { CommentType, NewCommentType } from '../types/comment-type';
 import { AppDispatchType, StateType } from '../types/state-type';
-import { AuthData, UserData } from '../types/user-auth-types';
+import { AuthData, UserData, UserInfoData } from '../types/user-auth-types';
 import { dropToken, saveToken } from '../services/token';
 import { setError } from './slices/error-slice/error-slice';
 
@@ -59,11 +59,12 @@ export const getOffer = createAsyncThunk<
 });
 
 export const checkAuthorizationStatus = createAsyncThunk<
-  void,
+  UserInfoData,
   undefined,
   AsyncThunkType
 >('CHECK_AUTH', async (_args, { extra: HTTPClient }) => {
-  await HTTPClient.get<string>(ServerRoutes.login);
+  const { data } = await HTTPClient.get<UserInfoData>(ServerRoutes.login);
+  return data;
 });
 
 export const login = createAsyncThunk<string, AuthData, AsyncThunkType>(
@@ -114,6 +115,6 @@ export const changeFavoriteStatus = createAsyncThunk<
     const { data } = await HTTPClient.post<OfferType>(
       `${ServerRoutes.favorite}/${id}/${Number(isFavorite)}`
     );
-    return {offer: data, increment: isFavorite};
+    return { offer: data, increment: isFavorite };
   }
 );
