@@ -35,6 +35,31 @@ describe('async thunk actions', () => {
     ]);
   });
 
+  it('when getFavorites status is 200', async () => {
+    const store = mockStore();
+    HTTPClient.onGet(ServerRoutes.favorite).reply(200, []);
+    expect(store.getActions()).toEqual([]);
+    await store.dispatch(getFavorites());
+    const actions = store.getActions().map(({ type }) => type);
+    expect(actions).toEqual([
+      getFavorites.pending.type,
+      getFavorites.fulfilled.type,
+    ]);
+  });
+
+  it('when changeFavoriteStatus status is 200', async () => {
+    const param = {id: 1, isFavorite: true };
+    const store = mockStore();
+    HTTPClient.onPost(`${ServerRoutes.favorite}/${param.id}/${1}`).reply(200, []);
+    expect(store.getActions()).toEqual([]);
+    await store.dispatch(changeFavoriteStatus(param));
+    const actions = store.getActions().map(({ type }) => type);
+    expect(actions).toEqual([
+      changeFavoriteStatus.pending.type,
+      changeFavoriteStatus.fulfilled.type,
+    ]);
+  });
+
   it('when getOffers is 200', async () => {
     const store = mockStore();
     HTTPClient.onGet(ServerRoutes.hotels).reply(200, []);
