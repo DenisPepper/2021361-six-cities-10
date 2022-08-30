@@ -28,7 +28,9 @@ export const setComment = createAsyncThunk<
     `${ServerRoutes.comments}/${id}`,
     comment
   );
-  form.reset();
+  if (data) {
+    form.reset();
+  }
   return data;
 });
 
