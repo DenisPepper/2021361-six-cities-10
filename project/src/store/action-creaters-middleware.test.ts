@@ -4,7 +4,14 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { StateType } from '../types/state-type';
 import { Action } from 'redux';
 import thunk, { ThunkDispatch } from 'redux-thunk';
-import { checkAuthorizationStatus } from './action-creaters-middleware';
+import {
+  checkAuthorizationStatus,
+  clearError,
+  getFavorites,
+  changeFavoriteStatus,
+  getOffer,
+  getOffers,
+} from './action-creaters-middleware';
 import axios from 'axios';
 
 describe('async thunk actions', () => {
@@ -29,5 +36,15 @@ describe('async thunk actions', () => {
     ]);
   });
 
-
+  it('when getOffers is 200', async () => {
+    const store = mockStore();
+    HTTPClient.onGet(ServerRoutes.hotels).reply(200, []);
+    expect(store.getActions()).toEqual([]);
+    await store.dispatch(getOffers());
+    const actions = store.getActions().map(({ type }) => type);
+    expect(actions).toEqual([
+      getOffers.pending.type,
+      getOffers.fulfilled.type,
+    ]);
+  });
 });
