@@ -8,6 +8,18 @@ const FULL_STARS = 5;
 
 export const RATING_COEF = FULL_PERCENT / FULL_STARS;
 
+export const COMMENTS_MAX_COUNT = 10;
+
+export const ROOM_PHOTOS_MAX_COUNT = 6;
+
+export const RATINGS = [
+  { value: 5, title: 'perfect' },
+  { value: 4, title: 'good' },
+  { value: 3, title: 'not bad' },
+  { value: 2, title: 'badly' },
+  { value: 1, title: 'terribly' },
+];
+
 export enum Timeouts {
   Error = 5000,
   Debounce = 1000,

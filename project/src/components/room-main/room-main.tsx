@@ -5,7 +5,7 @@ import CommentSection from '../../components/comments-section/comments-section';
 import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import { useAppSelector } from '../../hooks';
-import { AppPath, AuthorizationStatus, DEFAULT_SORT } from '../../settings';
+import { AppPath, AuthorizationStatus, DEFAULT_SORT, ROOM_PHOTOS_MAX_COUNT } from '../../settings';
 import { shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
@@ -40,7 +40,7 @@ export default function RoomMain(): JSX.Element {
       <section className='property'>
         <div className='property__gallery-container container'>
           <div className='property__gallery'>
-            {room.images.slice(0, 6).map((element) => (
+            {room.images.slice(0, ROOM_PHOTOS_MAX_COUNT).map((element) => (
               <RoomImage key={element} src={element}></RoomImage>
             ))}
           </div>

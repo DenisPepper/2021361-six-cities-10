@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
+import { RATINGS } from '../../settings';
 import { setComment } from '../../store/action-creaters-middleware';
 import { getInteger, debounce } from '../../util';
 import CommentFormInputRating from '../comment-form-input-rating/comment-form-input-rating';
-
-const RATINGS = [
-  { value: 5, title: 'perfect' },
-  { value: 4, title: 'good' },
-  { value: 3, title: 'not bad' },
-  { value: 2, title: 'badly' },
-  { value: 1, title: 'terribly' },
-];
 
 type CommentFormProps = {
   id: number;

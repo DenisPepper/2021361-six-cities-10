@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../hooks';
-import { AuthorizationStatus } from '../../settings';
+import { AuthorizationStatus, COMMENTS_MAX_COUNT } from '../../settings';
 import { CommentType } from '../../types/comment-type';
 import CommentForm from '../comment-form/comment-form';
 import CommentItem from '../comment-item/comment-item';
@@ -30,7 +30,7 @@ export default function CommentSection(props: CommentFormProps): JSX.Element {
 
       <ul className='reviews__list'>
         {comments
-          .slice(0, 10)
+          .slice(0, COMMENTS_MAX_COUNT)
           .sort(comparator)
           .map((comment) => (
             <CommentItem key={generateKey(comment)} comment={comment} />
