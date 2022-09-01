@@ -4,6 +4,7 @@ import useMap from '../../hooks/use-map';
 import { Location } from '../../types/map-types';
 import { MapIconsURL, ICON_SIZE, DEFAULT_MAP_SETTINGS } from '../../settings';
 import 'leaflet/dist/leaflet.css';
+import './map.css';
 import { useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
 import { getInteger } from '../../util';
@@ -51,7 +52,7 @@ export default function Map(): JSX.Element {
   }, [map, offersLocations, location.latitude, location.longitude, currentID]);
   return (
     <section
-      style={{ height: '600px' }}
+      //style={{ height: '600px' }}
       ref={mapRef}
       className='cities__map map'
     />
