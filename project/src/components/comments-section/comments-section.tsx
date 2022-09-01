@@ -1,21 +1,14 @@
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus, COMMENTS_MAX_COUNT } from '../../settings';
-import { CommentType } from '../../types/comment-type';
 import CommentForm from '../comment-form/comment-form';
 import CommentItem from '../comment-item/comment-item';
-import dayjs from 'dayjs';
 import { shallowEqual } from 'react-redux';
 import { roomComments, authStatus } from '../../store/selectors/selectors';
+import { generateKey, comparator } from '../../util';
 
 type CommentFormProps = {
   id: number;
 };
-
-const generateKey = (comment: CommentType): string =>
-  `${comment.id}${comment.user.id}${comment.date}`;
-
-const comparator = (a: CommentType, b: CommentType) =>
-  dayjs(b.date).diff(dayjs(a.date));
 
 export default function CommentSection(props: CommentFormProps): JSX.Element {
   const { id } = props;

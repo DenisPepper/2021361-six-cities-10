@@ -1,6 +1,7 @@
 import React from 'react';
 import { DECIMAL, RATING_COEF, Timeouts } from './settings';
 import dayjs from 'dayjs';
+import { CommentType } from './types/comment-type';
 
 export const converToPercent = (rating: number) => rating * RATING_COEF;
 
@@ -32,3 +33,9 @@ export const getRandomInteger = (min: number, max: number): number => {
 };
 
 export const formatDate = (date: string) => dayjs(date).format('MMMM YYYY');
+
+export const generateKey = (comment: CommentType): string =>
+  `${comment.id}${comment.user.id}${comment.date}`;
+
+export const comparator = (a: CommentType, b: CommentType) =>
+  dayjs(b.date).diff(dayjs(a.date));
