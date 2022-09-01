@@ -1,6 +1,6 @@
 import CitiesList from '../../components/cities-list/cities-list';
-import MainPageEmptySection from '../main-page-empty-section.ts/main-page-empty-section';
-import MainPageFilledSection from '../main-page-filled-section/main-page-filled-section';
+import MainPageEmptySection from '../../components/main-page-empty-section/main-page-empty-section';
+import MainPageFilledSection from '../../components/main-page-filled-section/main-page-filled-section';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
 import { shallowEqual } from 'react-redux';

@@ -1,10 +1,10 @@
-import Map from '../../components/map/map';
-import Sorts from '../../components/sorts/sorts';
-import PlaceCardList from '../../components/place-card-list/place-card-list';
+import Map from '../map/map';
+import Sorts from '../sorts/sorts';
+import PlaceCardList from '../place-card-list/place-card-list';
 import { useAppSelector } from '../../hooks';
 import { OfferTypeToSort } from '../../types/offer-type';
 import { shallowEqual } from 'react-redux';
-import { currentSort } from '../../store/selectors/selectors';
+import { currentSort, currentCity } from '../../store/selectors/selectors';
 
 type MainPageFilledSectionProps = {
   offers: OfferTypeToSort[];
@@ -15,12 +15,13 @@ export default function MainPageFilledSection(
 ): JSX.Element {
   const { offers } = props;
   const sort = useAppSelector(currentSort, shallowEqual);
+  const city = useAppSelector(currentCity, shallowEqual);
 
   return (
     <div className='cities__places-container container'>
       <section className='cities__places places'>
         <h2 className='visually-hidden'>Places</h2>
-        <b className='places__found'>{`${offers.length} places to stay in City`}</b>
+        <b className='places__found'>{`${offers.length} places to stay in ${city}`}</b>
         <Sorts currentSort={sort} />
         <div className='cities__places-list places__list tabs__content'>
           <PlaceCardList
