@@ -4,7 +4,7 @@ import axios, {
   AxiosResponse,
   AxiosError,
 } from 'axios';
-import { BASE_URL, REQUEST_TIMEOUT } from '../settings';
+import { BASE_URL, Timeouts } from '../settings';
 import { getToken } from './token';
 import { StatusCodes } from 'http-status-codes';
 import { AppErrorHandler } from './app-error-handler';
@@ -19,7 +19,7 @@ const shouldDisplayError = (response: AxiosResponse) =>
   !!StatusCodeMapping[response.status];
 
 export const createHTTPClient = (): AxiosInstance => {
-  const api = axios.create({ baseURL: BASE_URL, timeout: REQUEST_TIMEOUT });
+  const api = axios.create({ baseURL: BASE_URL, timeout: Timeouts.API });
 
   api.interceptors.request.use((config: AxiosRequestConfig) => {
     config.headers['x-token'] = getToken();

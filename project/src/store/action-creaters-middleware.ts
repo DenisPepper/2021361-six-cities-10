@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { ServerRoutes, TIME_OUT_SHOW_ERROR } from '../settings';
+import { ServerRoutes, Timeouts } from '../settings';
 import {
   OfferType,
   OfferTypeFullData,
@@ -94,7 +94,7 @@ export const logout = createAsyncThunk<void, undefined, AsyncThunkType>(
 export const clearError = createAsyncThunk<void, undefined, AsyncThunkType>(
   'CLEAR_ERROR',
   (_args, { dispatch }) => {
-    setTimeout(() => dispatch(setError(null)), TIME_OUT_SHOW_ERROR);
+    setTimeout(() => dispatch(setError(null)), Timeouts.Error);
   }
 );
 

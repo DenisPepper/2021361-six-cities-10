@@ -2,12 +2,7 @@ import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/use-map';
 import { Location } from '../../types/map-types';
-import {
-  URL_MARKER_DEFAULT,
-  URL_MARKER_CURRENT,
-  ICON_SIZE,
-  DEFAULT_MAP_SETTINGS,
-} from '../../settings';
+import { MapIconsURL, ICON_SIZE, DEFAULT_MAP_SETTINGS } from '../../settings';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
@@ -20,13 +15,13 @@ import {
 } from '../../store/selectors/selectors';
 
 const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
+  iconUrl: MapIconsURL.Default,
   iconSize: [ICON_SIZE, ICON_SIZE],
   iconAnchor: [ICON_SIZE / 2, ICON_SIZE],
 });
 
 const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
+  iconUrl: MapIconsURL.Current,
   iconSize: [ICON_SIZE, ICON_SIZE],
   iconAnchor: [ICON_SIZE / 2, ICON_SIZE],
 });

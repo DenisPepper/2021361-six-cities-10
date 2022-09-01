@@ -3,12 +3,18 @@ import { OfferTypeToSort } from './types/offer-type';
 export const DECIMAL = 10;
 
 const FULL_PERCENT = 100;
+
 const FULL_STARS = 5;
+
 export const RATING_COEF = FULL_PERCENT / FULL_STARS;
 
-export const TIME_OUT_SHOW_ERROR = 5000;
+export enum Timeouts {
+  Error = 5000,
+  Debounce = 1000,
+  API = 5000,
+}
 
-export const DEFAULT_DELAY = 1000;
+export const BASE_URL = 'https://10.react.pages.academy/six-cities';
 
 export enum AuthorizationStatus {
   Yes = 'YES',
@@ -24,6 +30,11 @@ export enum AppPath {
   Offer = '/offer/',
 }
 
+export enum MapIconsURL {
+  Default = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
+  Current = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg',
+}
+
 export enum NameSpace {
   Auth = 'AUTH',
   Current = 'CURRENT',
@@ -31,12 +42,8 @@ export enum NameSpace {
   Favorites = 'FAVORITES',
   Offers = 'OFFERS',
   Comments = 'COMMENTS',
-  Spinner = 'SPINNER'
+  Spinner = 'SPINNER',
 }
-
-export const BASE_URL = 'https://10.react.pages.academy/six-cities';
-
-export const REQUEST_TIMEOUT = 5000;
 
 export const ServerRoutes = {
   hotels: '/hotels',
@@ -45,12 +52,6 @@ export const ServerRoutes = {
   comments: '/comments',
   favorite: '/favorite',
 };
-
-export const URL_MARKER_DEFAULT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
-
-export const URL_MARKER_CURRENT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
 
 export const ICON_SIZE = 40;
 

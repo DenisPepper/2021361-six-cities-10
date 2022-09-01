@@ -1,5 +1,5 @@
 import React from 'react';
-import { DECIMAL, RATING_COEF, DEFAULT_DELAY } from './settings';
+import { DECIMAL, RATING_COEF, Timeouts } from './settings';
 import dayjs from 'dayjs';
 
 export const converToPercent = (rating: number) => rating * RATING_COEF;
@@ -11,7 +11,7 @@ type V = React.ChangeEvent<HTMLTextAreaElement>;
 type C = (value: V) => void;
 type T = ReturnType<typeof setTimeout>;
 
-export const debounce = (callback: C, delay = DEFAULT_DELAY) => {
+export const debounce = (callback: C, delay = Timeouts.Debounce) => {
   let timeoutId: T;
   return (value: V) => {
     clearTimeout(timeoutId);
