@@ -1,5 +1,6 @@
 import React from 'react';
 import { DECIMAL, RATING_COEF, DEFAULT_DELAY } from './settings';
+import dayjs from 'dayjs';
 
 export const converToPercent = (rating: number) => rating * RATING_COEF;
 
@@ -29,3 +30,5 @@ export const getRandomInteger = (min: number, max: number): number => {
   }
   return min + Math.floor(Math.random() * (max - min + 1));
 };
+
+export const formatDate = (date: string) => dayjs(date).format('MMMM YYYY');

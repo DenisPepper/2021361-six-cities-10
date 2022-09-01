@@ -1,5 +1,5 @@
 import { CommentType } from '../../types/comment-type';
-import { converToPercent } from '../../util';
+import { converToPercent, formatDate } from '../../util';
 
 type CommentItemProps = {
   comment: CommentType;
@@ -30,8 +30,7 @@ export default function CommentItem(props: CommentItemProps): JSX.Element {
         </div>
         <p className='reviews__text'>{comment.comment}</p>
         <time className='reviews__time' dateTime={comment.date}>
-          {/* FIXME: format data to <April 2019> */}
-          {comment.date}
+          {formatDate(comment.date)}
         </time>
       </div>
     </li>
